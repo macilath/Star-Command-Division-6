@@ -6,3 +6,6 @@
 *.csproj
 *.unityproj
 *.sln
+
+/Assets/TK2DROOT
+/Assets/TK2DROOT.meta
