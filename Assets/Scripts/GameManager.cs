@@ -1,14 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () 
-	{
-		
+	void Start () {
+		AddSelectables();		
 	}
+	
+	void Update () {
 
+	}
+	
+	public List<GameObject> Selectable = new List<GameObject>(); 
+	
+	void AddSelectables() {
+		if(Application.loadedLevelName == "Scene1") {
+			// Add Ship object to selectable list
+			GameObject PlayerShip = GameObject.Find("Ship");
+			Selectable.Add(PlayerShip); 
+			print("Added " + PlayerShip);
+		}
+	}
+	
     /* For Unit Selection:
      * 
      * The other (and probably better) way is to keep a list of all selectable units (in some kind of gamemanager) and just transform the positions of all units into screenspace. 

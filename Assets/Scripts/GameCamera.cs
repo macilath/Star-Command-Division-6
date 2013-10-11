@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameCamera : MonoBehaviour {
 
-    private Camera camera;
+    public Camera camera;
 	public float moveSpeed = 0.2f;
 	
 	void Start()
