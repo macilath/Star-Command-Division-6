@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour, UnitController {
 	
 	void Update () {	
 		Vector3 shipPosition = Camera.main.WorldToScreenPoint(playerShip.transform.position);
+		
+		Debug.Log(string.Format("({0}, {1}, {2})",shipPosition.x, shipPosition.y, shipPosition.z));
 
         if (Input.GetMouseButtonDown(0)) {
             if (isSelected == false) {
