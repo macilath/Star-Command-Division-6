@@ -56,7 +56,7 @@ public class GameCamera : MonoBehaviour {
         }
         while(y_pos < -bounds)
         {
-            x_pos = camera.transform.position.x;
+            y_pos = camera.transform.position.y;
             camera.transform.Translate(new Vector3(0, -bounds - y_pos, 0));
         }
 
