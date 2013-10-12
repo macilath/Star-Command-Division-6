@@ -60,17 +60,12 @@ public class PlayerController : MonoBehaviour, UnitController {
         {
             targetDest = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             print("Orders: GOTO " + targetDest);
-            // Later we need to detect if there is an enemy at the coordinates we just chose
-            // If so, follow that enemy and attack (since enemies will continue to move)
-            //Vector3 destination = Input.mousePosition;
-            //transform.position = Vector3.Lerp(shipPosition, destination, 0.2f);
-            //destination.z = 0;
-            //transform.position = destination;
         }
     }
 
     void move(Vector3 shipPosition)
     {
+        // Move ship
         Vector3 forceVector = (targetDest - shipPosition);
         forceVector.Normalize();
         Vector3 shipVelocity = playerShip.rigidbody.velocity;
