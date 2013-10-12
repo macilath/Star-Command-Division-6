@@ -14,26 +14,6 @@ public class GameCamera : MonoBehaviour {
 	
 	void FixedUpdate()
 	{
-		/*if(camera.transform.position.x < 10 && Input.GetAxisRaw("Horizontal") > 0)
-		{
-			camera.transform.Translate(new Vector3((Input.GetAxisRaw("Horizontal") * moveSpeed), 0, 0));
-		}
-		
-		if(camera.transform.position.x > - 10 && Input.GetAxisRaw("Horizontal") < 0)
-		{
-			camera.transform.Translate(new Vector3((Input.GetAxisRaw("Horizontal") * moveSpeed), 0, 0));
-		}
-		
-		if(camera.transform.position.y < 10 && Input.GetAxisRaw("Vertical") > 0)
-		{
-			camera.transform.Translate(new Vector3(0, (Input.GetAxisRaw("Vertical") * moveSpeed), 0));
-		}
-		
-		if(camera.transform.position.y > - 10 && Input.GetAxisRaw("Vertical") < 0)
-		{
-			camera.transform.Translate(new Vector3(0, (Input.GetAxisRaw("Vertical") * moveSpeed), 0));
-		}*/
-
         float x_pos = camera.transform.position.x;
         float y_pos = camera.transform.position.y;
         float h_axis = Input.GetAxisRaw("Horizontal");
