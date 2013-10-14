@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour, UnitController {
         if (Input.GetMouseButtonDown(1) && isSelected == true)
         {
             targetDest = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            targetDest.z = 0.0f;
             print("Orders: GOTO " + targetDest);
         }
     }
@@ -70,12 +71,24 @@ public class PlayerController : MonoBehaviour, UnitController {
         forceVector.Normalize();
         Vector3 shipVelocity = playerShip.rigidbody.velocity;
 
+        Rect boundingRect = new Rect(shipPosition.x, shipPosition.y, 2, 2);
+        Debug.Log(shipPosition - targetDest);
+        if (boundingRect.Contains(targetDest))
+        {
+            //playerShip.rigidbody.AddRelativeForce(-shipVelocity * playerShip.rigidbody.mass);
+            playerShip.rigidbody.velocity = new Vector3(0, 0, 0);    //rigidbody.velocity = new Vector3(0, 0, 0);
+            Debug.Log("Destination Reached.");
+            return;
+        }
+        /*
         if (targetDest == shipPosition)
         {
+           
             playerShip.rigidbody.velocity = new Vector3(0, 0, 0);
             Debug.Log("Destination Reached.");
             return;
         }
+         * */
 
         if (shipVelocity.sqrMagnitude < shipSpeed)
         {
