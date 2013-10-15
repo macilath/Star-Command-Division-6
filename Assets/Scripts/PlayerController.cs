@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour, UnitController {
 	public static GameManager manager; 
 	public int shipSpeed = 10;
 	public int shipAccel = 3;
-    public int shipSize = 3;
+    public float shipSizeH = 3f;
+    public float shipSizeW = 3f;
     public Vector3 targetDest;
 
 	void Start () {
@@ -72,7 +73,7 @@ public class PlayerController : MonoBehaviour, UnitController {
         forceVector.Normalize();
         Vector3 shipVelocity = playerShip.rigidbody.velocity;
 
-        Rect boundingRect = new Rect(shipPosition.x - (shipSize/2), shipPosition.y - (shipSize/2), 2, 2);
+        Rect boundingRect = new Rect(shipPosition.x - (shipSizeW/2), shipPosition.y - (shipSizeH/2), shipSizeW, shipSizeH);
         Debug.Log(shipPosition - targetDest);
         if (boundingRect.Contains(targetDest))
         {
