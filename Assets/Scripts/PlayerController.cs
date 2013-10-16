@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour, UnitController {
     public float shipSizeH = 3f;
     public float shipSizeW = 3f;
     public Vector3 targetDest;
+    private bool hasTarget = false;
 
 	void Start () {
 		// For level 1 we are just looking for 1 ship
@@ -60,9 +61,20 @@ public class PlayerController : MonoBehaviour, UnitController {
         // Assign movement orders to ship
         if (Input.GetMouseButtonDown(1) && isSelected == true)
         {
-            targetDest = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            targetDest.z = 0.0f;
-            print("Orders: GOTO " + targetDest);
+            if (hasTarget == false)
+            {
+                hasTarget = true;
+                targetDest = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                targetDest.z = 0.0f;
+                print("Orders: GOTO " + targetDest);
+            }
+            else if (hasTarget == true && Input.GetMouseButtonDown(1) && isSelected == true)
+            {
+                playerShip.rigidbody.velocity = new Vector3(0, 0, 0);
+                targetDest = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                targetDest.z = 0.0f;
+                Debug.Log("New Orders: GOTO " + targetDest);
+            }
         }
     }
 
@@ -80,6 +92,7 @@ public class PlayerController : MonoBehaviour, UnitController {
             //playerShip.rigidbody.AddRelativeForce(-shipVelocity * playerShip.rigidbody.mass);
             playerShip.rigidbody.velocity = new Vector3(0, 0, 0);    //rigidbody.velocity = new Vector3(0, 0, 0);
             Debug.Log("Destination Reached.");
+            hasTarget = false;
             return;
         }
         /*
