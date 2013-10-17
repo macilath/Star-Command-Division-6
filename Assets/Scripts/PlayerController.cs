@@ -50,14 +50,14 @@ public class PlayerController : MonoBehaviour, UnitController {
         {
             if (isSelected == false)
             {
-                print("Mouse0 detected");
-                print(Input.mousePosition);
+                Debug.Log("Mouse0 detected");
+                Debug.Log(Input.mousePosition);
                 // Create our bounding rectangle - the size of which still needs some testing/debugging
                 Rect boundingRect = new Rect(Input.mousePosition.x - 75, Input.mousePosition.y - 75, 150, 150);
                 // See if our Ship object is in the bounding rectangle
                 if (boundingRect.Contains(shipPosition))
                 {
-                    print("Found object");
+                    Debug.Log("Found object");
                     isSelected = true;
                 }
             }
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour, UnitController {
                 hasTarget = true;
                 targetDest = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 targetDest.z = 0.0f;
-                print("Orders: GOTO " + targetDest);
+                Debug.Log("Orders: GOTO " + targetDest);
             }
             else if (hasTarget == true && Input.GetMouseButtonDown(1) && isSelected == true)
             {
@@ -112,11 +112,11 @@ public class PlayerController : MonoBehaviour, UnitController {
             targetAngle += 360;
         }
         float rotationAngle = targetAngle - shipAngle;
-        Debug.Log("Rotate from " + shipAngle + " to " + targetAngle);
-        Debug.Log(rotationAngle + " degrees");
-        playerShip.transform.rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
+        //Debug.Log("Rotate from " + shipAngle + " to " + targetAngle);
+        //Debug.Log(rotationAngle + " degrees");
+        playerShip.transform.rotation = Quaternion.AngleAxis(targetAngle, Vector3.forward);
         facingTarget = true;
-        //TODO: fix rotation direction
+        //TODO: make rotation fluid instead of instant
     }
 
     void move(Vector3 shipPosition)
