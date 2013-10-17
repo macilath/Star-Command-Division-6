@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour, UnitController {
 	public int shipAccel = 3;
     public float shipSizeH = 3f;
     public float shipSizeW = 3f;
+    public float shipRotSpeed = 1f;
     public Vector3 targetDest;
     private bool hasTarget = false;
 
@@ -28,10 +29,15 @@ public class PlayerController : MonoBehaviour, UnitController {
 	
 	void Update () {
         Vector3 shipPosition = playerShip.transform.position;
+        Vector3 shipRotation = playerShip.transform.rotation;
 		Vector3 shipPositionScreen = Camera.main.WorldToScreenPoint(shipPosition);
         
         getShipSelected(shipPositionScreen);
         setTarget();
+        if (hasTarget)
+        {
+            rotate(shipRotation, shipPosition);
+        }
         move(shipPosition);
 	}
 
@@ -78,6 +84,31 @@ public class PlayerController : MonoBehaviour, UnitController {
         }
     }
 
+    void rotate(Vector3 shipRotation, Vector3 shipPosition)
+    {
+        shipRotation.Normalize();
+        Vector3 toTarget = targetDest - shipPosition;
+        toTarget.Normalize();
+        float angle = Vector3.Angle(shipRotation, toTarget);
+        if (angle == 0)
+        {
+            playerShip.rigidbody.angularVelocity = 0;
+            return;
+        }
+        else if (angle <  0)
+        {
+            Vector3 torque = new Vector3(0, 0, -1);
+            playerShip.rigidbody.addTorque(torque * shipRotSpeed);
+            return;
+        }
+        else
+        {
+            Vector3 torque = new Vector3(0, 0, 1);
+            playerShip.rigidbody.addTorque(torque * shipRotSpeed);
+            return;
+        }
+    }
+
     void move(Vector3 shipPosition)
     {
         // Move ship
@@ -87,7 +118,7 @@ public class PlayerController : MonoBehaviour, UnitController {
 
         Rect boundingRect = new Rect(shipPosition.x - (shipSizeW/2), shipPosition.y - (shipSizeH/2), shipSizeW, shipSizeH);
         Debug.Log(shipPosition - targetDest);
-        if (boundingRect.Contains(targetDest))
+        if (hasTarget && boundingRect.Contains(targetDest))
         {
             //playerShip.rigidbody.AddRelativeForce(-shipVelocity * playerShip.rigidbody.mass);
             playerShip.rigidbody.velocity = new Vector3(0, 0, 0);    //rigidbody.velocity = new Vector3(0, 0, 0);
@@ -106,13 +137,26 @@ public class PlayerController : MonoBehaviour, UnitController {
         */
 
         //TODO: change this to compare vectors using cosine to ensure ship is always trying to move to targetDest
-        if (shipVelocity.sqrMagnitude < shipSpeed)
+        if (hasTarget)
         {
-            forceVector = shipVelocity + (forceVector * shipAccel);
+            if (shipVelocity.sqrMagnitude < shipSpeed)
+            {
+                forceVector = shipVelocity + (forceVector * shipAccel);
+            }
+            else
+            {
+                forceVector = new Vector3(0, 0, 0);
+            }
         }
         else
         {
-            forceVector = new Vector3(0, 0, 0);
+            if (shipVelocity.sqrMagnitude > 0)
+            {
+                forceVector = new Vector3(0, -1, 0);
+                forceVector *= shipAccel;
+                playerShip.rigidbody.AddRelativeForce(forceVector);
+                return;
+            }
         }
 
         playerShip.rigidbody.AddForce(forceVector);
