@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour, UnitController {
 
 	void Start () {
 		// For level 1 we are just looking for 1 ship
-		playerShip = GameObject.Find("Ship");
+		playerShip = this.gameObject;
         targetDest = playerShip.transform.position;
 	}
 	
