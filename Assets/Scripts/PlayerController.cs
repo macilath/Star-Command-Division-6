@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour, UnitController {
     public Vector3 targetDest;
     private bool hasTarget = false;
     private bool facingTarget = true;
+    private bool targetIsEnemy = false;
 
 	void Start () {
 		// For level 1 we are just looking for 1 ship

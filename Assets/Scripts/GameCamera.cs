@@ -10,6 +10,7 @@ public class GameCamera : MonoBehaviour {
     private GameObject dust;
     private int nebulaMoveFraction = 4;
     private int dustMoveFraction = 2;
+    private int edgeSensitivity = 5;
 	
 	void Start()
 	{
@@ -50,9 +51,24 @@ public class GameCamera : MonoBehaviour {
             camera.transform.Translate(movement);
         }
 
-        if(h_axis != 0)
+        mouse_x = Input.mousePosition.x;
+        mouse_y = Input.mousePosition.y;
+        if(h_axis != 0 || mouse_x >= Screen.width - edgeSensitivity || mouse_x <= edgeSensitivity)
         {
-            Vector3 movement = new Vector3((Input.GetAxisRaw("Horizontal") * moveSpeed), 0, 0);
+            Vector3 movement;
+            if(h_axis != 0)
+            {
+                movement = new Vector3((Input.GetAxisRaw("Horizontal") * moveSpeed), 0, 0);
+            }
+            else if (mouse_x <= edgeSensitivity)
+            {
+                movement = new Vector3(-moveSpeed, 0, 0);
+            }
+            else
+            {
+                movement = new Vector3(moveSpeed, 0, 0);
+            }
+            
             camera.transform.Translate(movement);
             if(x_pos > -bounds && x_pos < bounds)
             {
@@ -60,9 +76,22 @@ public class GameCamera : MonoBehaviour {
                 dust.transform.Translate(movement / dustMoveFraction);
             }
         }
-        if(v_axis != 0)
+        if(v_axis != 0 || mouse_y >= Screen.height - edgeSensitivity || mouse_y <= edgeSensitivity)
         {
-            Vector3 movement = new Vector3(0, (Input.GetAxisRaw("Vertical") * moveSpeed), 0);
+            Vector3 movement;
+            if(v_axis != 0)
+            {
+                movement = new Vector3(0, (Input.GetAxisRaw("Vertical") * moveSpeed), 0);
+            }
+            else if (mouse_y <= edgeSensitivity)
+            {
+                movement = new Vector3(0, -moveSpeed, 0);
+            }
+            else
+            {
+                movement = new Vector3(0, moveSpeed, 0);
+            }
+
             camera.transform.Translate(movement);
             if(y_pos > -bounds && y_pos < bounds)
             {
