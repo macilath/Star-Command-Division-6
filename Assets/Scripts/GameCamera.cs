@@ -51,8 +51,8 @@ public class GameCamera : MonoBehaviour {
             camera.transform.Translate(movement);
         }
 
-        mouse_x = Input.mousePosition.x;
-        mouse_y = Input.mousePosition.y;
+        float mouse_x = Input.mousePosition.x;
+        float mouse_y = Input.mousePosition.y;
         if(h_axis != 0 || mouse_x >= Screen.width - edgeSensitivity || mouse_x <= edgeSensitivity)
         {
             Vector3 movement;
