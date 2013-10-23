@@ -2,28 +2,28 @@
 using System.Collections;
 using System;
 
-public interface UnitController
-{
-    //public GameObject playerShip;
-    //private bool isSelected;
-    //public static GameManager manager; 
-    //public int shipSpeed;
-    //public int shipAccel;
-    //public float shipSizeH;
-    //public float shipSizeW;
-    //public float shipRotSpeed;
-    //public Vector3 targetDest;
-    //private bool hasTarget;
-    //private bool facingTarget;
-    //private bool targetIsEnemy;
+public abstract class UnitController : MonoBehaviour {
 
-    //void getShipSelected(Vector3 shipPosition);
+    public GameObject playerShip;
+    protected bool isSelected;
+    public static GameManager manager; 
+    public int shipSpeed;
+    public int shipAccel;
+    public float shipSizeH;
+    public float shipSizeW;
+    public float shipRotSpeed;
+    public Vector3 targetDest;
+    protected bool hasTarget;
+    protected bool facingTarget;
+    protected bool targetIsEnemy;
 
-    //void setTarget();
+    public abstract void getShipSelected(Vector3 shipPosition);
 
-    //float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up);
+    public abstract void setTarget();
 
-    //void rotate(Vector3 shipPosition);
+    public abstract float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up);
 
-    //void move(Vector3 shipPosition);
+    public abstract void rotate(Vector3 shipPosition);
+
+    public abstract void move(Vector3 shipPosition);
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameCamera : MonoBehaviour, UnitController {
+public class GameCamera : MonoBehaviour {
 
     public Camera camera;
 	public float moveSpeed;
@@ -18,7 +18,7 @@ public class GameCamera : MonoBehaviour, UnitController {
         nebula = GameObject.Find("Nebula");
         dust = GameObject.Find("SpaceDust");
         moveSpeed = 0.2f;
-        bounds = 10;
+        bounds = 30;
         nebulaMoveFraction = 4;
         dustMoveFraction = 2;
         edgeSensitivity = 5;
