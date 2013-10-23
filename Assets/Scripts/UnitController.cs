@@ -2,10 +2,10 @@
 using System.Collections;
 using System;
 
-public abstract UnitController{
+public abstract class UnitController : MonoBehaviour {
 
     public GameObject playerShip;
-    private bool isSelected;
+    protected bool isSelected;
     public static GameManager manager; 
     public int shipSpeed;
     public int shipAccel;
@@ -13,17 +13,17 @@ public abstract UnitController{
     public float shipSizeW;
     public float shipRotSpeed;
     public Vector3 targetDest;
-    private bool hasTarget;
-    private bool facingTarget;
-    private bool targetIsEnemy;
+    protected bool hasTarget;
+    protected bool facingTarget;
+    protected bool targetIsEnemy;
 
-    void getShipSelected(Vector3 shipPosition);
+    public abstract void getShipSelected(Vector3 shipPosition);
 
-    void setTarget();
+    public abstract void setTarget();
 
-    float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up);
+    public abstract float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up);
 
-    void rotate(Vector3 shipPosition);
+    public abstract void rotate(Vector3 shipPosition);
 
-    void move(Vector3 shipPosition);
+    public abstract void move(Vector3 shipPosition);
 }

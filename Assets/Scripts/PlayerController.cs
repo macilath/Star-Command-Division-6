@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class PlayerController : MonoBehaviour, UnitController {
+public class PlayerController : UnitController {
 
     /*
      * For Player Unit Selection:
@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour, UnitController {
      * Then we wait on right click (orders) to assign the unit's destination, or if another left click is detected we deselect the unit
      */
 	//public Transform target; 
-	public GameObject playerShip;
+	/*public GameObject playerShip;
 	private bool isSelected = false;
 	public static GameManager manager; 
 	public int shipSpeed = 10;
@@ -21,12 +21,21 @@ public class PlayerController : MonoBehaviour, UnitController {
     public Vector3 targetDest;
     private bool hasTarget = false;
     private bool facingTarget = true;
-    private bool targetIsEnemy = false;
+    private bool targetIsEnemy = false;*/
 
 	void Start () {
 		// For level 1 we are just looking for 1 ship
 		playerShip = this.gameObject;
         targetDest = playerShip.transform.position;
+	    isSelected = false;
+	    shipSpeed = 10;
+	    shipAccel = 3;
+        shipSizeH = 3f;
+        shipSizeW = 3f;
+        shipRotSpeed = 10f;
+        hasTarget = false;
+        facingTarget = true;
+        targetIsEnemy = false;
 	}
 	
 	void Update () {
@@ -45,7 +54,7 @@ public class PlayerController : MonoBehaviour, UnitController {
         }
 	}
 
-    void getShipSelected(Vector3 shipPosition)
+    public override void getShipSelected(Vector3 shipPosition)
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -66,7 +75,7 @@ public class PlayerController : MonoBehaviour, UnitController {
         }
     }
 
-    void setTarget()
+    public override void setTarget()
     {
         // Assign movement orders to ship
         if (Input.GetMouseButtonDown(1) && isSelected == true)
@@ -90,7 +99,8 @@ public class PlayerController : MonoBehaviour, UnitController {
         }
     }
 
-    float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up) {
+    public override float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)
+    {
         Vector3 perp = Vector3.Cross(fwd, targetDir);
         float dir = Vector3.Dot(perp, up);
         
@@ -103,7 +113,7 @@ public class PlayerController : MonoBehaviour, UnitController {
         }
     }
 
-    void rotate(Vector3 shipPosition)
+    public override void rotate(Vector3 shipPosition)
     {
         Vector3 toTarget = targetDest - shipPosition;
         float shipAngle = playerShip.transform.rotation.eulerAngles.z;
@@ -120,7 +130,7 @@ public class PlayerController : MonoBehaviour, UnitController {
         //TODO: make rotation fluid instead of instant
     }
 
-    void move(Vector3 shipPosition)
+    public override void move(Vector3 shipPosition)
     {
         // Move ship
         Vector3 forceVector = (targetDest - shipPosition);
