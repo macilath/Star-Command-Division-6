@@ -65,7 +65,7 @@ public class PlayerController : UnitController {
     public override void getShipSelected(Vector3 shipPosition)
     {
         Vector3 camPos = Camera.main.WorldToScreenPoint(shipPosition);
-        if (renderer.isVisible && Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))
         {
             //camPos.y = Mouse.InverseMouseY(camPos.y);
 

@@ -5,7 +5,8 @@ public class GameCamera : MonoBehaviour {
 
     public Camera camera;
 	public float moveSpeed;
-    public float bounds;
+    public float y_bounds;
+    public float x_bounds;
     private GameObject nebula;
     private GameObject dust;
     private int nebulaMoveFraction;
@@ -18,7 +19,8 @@ public class GameCamera : MonoBehaviour {
         nebula = GameObject.Find("Nebula");
         dust = GameObject.Find("SpaceDust");
         moveSpeed = 0.2f;
-        bounds = 30;
+        y_bounds = 90;
+        x_bounds = 30;
         nebulaMoveFraction = 4;
         dustMoveFraction = 2;
         edgeSensitivity = 5;
@@ -31,28 +33,28 @@ public class GameCamera : MonoBehaviour {
         float h_axis = Input.GetAxisRaw("Horizontal");
         float v_axis = Input.GetAxisRaw("Vertical");
 
-        while(x_pos > bounds)
+        while(x_pos > x_bounds)
         {
             x_pos = camera.transform.position.x;
-            Vector3 movement = new Vector3(bounds - x_pos, 0, 0);
+            Vector3 movement = new Vector3(x_bounds - x_pos, 0, 0);
             camera.transform.Translate(movement);
         }
-        while(x_pos < -bounds)
+        while(x_pos < -x_bounds)
         {
             x_pos = camera.transform.position.x;
-            Vector3 movement = new Vector3(-bounds - x_pos, 0, 0);
+            Vector3 movement = new Vector3(-x_bounds - x_pos, 0, 0);
             camera.transform.Translate(movement);
         }
-        while(y_pos > bounds)
+        while(y_pos > y_bounds)
         {
             y_pos = camera.transform.position.y;
-            Vector3 movement = new Vector3(0, bounds - y_pos, 0);
+            Vector3 movement = new Vector3(0, y_bounds - y_pos, 0);
             camera.transform.Translate(movement);
         }
-        while(y_pos < -bounds)
+        while(y_pos < -y_bounds)
         {
             y_pos = camera.transform.position.y;
-            Vector3 movement = new Vector3(0, -bounds - y_pos, 0);
+            Vector3 movement = new Vector3(0, -y_bounds - y_pos, 0);
             camera.transform.Translate(movement);
         }
 
@@ -75,7 +77,7 @@ public class GameCamera : MonoBehaviour {
             }
             
             camera.transform.Translate(movement);
-            if(x_pos > -bounds && x_pos < bounds)
+            if(x_pos > -x_bounds && x_pos < x_bounds)
             {
                 nebula.transform.Translate(movement / nebulaMoveFraction);
                 dust.transform.Translate(movement / dustMoveFraction);
@@ -98,7 +100,7 @@ public class GameCamera : MonoBehaviour {
             }
 
             camera.transform.Translate(movement);
-            if(y_pos > -bounds && y_pos < bounds)
+            if(y_pos > -y_bounds && y_pos < y_bounds)
             {
                 nebula.transform.Translate(movement / nebulaMoveFraction);
                 dust.transform.Translate(movement / dustMoveFraction);
