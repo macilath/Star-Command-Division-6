@@ -40,27 +40,9 @@ public class PlayerController : UnitController {
 	}
 	
 	void Update () {
-        Vector3 shipPosition = this.transform.position;
+        Vector3 shipPosition = playerShip.transform.position;
 
-        if (renderer.isVisible && Input.GetMouseButtonUp(0))
-        {
-            Vector3 camPos = Camera.main.WorldToScreenPoint(transform.position);
-            camPos.y = Mouse.InverseMouseY(camPos.y);
-
-            // if the user simply clicks then we will want to be able to select that ship
-            Rect boundingRect = new Rect(Input.mousePosition.x - 75, Input.mousePosition.y - 75, 150, 150);
-            
-            // If the user simply clicks and doesn't drag, the selection box will be smaller than this
-            if (Mouse.selection.width < 150 && Mouse.selection.height < 150)
-            {
-                isSelected = boundingRect.Contains(camPos);
-            }
-            else
-            {
-                isSelected = Mouse.selection.Contains(camPos);
-            }
-        }
-
+        getShipSelected(shipPosition);
         setTarget();
         if (hasTarget && !facingTarget)
         {
@@ -82,7 +64,42 @@ public class PlayerController : UnitController {
 
     public override void getShipSelected(Vector3 shipPosition)
     {
-        if (Input.GetMouseButtonDown(0))
+        Vector3 camPos = Camera.main.WorldToScreenPoint(shipPosition);
+        if (renderer.isVisible && Input.GetMouseButtonUp(0))
+        {
+            //camPos.y = Mouse.InverseMouseY(camPos.y);
+
+            // if the user simply clicks then we will want to be able to select that ship
+            // If the user simply clicks and doesn't drag, the selection box will be smaller than this
+            if (Mouse.selection.width <= 10 && Mouse.selection.height <= 10)
+            {
+                Rect boundingRect = new Rect(Input.mousePosition.x - 75, Input.mousePosition.y - 75, 150, 150);
+                if (boundingRect.Contains(camPos))
+                {
+                    Debug.Log("Found object: " + this.name);
+                    isSelected = true;
+                }
+                else
+                {
+                    Debug.Log("Deselected: " + this.name);
+                    isSelected = false;
+                }
+            }
+            else
+            {
+                if (Mouse.selection.Contains(camPos))
+                {
+                    Debug.Log("Found object: " + this.name);
+                    isSelected = true;
+                }
+                else
+                {
+                    Debug.Log("Deselected: " + this.name);
+                    isSelected = false;
+                }
+            }
+        }
+        /*if (Input.GetMouseButtonDown(0))
         {
             if (isSelected == false)
             {
@@ -91,14 +108,14 @@ public class PlayerController : UnitController {
                 // Create our bounding rectangle - the size of which still needs some testing/debugging
                 Rect boundingRect = new Rect(Input.mousePosition.x - 75, Input.mousePosition.y - 75, 150, 150);
                 // See if our Ship object is in the bounding rectangle
-                if (boundingRect.Contains(shipPosition))
+                if (boundingRect.Contains(camPos))
                 {
                     Debug.Log("Found object");
                     isSelected = true;
                 }
             }
             else isSelected = false; // Clear out previous selection
-        }
+        }*/
     }
 
     public override void setTarget()
