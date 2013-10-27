@@ -12,6 +12,7 @@ public class WeaponController : MonoBehaviour {
     private float weaponSizeW;
     private bool isCollided;
     private bool hasTarget;
+    private string enemyTag;
 
     private GameObject weapon;
     private GameObject target;
@@ -38,14 +39,15 @@ public class WeaponController : MonoBehaviour {
 	    	}
 	    	else
 	    	{
-
+	    		doDamage();
 	    	}
 	    }
     }
 
-    public void setTarget(GameObject t)
+    public void setTarget(GameObject t, string tag)
     {
     	target = t;
+    	enemyTag = tag;
     	hasTarget = true;
     }
 
@@ -58,6 +60,19 @@ public class WeaponController : MonoBehaviour {
         	Debug.Log("Shot collided with target.");
         	isCollided = true;
         }
+    }
+
+    private void doDamage()
+    {
+    	if(target.tag == enemyTag) //target is an opposing ship
+    	{
+			((UnitController)((target).GetComponent("UnitController"))).takeDamage(weaponDamage);
+    		Destroy(this.gameObject);
+    	}
+    	else if(target.tag == "Asteroid")
+    	{
+
+    	}
     }
 
     private void move()

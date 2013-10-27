@@ -2,8 +2,9 @@
 using System.Collections;
 
 public class Asteroid : MonoBehaviour {
-	
-	public GameObject Explosion;
+
+	private const int asteroidDamage = 50;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -18,8 +19,7 @@ public class Asteroid : MonoBehaviour {
 	{
 		if(other.gameObject.tag == "Ship" || other.gameObject.tag == "EnemyShip")
 		{
-			Instantiate(Explosion, other.transform.position, Quaternion.identity);
-			Destroy(other.gameObject);
+			((UnitController)((other.gameObject).GetComponent("UnitController"))).takeDamage(asteroidDamage);
 		}
     }
 }
