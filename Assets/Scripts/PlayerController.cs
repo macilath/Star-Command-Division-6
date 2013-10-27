@@ -29,7 +29,7 @@ public class PlayerController : UnitController {
 		playerShip = this.gameObject;
         targetDest = playerShip.transform.position;
 	    isSelected = false;
-	    shipSpeed = 10;
+	    shipSpeed = 30;
 	    shipAccel = 3;
         shipSizeH = 3f;
         shipSizeW = 3f;
