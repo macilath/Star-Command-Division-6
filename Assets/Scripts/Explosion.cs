@@ -7,6 +7,7 @@ public class Explosion : MonoBehaviour {
 	private float startTime;
 	// Use this for initialization
 	void Start () {
+		//Debug.Log("I'm attached to "+this.gameObject.transform.name);
 		startTime = Time.time;
 	}
 	

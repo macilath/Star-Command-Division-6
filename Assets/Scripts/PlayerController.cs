@@ -29,17 +29,20 @@ public class PlayerController : UnitController {
 		playerShip = this.gameObject;
         targetDest = playerShip.transform.position;
 	    isSelected = false;
-	    shipSpeed = 10;
+	    shipSpeed = 30;
 	    shipAccel = 3;
         shipSizeH = 3f;
         shipSizeW = 3f;
         shipRotSpeed = 10f;
+        shipHealth = 100;
+        maxHealth = 100;
         hasTarget = false;
         facingTarget = true;
         targetIsEnemy = false;
 	}
 	
 	void Update () {
+        checkHealth();
         Vector3 shipPosition = playerShip.transform.position;
 
         getShipSelected(shipPosition);
@@ -62,7 +65,7 @@ public class PlayerController : UnitController {
         }
     }
 
-    public override void getShipSelected(Vector3 shipPosition)
+    protected override void getShipSelected(Vector3 shipPosition)
     {
         Vector3 camPos = Camera.main.WorldToScreenPoint(shipPosition);
         if (Input.GetMouseButtonUp(0))
@@ -99,23 +102,6 @@ public class PlayerController : UnitController {
                 }
             }
         }
-        /*if (Input.GetMouseButtonDown(0))
-        {
-            if (isSelected == false)
-            {
-                Debug.Log("Mouse0 detected");
-                Debug.Log(Input.mousePosition);
-                // Create our bounding rectangle - the size of which still needs some testing/debugging
-                Rect boundingRect = new Rect(Input.mousePosition.x - 75, Input.mousePosition.y - 75, 150, 150);
-                // See if our Ship object is in the bounding rectangle
-                if (boundingRect.Contains(camPos))
-                {
-                    Debug.Log("Found object");
-                    isSelected = true;
-                }
-            }
-            else isSelected = false; // Clear out previous selection
-        }*/
     }
 
     public override void setTarget()
@@ -142,7 +128,7 @@ public class PlayerController : UnitController {
         }
     }
 
-    public override float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)
+    protected override float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)
     {
         Vector3 perp = Vector3.Cross(fwd, targetDir);
         float dir = Vector3.Dot(perp, up);
@@ -156,7 +142,7 @@ public class PlayerController : UnitController {
         }
     }
 
-    public override void rotate(Vector3 shipPosition)
+    protected override void rotate(Vector3 shipPosition)
     {
         Vector3 toTarget = targetDest - shipPosition;
         float shipAngle = this.transform.rotation.eulerAngles.z;
@@ -173,7 +159,7 @@ public class PlayerController : UnitController {
         //TODO: make rotation fluid instead of instant
     }
 
-    public override void move(Vector3 shipPosition)
+    protected override void move(Vector3 shipPosition)
     {
         // Move ship
         Vector3 forceVector = (targetDest - shipPosition);
@@ -216,5 +202,26 @@ public class PlayerController : UnitController {
         }*/
 
         this.rigidbody.AddForce(forceVector);
+    }
+
+    protected override void checkHealth()
+    {
+        if(shipHealth <= 0)
+        {
+            GameObject Explosion = (GameObject)Resources.Load("ShipExplode1");
+            Instantiate(Explosion, playerShip.transform.position, Quaternion.identity);
+            Destroy(playerShip);
+        }
+    }
+
+    public override void takeDamage(int damage)
+    {
+
+        shipHealth -= damage;
+    }
+
+    protected override void fireWeapons()
+    {
+
     }
 }
