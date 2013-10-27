@@ -4,7 +4,6 @@ using System;
 
 public abstract class UnitController : MonoBehaviour {
 
-    public GameObject Explosion;
     protected GameObject playerShip;
     protected bool isSelected;
     public static GameManager manager; 

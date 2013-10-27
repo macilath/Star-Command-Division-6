@@ -24,9 +24,6 @@ public class PlayerController : UnitController {
     private bool facingTarget = true;
     private bool targetIsEnemy = false;*/
 
-
-    public GameObject Explosion;
-
 	void Start () {
 		// For level 1 we are just looking for 1 ship
 		playerShip = this.gameObject;
@@ -211,6 +208,7 @@ public class PlayerController : UnitController {
     {
         if(shipHealth <= 0)
         {
+            GameObject Explosion = (GameObject)Resources.Load("ShipExplode1");
             Instantiate(Explosion, playerShip.transform.position, Quaternion.identity);
             Destroy(playerShip);
         }
