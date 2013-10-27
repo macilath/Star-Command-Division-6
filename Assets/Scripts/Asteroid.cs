@@ -16,7 +16,7 @@ public class Asteroid : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision other)
 	{
-		if(other.gameObject.tag == "Ship")
+		if(other.gameObject.tag == "Ship" || other.gameObject.tag == "EnemyShip")
 		{
 			Instantiate(Explosion, other.transform.position, Quaternion.identity);
 			Destroy(other.gameObject);
