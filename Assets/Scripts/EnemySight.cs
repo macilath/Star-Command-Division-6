@@ -14,7 +14,7 @@ public class EnemySight : MonoBehaviour
 
     void Start()
     {
-        transform.localScale = new Vector3(detectionRadius, detectionRadius, 1);
+        detectionRadius = transform.localScale.x/2;
         playerInSight = false;
     }
 
@@ -31,9 +31,9 @@ public class EnemySight : MonoBehaviour
             {
                 RaycastHit hit;
 
-                if (Physics.Raycast(transform.position, directionFromPlayer.normalized, out hit, detectionRadius/2))
+                if (Physics.Raycast(transform.position, directionFromPlayer.normalized, out hit, detectionRadius))
                 {
-                    Debug.DrawRay(transform.position, directionFromPlayer.normalized * (detectionRadius/2));
+                    Debug.DrawRay(transform.position, directionFromPlayer.normalized * (detectionRadius));
                     // ... and if the raycast hits the player...
                     if (hit.collider.gameObject.tag == "Ship")
                     {
