@@ -5,8 +5,8 @@ public class GameCamera : MonoBehaviour {
 
     public Camera camera;
 	public float moveSpeed;
-    public float y_bounds;
-    public float x_bounds;
+    public static float y_bounds;
+    public static float x_bounds;
     private GameObject nebula;
     private GameObject dust;
     private int nebulaMoveFraction;

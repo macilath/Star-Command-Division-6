@@ -24,10 +24,37 @@ public abstract class UnitController : MonoBehaviour {
     public abstract void setTarget();
 
     public abstract void takeDamage(int damage);
+    
+    protected float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)
+    {
+        Vector3 perp = Vector3.Cross(fwd, targetDir);
+        float dir = Vector3.Dot(perp, up);
+        
+        if (dir > 0f) {
+            return 1f;
+        } else if (dir < 0f) {
+            return -1f;
+        } else {
+            return 0f;
+        }
+    }
 
-    protected abstract float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up);
-
-    protected abstract void rotate(Vector3 shipPosition);
+    protected void rotate(Vector3 shipPosition)
+    {
+        Vector3 toTarget = targetDest - shipPosition;
+        float shipAngle = this.transform.rotation.eulerAngles.z;
+        float targetAngle = Vector3.Angle(Vector3.up, toTarget) * AngleDir(Vector3.up, toTarget, Vector3.forward);
+        if (targetAngle < 0)
+        {
+            targetAngle += 360;
+        }
+        float rotationAngle = targetAngle - shipAngle;
+        //Debug.Log("Rotate from " + shipAngle + " to " + targetAngle);
+        //Debug.Log(rotationAngle + " degrees");
+        this.transform.rotation = Quaternion.AngleAxis(targetAngle, Vector3.forward);
+        facingTarget = true;
+        //TODO: make rotation fluid instead of instant
+    }
 
     protected abstract void move(Vector3 shipPosition);
 
