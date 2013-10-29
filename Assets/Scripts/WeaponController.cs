@@ -19,20 +19,28 @@ public class WeaponController : MonoBehaviour {
     private GameObject parentShip;
 
     void Start () {
-    	weaponDamage = 5;
+    	weaponDamage = 25;
 	    weaponRange = 10;
-	    weaponSpeed = 50;
+	    weaponSpeed = 500;
 	    weaponAccel = 0;
 	    weaponSizeH = 3f;
 	    weaponSizeW = 0.3f;
 	    isCollided = false;
 	    hasTarget = false;
 	    weapon = this.gameObject;
-
-        this.rigidbody.AddRelativeForce((new Vector3(0, -1, 0)) * weaponSpeed);
+        kick();
+        //for debugging, should be determined by firing ship
+        enemyTag = "EnemyShip";
     }
     
     void Update () {
+    }
+
+    private void kick()
+    {
+        Vector3 forceVector = weapon.transform.up * weaponSpeed;
+        Debug.Log("projectile force vector: " + forceVector);
+        weapon.rigidbody.AddForce(forceVector);
     }
 
     public void setTarget(GameObject t, string tag)

@@ -32,16 +32,19 @@ public class PlayerController : UnitController {
         Vector3 shipPosition = playerShip.transform.position;
 
         getShipSelected(shipPosition);
-        setTarget();
-        if (hasTarget && !facingTarget)
+        if (isSelected)
         {
-            rotate(shipPosition);
+            setTarget();
+            if (hasTarget && !facingTarget)
+            {
+                rotate(shipPosition);
+            }
+            if (hasTarget && facingTarget)
+            {
+                move(shipPosition);
+            }
+            checkShoot();
         }
-        if (hasTarget && facingTarget)
-        {
-            move(shipPosition);
-        }
-        checkShoot();
 	}
 
     void OnDrawGizmos()
@@ -179,9 +182,10 @@ public class PlayerController : UnitController {
     {
         Debug.Log("Ship " + playerShip.name + " has fired.");
         GameObject Projectile = (GameObject)Resources.Load("Projectile");
-        GameObject projObject = Instantiate(Projectile, playerShip.transform.position, playerShip.transform.rotation) as GameObject;
-        WeaponController proj = (WeaponController)projObject.GetComponent("WeaponController");
-        proj.setParent(this.gameObject);
+        Vector3 projectile_position = playerShip.transform.position + (playerShip.transform.up * (shipSizeH + 1));
+        Instantiate(Projectile, projectile_position, playerShip.transform.rotation);
+        //WeaponController proj = (WeaponController)projObject.GetComponent("WeaponController");
+        //proj.setParent(this.gameObject);
         //TODO: set the target of the projectile
         //proj.setTarget()
     }
