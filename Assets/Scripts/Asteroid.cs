@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Asteroid : MonoBehaviour {
 
-	private const int asteroidDamage = 50;
+	private const int asteroidDamage = 5;
 
 	// Use this for initialization
 	void Start () {
@@ -15,7 +15,7 @@ public class Asteroid : MonoBehaviour {
 	
 	}
 	
-	void OnCollisionEnter(Collision other)
+	void OnCollisionStay(Collision other)
 	{
 		if(other.gameObject.tag == "Ship" || other.gameObject.tag == "EnemyShip")
 		{

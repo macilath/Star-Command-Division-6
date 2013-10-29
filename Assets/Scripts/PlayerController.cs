@@ -10,20 +10,6 @@ public class PlayerController : UnitController {
      * Then we wait on right click (orders) to assign the unit's destination, or if another left click is detected we deselect the unit
      */
 
-	//public Transform target; 
-	/*public GameObject playerShip;
-	private bool isSelected = false;
-	public static GameManager manager; 
-	public int shipSpeed = 10;
-	public int shipAccel = 3;
-    public float shipSizeH = 3f;
-    public float shipSizeW = 3f;
-    public float shipRotSpeed = 10f;
-    public Vector3 targetDest;
-    private bool hasTarget = false;
-    private bool facingTarget = true;
-    private bool targetIsEnemy = false;*/
-
 	void Start () {
 		// For level 1 we are just looking for 1 ship
 		playerShip = this.gameObject;
@@ -46,14 +32,18 @@ public class PlayerController : UnitController {
         Vector3 shipPosition = playerShip.transform.position;
 
         getShipSelected(shipPosition);
-        setTarget();
-        if (hasTarget && !facingTarget)
+        if (isSelected)
         {
-            rotate(shipPosition);
-        }
-        if (hasTarget && facingTarget)
-        {
-            move(shipPosition);
+            setTarget();
+            if (hasTarget && !facingTarget)
+            {
+                rotate(shipPosition);
+            }
+            if (hasTarget && facingTarget)
+            {
+                move(shipPosition);
+            }
+            checkShoot();
         }
 	}
 
@@ -84,7 +74,6 @@ public class PlayerController : UnitController {
                 }
                 else
                 {
-                    Debug.Log("Deselected: " + this.name);
                     isSelected = false;
                 }
             }
@@ -97,13 +86,13 @@ public class PlayerController : UnitController {
                 }
                 else
                 {
-                    Debug.Log("Deselected: " + this.name);
                     isSelected = false;
                 }
             }
         }
     }
 
+    //TODO: have ship decide whether target is an object to fire on or just a destination
     public override void setTarget()
     {
         // Assign movement orders to ship
@@ -126,37 +115,6 @@ public class PlayerController : UnitController {
             this.rigidbody.angularVelocity = Vector3.zero;
             facingTarget = false;
         }
-    }
-
-    protected override float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)
-    {
-        Vector3 perp = Vector3.Cross(fwd, targetDir);
-        float dir = Vector3.Dot(perp, up);
-        
-        if (dir > 0f) {
-            return 1f;
-        } else if (dir < 0f) {
-            return -1f;
-        } else {
-            return 0f;
-        }
-    }
-
-    protected override void rotate(Vector3 shipPosition)
-    {
-        Vector3 toTarget = targetDest - shipPosition;
-        float shipAngle = this.transform.rotation.eulerAngles.z;
-        float targetAngle = Vector3.Angle(Vector3.up, toTarget) * AngleDir(Vector3.up, toTarget, Vector3.forward);
-        if (targetAngle < 0)
-        {
-            targetAngle += 360;
-        }
-        float rotationAngle = targetAngle - shipAngle;
-        //Debug.Log("Rotate from " + shipAngle + " to " + targetAngle);
-        //Debug.Log(rotationAngle + " degrees");
-        this.transform.rotation = Quaternion.AngleAxis(targetAngle, Vector3.forward);
-        facingTarget = true;
-        //TODO: make rotation fluid instead of instant
     }
 
     protected override void move(Vector3 shipPosition)
@@ -222,6 +180,22 @@ public class PlayerController : UnitController {
 
     protected override void fireWeapons()
     {
+        Debug.Log("Ship " + playerShip.name + " has fired.");
+        GameObject Projectile = (GameObject)Resources.Load("Projectile");
+        Vector3 projectile_position = playerShip.transform.position + (playerShip.transform.up * (shipSizeH + 1));
+        Instantiate(Projectile, projectile_position, playerShip.transform.rotation);
+        //WeaponController proj = (WeaponController)projObject.GetComponent("WeaponController");
+        //proj.setParent(this.gameObject);
+        //TODO: set the target of the projectile
+        //proj.setTarget()
+    }
 
+    private void checkShoot()
+    {
+        //temporary, until intelligent firing is in place
+        if(Input.GetKeyDown("space"))
+        {
+            fireWeapons();
+        }
     }
 }

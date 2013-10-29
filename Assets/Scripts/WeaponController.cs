@@ -16,32 +16,31 @@ public class WeaponController : MonoBehaviour {
 
     private GameObject weapon;
     private GameObject target;
+    private GameObject parentShip;
 
     void Start () {
-    	weaponDamage = 5;
+    	weaponDamage = 25;
 	    weaponRange = 10;
-	    weaponSpeed = 50;
+	    weaponSpeed = 500;
 	    weaponAccel = 0;
 	    weaponSizeH = 3f;
 	    weaponSizeW = 0.3f;
 	    isCollided = false;
 	    hasTarget = false;
 	    weapon = this.gameObject;
+        kick();
+        //for debugging, should be determined by firing ship
+        enemyTag = "EnemyShip";
     }
     
     void Update () {
-    	if(hasTarget)
-    	{
-	    	if(!isCollided)
-	    	{
-	    		checkCollision();
-	    		move();
-	    	}
-	    	else
-	    	{
-	    		doDamage();
-	    	}
-	    }
+    }
+
+    private void kick()
+    {
+        Vector3 forceVector = weapon.transform.up * weaponSpeed;
+        Debug.Log("projectile force vector: " + forceVector);
+        weapon.rigidbody.AddForce(forceVector);
     }
 
     public void setTarget(GameObject t, string tag)
@@ -51,32 +50,36 @@ public class WeaponController : MonoBehaviour {
     	hasTarget = true;
     }
 
-    private void checkCollision()
+    public void setParent(GameObject obj)
     {
-    	Vector3 weaponPosition = weapon.transform.position;
-    	Rect boundingRect = new Rect(weaponPosition.x - 8, weaponPosition.y - 75, 16, 150);
-        if (boundingRect.Contains(target.transform.position))
+        parentShip = obj;
+        Debug.Log("Weapon Name: " + weapon.name);
+        Debug.Log("Parent Name: " + parentShip.name);
+        Physics.IgnoreCollision(weapon.collider, parentShip.collider);
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.tag == enemyTag)
         {
-        	Debug.Log("Shot collided with target.");
-        	isCollided = true;
+            ((UnitController)((other.gameObject).GetComponent("UnitController"))).takeDamage(weaponDamage);
         }
+        else if(other.gameObject.tag == "Asteroid")
+        {
+            Vector3 point_of_contact = (other.contacts[0]).point;
+            other.rigidbody.AddForceAtPosition((this.rigidbody.velocity) * 5, point_of_contact);
+        }
+        Destroy(this.gameObject);
     }
 
-    private void doDamage()
+    private void checkBounds()
     {
-    	if(target.tag == enemyTag) //target is an opposing ship
-    	{
-			((UnitController)((target).GetComponent("UnitController"))).takeDamage(weaponDamage);
-    		Destroy(this.gameObject);
-    	}
-    	else if(target.tag == "Asteroid")
-    	{
+        float x_bounds = GameCamera.x_bounds;
+        float y_bounds = GameCamera.y_bounds;
 
-    	}
-    }
-
-    private void move()
-    {
-
+        if(Math.Abs(weapon.transform.position.x) > x_bounds || Math.Abs(weapon.transform.position.y) > y_bounds)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
