@@ -2,16 +2,9 @@
 using System.Collections;
 using System;
 
-public class PlayerController : UnitController {
-
-    /*
-     * For Player Unit Selection:
-     * We can check on mouse click if the rect contains / collides with the game object
-     * Then we wait on right click (orders) to assign the unit's destination, or if another left click is detected we deselect the unit
-     */
+public class EnemyController : UnitController {
 
 	void Start () {
-		// For level 1 we are just looking for 1 ship
 		thisShip = this.gameObject;
         targetDest = thisShip.transform.position;
 	    isSelected = false;

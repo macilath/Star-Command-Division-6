@@ -53,14 +53,18 @@ public class WeaponController : MonoBehaviour {
     public void setParent(GameObject obj)
     {
         parentShip = obj;
-        Debug.Log("Weapon Name: " + weapon.name);
-        Debug.Log("Parent Name: " + parentShip.name);
-        Physics.IgnoreCollision(weapon.collider, parentShip.collider);
+        //Debug.Log("Weapon Name: " + weapon.name);
+        //Debug.Log("Parent Name: " + parentShip.name);
+        //Physics.IgnoreCollision(weapon.collider, parentShip.collider);
     }
 
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.tag == enemyTag)
+        if(other.gameObject == parentShip)
+        {
+            Physics.IgnoreCollision(other.collider, this.collider);
+        }
+        else if(other.gameObject.tag == enemyTag)
         {
             ((UnitController)((other.gameObject).GetComponent("UnitController"))).takeDamage(weaponDamage);
         }
