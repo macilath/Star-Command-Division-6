@@ -198,4 +198,13 @@ public class PlayerController : UnitController {
             fireWeapons();
         }
     }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "SpaceStation")
+        {
+            Debug.Log("Next Level");
+            Application.LoadLevel("Level1");
+        }
+    }
 }
