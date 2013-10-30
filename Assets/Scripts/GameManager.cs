@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
     public List<GameObject> EnemyShips = new List<GameObject>();
 
     public Stopwatch alertStopwatch = new Stopwatch();
-    private int alertWindow = 120000;
+    private int alertWindow = 60000; //in ms, 1 min 
     public int survivingShips = 0; 
 
     void Start()
@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour {
         if (PlayerShips.Count == 0 && Application.loadedLevelName == "Level2") //or we lose special ship
         {
             //Application.LoadLevel("L2Loss");
+			Application.LoadLevel("L1Loss");
         }
     }
 	
