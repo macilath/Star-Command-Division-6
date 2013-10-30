@@ -149,17 +149,25 @@ public class PlayerController : UnitController {
         }
     }
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "SpaceStation")
         {
             manager.survivingShips++;
+            Debug.Log(manager.survivingShips);
             if (manager.survivingShips == manager.PlayerShips.Count)
             {
                 Debug.Log("Next Level");
-                Application.LoadLevel("Level1");
+                Application.LoadLevel("Level2");
             }
 
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "SpaceStation")
+        {
+            manager.survivingShips--;
         }
     }
 }
