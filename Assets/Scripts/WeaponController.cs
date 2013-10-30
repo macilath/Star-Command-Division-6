@@ -75,7 +75,7 @@ public class WeaponController : MonoBehaviour {
     private void checkBounds()
     {
         Vector3 distanceTravelled = weapon.transform.position - initialPosition;
-        if(Vector3.sqrMagnitude(distanceTravelled) > weaponRange)
+        if(distanceTravelled.sqrMagnitude() > weaponRange)
         {
             Destroy(weapon);
         }
