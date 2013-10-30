@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
 
@@ -18,6 +18,18 @@ public abstract class UnitController : MonoBehaviour {
     protected bool hasTarget;
     protected bool facingTarget;
     protected bool targetIsEnemy;
+    protected int fireInterval = 1000;
+    protected Stopwatch stopwatch = new Stopwatch();
+
+    protected bool shipCanFire()
+    {
+        if(stopwatch.ElapsedMilliseconds == 0 || stopwatch.ElapsedMilliseconds >= fireInterval)
+        {
+            stopwatch.Reset();
+            return true;
+        }
+        return false;
+    }
 
     protected abstract void getShipSelected(Vector3 shipPosition);
 
