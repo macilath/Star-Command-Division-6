@@ -1,22 +1,16 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
 
-public class PlayerController : UnitController {
+public class EnemyController : UnitController {
 
-    /*
-     * For Player Unit Selection:
-     * We can check on mouse click if the rect contains / collides with the game object
-     * Then we wait on right click (orders) to assign the unit's destination, or if another left click is detected we deselect the unit
-     */
-
-	void Start () {
-		// For level 1 we are just looking for 1 ship
-		thisShip = this.gameObject;
+    void Start () {
+        // For level 1 we are just looking for 1 ship
+        thisShip = this.gameObject;
         targetDest = thisShip.transform.position;
-	    isSelected = false;
-	    shipSpeed = 30;
-	    shipAccel = 3;
+        isSelected = false;
+        shipSpeed = 30;
+        shipAccel = 3;
         shipSizeH = 3f;
         shipSizeW = 3f;
         shipRotSpeed = 10f;
@@ -25,9 +19,9 @@ public class PlayerController : UnitController {
         hasTarget = false;
         facingTarget = true;
         targetIsEnemy = false;
-	}
-	
-	void Update () {
+    }
+    
+    void Update () {
         checkHealth();
         Vector3 shipPosition = thisShip.transform.position;
 
@@ -45,7 +39,7 @@ public class PlayerController : UnitController {
             }
             checkShoot();
         }
-	}
+    }
 
     void OnDrawGizmos()
     {
@@ -184,10 +178,9 @@ public class PlayerController : UnitController {
         GameObject Projectile = (GameObject)Resources.Load("Projectile");
         Vector3 projectile_position = thisShip.transform.position + (thisShip.transform.up * (shipSizeH + 1));
         GameObject projObject = Instantiate(Projectile, projectile_position, thisShip.transform.rotation) as GameObject;
-
         WeaponController proj = (WeaponController)projObject.GetComponent("WeaponController");
-        proj.setEnemyTag("EnemyShip");
-        //proj.setParent(this.gameObject);
+        proj.setEnemytag("PlayerShip");
+
         //TODO: set the target of the projectile
         //proj.setTarget()
     }
@@ -198,15 +191,6 @@ public class PlayerController : UnitController {
         if(Input.GetKeyDown("space"))
         {
             fireWeapons();
-        }
-    }
-
-    void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.tag == "SpaceStation")
-        {
-            Debug.Log("Next Level");
-            Application.LoadLevel("Level1");
         }
     }
 }

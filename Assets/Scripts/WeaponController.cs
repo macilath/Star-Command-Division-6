@@ -30,7 +30,7 @@ public class WeaponController : MonoBehaviour {
 	    weapon = this.gameObject;
         kick();
         //for debugging, should be determined by firing ship
-        enemyTag = "EnemyShip";
+        //enemyTag = "EnemyShip";
     }
     
     void Update () {
@@ -50,12 +50,9 @@ public class WeaponController : MonoBehaviour {
     	hasTarget = true;
     }
 
-    public void setParent(GameObject obj)
+    public void setEnemyTag(string tag)
     {
-        parentShip = obj;
-        Debug.Log("Weapon Name: " + weapon.name);
-        Debug.Log("Parent Name: " + parentShip.name);
-        Physics.IgnoreCollision(weapon.collider, parentShip.collider);
+        enemyTag = tag;
     }
 
     void OnCollisionEnter(Collision other)

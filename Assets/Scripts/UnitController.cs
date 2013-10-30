@@ -4,7 +4,7 @@ using System;
 
 public abstract class UnitController : MonoBehaviour {
 
-    protected GameObject playerShip;
+    protected GameObject thisShip;
     protected bool isSelected;
     public static GameManager manager; 
     protected int shipSpeed;
