@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
 
-public class PlayerController : UnitController {
+public class EnemyController : UnitController {
 
     /*
      * For Player Unit Selection:
@@ -10,13 +10,13 @@ public class PlayerController : UnitController {
      * Then we wait on right click (orders) to assign the unit's destination, or if another left click is detected we deselect the unit
      */
 
-	void Start () {
-		// For level 1 we are just looking for 1 ship
-		thisShip = this.gameObject;
+    void Start () {
+        // For level 1 we are just looking for 1 ship
+        thisShip = this.gameObject;
         targetDest = thisShip.transform.position;
-	    isSelected = false;
-	    shipSpeed = 30;
-	    shipAccel = 3;
+        isSelected = false;
+        shipSpeed = 30;
+        shipAccel = 3;
         shipSizeH = 3f;
         shipSizeW = 3f;
         shipRotSpeed = 10f;
@@ -25,9 +25,9 @@ public class PlayerController : UnitController {
         hasTarget = false;
         facingTarget = true;
         targetIsEnemy = false;
-	}
-	
-	void Update () {
+    }
+    
+    void Update () {
         checkHealth();
         Vector3 shipPosition = thisShip.transform.position;
 
@@ -45,7 +45,7 @@ public class PlayerController : UnitController {
             }
             checkShoot();
         }
-	}
+    }
 
     void OnDrawGizmos()
     {
