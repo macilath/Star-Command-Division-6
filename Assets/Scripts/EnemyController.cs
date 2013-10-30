@@ -93,6 +93,16 @@ public class EnemyController : UnitController {
         }
     }
 
+    void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.tag == "PlayerShip")
+        {
+            vision.previousSighting = other.gameObject.transform.position;
+            vision.sightingExists = true;
+            setTarget();
+        }
+    }
+
     //TODO: have ship decide whether target is an object to fire on or just a destination
     public override void setTarget()
     {

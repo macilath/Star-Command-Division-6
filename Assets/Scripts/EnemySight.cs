@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemySight : MonoBehaviour
 {
     public float detectionRadius;           // size of detection circle
-    public float fieldOfViewAngle;           // Number of degrees, centred on up, for the enemy see.
+    private float fieldOfViewAngle;           // Number of degrees, centred on up, for the enemy see.
     public bool playerInSight;                      // Whether or not the player is currently sighted.
 
     private float angle;
@@ -17,10 +17,11 @@ public class EnemySight : MonoBehaviour
 
     void Start()
     {
+        fieldOfViewAngle = 45;
         detectionRadius = transform.localScale.x/2;
         playerInSight = false;
         sightingExists = false;
-        previousSighting = new Vector3(-999,-999,-999);
+        previousSighting = transform.position;
     }
 
 
@@ -66,7 +67,10 @@ public class EnemySight : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        sightingExists = true;
-        playerInSight = false;
+        if (playerInSight)
+        {
+            sightingExists = true;
+            playerInSight = false;
+        }
     }
 }
