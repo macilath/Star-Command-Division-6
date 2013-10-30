@@ -4,33 +4,38 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
+    public List<GameObject> PlayerShips = new List<GameObject>();
+    public List<GameObject> EnemyShips = new List<GameObject>();
 	// Use this for initialization
-	void Start () {
-		AddSelectables();		
-	}
-	
-	void Update () {
+    void Start()
+    {
+        AddSelectables();
+    }
 
-	}
-	
-	public List<GameObject> Selectable = new List<GameObject>(); 
+    void Update()
+    {
+        if (PlayerShips.Count == 0 && Application.loadedLevelName == "Level1")
+        {
+            Application.LoadLevel("L1Loss");
+        }
+        if (PlayerShips.Count == 0 && Application.loadedLevelName == "Level2") //or we lose special ship
+        {
+            //Application.LoadLevel("L2Loss");
+        }
+    }
 	
 	void AddSelectables() {
-		if(Application.loadedLevelName == "Scene1") {
+		if(Application.loadedLevelName == "Level1") {
 			// Add Ship object to selectable list
-			GameObject PlayerShip = GameObject.Find("Ship");
-			Selectable.Add(PlayerShip); 
+            GameObject[] PlayerShip = GameObject.FindGameObjectsWithTag("PlayerShip");
+            for (int i = 0; i < PlayerShip.Length; i++)
+            {
+                PlayerShips.Add(PlayerShip[i]);
+            }
+
+            //Selectable.Add(PlayerShip); 
 			print("Added " + PlayerShip);
 		}
 	}
 	
-    /* For Unit Selection:
-     * 
-     * The other (and probably better) way is to keep a list of all selectable units (in some kind of gamemanager) and just transform the positions of all units into screenspace. 
-     * There you can simply use Rect.Contains to test if a unit is inside a rectangle.
-     * (http://answers.unity3d.com/questions/287406/rts-rectangle-selection-system.html)
-     * So here in GameManager we're going to keep an array (or similar structure) of GameObjects that we want to be selectable 
-     * 
-     */
-
 }
