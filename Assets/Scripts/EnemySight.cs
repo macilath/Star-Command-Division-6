@@ -21,7 +21,7 @@ public class EnemySight : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Ship")
+        if (other.gameObject.tag == "PlayerShip")
         {
             // Create a vector from the enemy to the player and store the angle between it and forward.
             directionFromPlayer = other.transform.position - transform.position;
@@ -35,7 +35,7 @@ public class EnemySight : MonoBehaviour
                 {
                     Debug.DrawRay(transform.position, directionFromPlayer.normalized * (detectionRadius));
                     // ... and if the raycast hits the player...
-                    if (hit.collider.gameObject.tag == "Ship")
+                    if (hit.collider.gameObject.tag == "PlayerShip")
                     {
                         // ... the player is in sight.
                         playerInSight = true;
