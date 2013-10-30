@@ -22,7 +22,7 @@ public class WeaponController : MonoBehaviour {
 
     void Start () {
     	weaponDamage = 25;
-	    weaponRange = 10;
+	    weaponRange = 1;
 	    weaponSpeed = 500;
 	    weaponAccel = 0;
 	    weaponSizeH = 3f;
@@ -75,7 +75,7 @@ public class WeaponController : MonoBehaviour {
     private void checkBounds()
     {
         Vector3 distanceTravelled = weapon.transform.position - initialPosition;
-        if(distanceTravelled.sqrMagnitude() > weaponRange)
+        if(distanceTravelled.sqrMagnitude > weaponRange)
         {
             Destroy(weapon);
         }
