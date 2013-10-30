@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
     void Start()
     {
-        AddSelectables();
+        AddShips();
     }
 
     void Update()
@@ -24,17 +24,21 @@ public class GameManager : MonoBehaviour {
         }
     }
 	
-	void AddSelectables() {
+	void AddShips() {
 		if(Application.loadedLevelName == "Level1") {
 			// Add Ship object to selectable list
-            GameObject[] PlayerShip = GameObject.FindGameObjectsWithTag("PlayerShip");
-            for (int i = 0; i < PlayerShip.Length; i++)
+            GameObject[] players = GameObject.FindGameObjectsWithTag("PlayerShip");
+            for (int i = 0; i < players.Length; i++)
             {
-                PlayerShips.Add(PlayerShip[i]);
+                PlayerShips.Add(players[i]);
             }
-
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyShip");
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                EnemyShips.Add(players[i]);
+            }
             //Selectable.Add(PlayerShip); 
-			print("Added " + PlayerShip);
+			
 		}
 	}
 	
