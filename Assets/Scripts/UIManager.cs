@@ -40,7 +40,7 @@ public class UIManager : MonoBehaviour {
         else if (Application.loadedLevelName == "L1Loss")
         {
             // GUI for losing in level 1
-            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 100, 100, 40), "Try Again"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 60, 100, 40), "Try Again"))
             {
                 print("Replay from L1Loss");
                 Application.LoadLevel("Level1");

@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public class GameManager : MonoBehaviour {
 
     public List<GameObject> PlayerShips = new List<GameObject>();
     public List<GameObject> EnemyShips = new List<GameObject>();
-	// Use this for initialization
+
+    public Stopwatch alertStopwatch = new Stopwatch();
+    private int alertWindow = 60000;
+
     void Start()
     {
         AddShips();
@@ -14,6 +18,18 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
+        if (alertStopwatch.ElapsedMilliseconds >= alertWindow) 
+        {
+            if (Application.loadedLevelName != "Level1")
+            {
+                alertStopwatch.Reset();
+            }
+            else
+            {
+                alertStopwatch.Reset();
+                Application.LoadLevel("L1Loss");
+            }
+        }
         if (PlayerShips.Count == 0 && Application.loadedLevelName == "Level1")
         {
             Application.LoadLevel("L1Loss");
@@ -25,7 +41,7 @@ public class GameManager : MonoBehaviour {
     }
 	
 	void AddShips() {
-		if(Application.loadedLevelName == "Level1") {
+		if(Application.loadedLevelName == "Level1" || Application.loadedLevelName == "Level2") {
 			// Add Ship object to selectable list
             GameObject[] players = GameObject.FindGameObjectsWithTag("PlayerShip");
             for (int i = 0; i < players.Length; i++)
@@ -35,7 +51,7 @@ public class GameManager : MonoBehaviour {
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyShip");
             for (int i = 0; i < enemies.Length; i++)
             {
-                EnemyShips.Add(players[i]);
+                EnemyShips.Add(enemies[i]);
             }
             //Selectable.Add(PlayerShip); 
 			

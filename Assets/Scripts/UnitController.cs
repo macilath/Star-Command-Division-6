@@ -89,7 +89,7 @@ public abstract class UnitController : MonoBehaviour {
             //thisShip.rigidbody.AddRelativeForce(-shipVelocity * thisShip.rigidbody.mass);
             this.rigidbody.velocity = Vector3.zero;
             this.rigidbody.angularVelocity = Vector3.zero;
-            Debug.Log("Destination Reached.");
+            UnityEngine.Debug.Log("Destination Reached.");
             hasTarget = false;
             return;
         }
