@@ -59,7 +59,7 @@ public class WeaponController : MonoBehaviour {
     {
         if(other.gameObject.tag == enemyTag)
         {
-            ((UnitController)((other.gameObject).GetComponent("UnitController"))).takeDamage(weaponDamage);
+            ((UnitController)((other.gameObject).GetComponent<UnitController>())).takeDamage(weaponDamage);
         }
         else if(other.gameObject.tag == "Asteroid")
         {
