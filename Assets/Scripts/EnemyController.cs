@@ -38,7 +38,10 @@ public class EnemyController : UnitController {
         {
             move(shipPosition);
         }
-        checkShoot();
+        if(shipCanFire())
+        {
+            checkShoot();
+        }
     }
 
     void OnDrawGizmos()
@@ -155,7 +158,7 @@ public class EnemyController : UnitController {
         GameObject projObject = Instantiate(Projectile, projectile_position, thisShip.transform.rotation) as GameObject;
         WeaponController proj = projObject.GetComponent<WeaponController>();
         proj.setEnemyTag("PlayerShip");
-
+        stopwatch.Start();
         //TODO: set the target of the projectile
         //proj.setTarget()
     }
