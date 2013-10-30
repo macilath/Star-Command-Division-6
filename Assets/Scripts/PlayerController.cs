@@ -42,7 +42,10 @@ public class PlayerController : UnitController {
             {
                 move(shipPosition);
             }
-            checkShoot();
+            if(shipCanFire())
+            {
+                checkShoot();
+            }
         }
 	}
 
@@ -176,6 +179,7 @@ public class PlayerController : UnitController {
 
         WeaponController proj = projObject.GetComponent<WeaponController>();
         proj.setEnemyTag("EnemyShip");
+        stopwatch.Start();
         //proj.setParent(this.gameObject);
         //TODO: set the target of the projectile
         //proj.setTarget()
