@@ -75,7 +75,50 @@ public abstract class UnitController : MonoBehaviour {
         //TODO: make rotation fluid instead of instant
     }
 
-    protected abstract void move(Vector3 shipPosition);
+    protected void move(Vector3 shipPosition)
+    {
+        // Move ship
+        Vector3 forceVector = (targetDest - shipPosition);
+        forceVector.Normalize();
+        Vector3 shipVelocity = this.rigidbody.velocity;
+
+        Rect boundingRect = new Rect(shipPosition.x - (shipSizeW/2), shipPosition.y - (shipSizeH/2), shipSizeW, shipSizeH);
+        //Debug.Log(shipPosition - targetDest);
+        if (hasTarget && boundingRect.Contains(targetDest))
+        {
+            //thisShip.rigidbody.AddRelativeForce(-shipVelocity * thisShip.rigidbody.mass);
+            this.rigidbody.velocity = Vector3.zero;
+            this.rigidbody.angularVelocity = Vector3.zero;
+            Debug.Log("Destination Reached.");
+            hasTarget = false;
+            return;
+        }
+
+        //TODO: change this to compare vectors using cosine to ensure ship is always trying to move to targetDest
+        if (hasTarget)
+        {
+            if (shipVelocity.sqrMagnitude < shipSpeed)
+            {
+                forceVector = shipVelocity + (forceVector * shipAccel);
+            }
+            else
+            {
+                forceVector = new Vector3(0, 0, 0);
+            }
+        }
+        /*else //TODO: use this idea to have ship slow down at destination instead of just stop instantly
+        {
+            if (shipVelocity.sqrMagnitude > 0)
+            {
+                forceVector = new Vector3(0, -1, 0);
+                forceVector *= shipAccel;
+                thisShip.rigidbody.AddRelativeForce(forceVector);
+                return;
+            }
+        }*/
+
+        this.rigidbody.AddForce(forceVector);
+    }
 
     protected void checkHealth()
     {
