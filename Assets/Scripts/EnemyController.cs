@@ -27,6 +27,7 @@ public class EnemyController : UnitController {
         Vector3 shipPosition = thisShip.transform.position;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         if (vision.sightingExists)
         {
@@ -37,6 +38,14 @@ public class EnemyController : UnitController {
             rotate(shipPosition);
         }
 
+=======
+        getShipSelected(shipPosition);
+        setTarget();
+        if (hasTarget && !facingTarget)
+        {
+            rotate(shipPosition);
+        }
+>>>>>>> 06cf173bf403eb8760417ad9fd0a40ea3dc812e6
 =======
         getShipSelected(shipPosition);
         setTarget();
