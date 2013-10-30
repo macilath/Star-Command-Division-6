@@ -116,6 +116,11 @@ public class PlayerController : UnitController {
             facingTarget = false;
         }
     }
+    
+    public void moveto(Vector3 shipPosition)
+    {
+        move(shipPosition);
+    }
 
     protected override void move(Vector3 shipPosition)
     {
