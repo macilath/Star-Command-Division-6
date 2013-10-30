@@ -11,7 +11,6 @@ public class PlayerController : UnitController {
      */
 
 	void Start () {
-		// For level 1 we are just looking for 1 ship
 		thisShip = this.gameObject;
         targetDest = thisShip.transform.position;
 	    isSelected = false;
