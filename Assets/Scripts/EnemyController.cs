@@ -178,7 +178,12 @@ public class EnemyController : UnitController {
     private void checkShoot()
     {
         //temporary, until intelligent firing is in place
-        if(Input.GetKeyDown("space"))
+        /*if(Input.GetKeyDown("space"))
+        {
+            fireWeapons();
+        }*/
+        EnemySight vision = (weapon.transform.Find("Vision")).GetComponent<EnemySight>();
+        if(vision.playerInSight)
         {
             fireWeapons();
         }
