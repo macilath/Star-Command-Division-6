@@ -22,7 +22,7 @@ public class WeaponController : MonoBehaviour {
 
     void Start () {
     	weaponDamage = 25;
-	    weaponRange = 1;
+	    weaponRange = 20;
 	    weaponSpeed = 500;
 	    weaponAccel = 0;
 	    weaponSizeH = 3f;
@@ -37,6 +37,7 @@ public class WeaponController : MonoBehaviour {
     }
     
     void Update () {
+        checkBounds();
     }
 
     private void kick()
@@ -74,8 +75,9 @@ public class WeaponController : MonoBehaviour {
 
     private void checkBounds()
     {
-        Vector3 distanceTravelled = weapon.transform.position - initialPosition;
-        if(distanceTravelled.sqrMagnitude > weaponRange)
+        float fun = Math.Abs(Vector3.Distance(initialPosition, weapon.transform.position));
+        Debug.Log("distance: " + fun); 
+        if(fun > weaponRange)
         {
             Destroy(weapon);
         }
