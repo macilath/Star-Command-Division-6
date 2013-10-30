@@ -12,10 +12,15 @@ public class EnemySight : MonoBehaviour
     private Vector3 directionFromPlayer;
     private Vector3 pos;
 
+    public Vector3 previousSighting;
+    public bool sightingExists;
+
     void Start()
     {
         detectionRadius = transform.localScale.x/2;
         playerInSight = false;
+        sightingExists = false;
+        previousSighting = new Vector3(-999,-999,-999);
     }
 
 
@@ -39,6 +44,7 @@ public class EnemySight : MonoBehaviour
                     {
                         // ... the player is in sight.
                         playerInSight = true;
+                        previousSighting = hit.collider.gameObject.transform.position;
                     }
                 }
             }
@@ -60,6 +66,7 @@ public class EnemySight : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
+        sightingExists = true;
         playerInSight = false;
     }
 }

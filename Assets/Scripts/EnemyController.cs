@@ -4,8 +4,10 @@ using System;
 
 public class EnemyController : UnitController {
 
+    EnemySight vision;
     void Start () {
         thisShip = this.gameObject;
+        vision = thisShip.GetComponentInChildren<EnemySight>();
         targetDest = thisShip.transform.position;
         isSelected = false;
         shipSpeed = 30;
@@ -24,12 +26,34 @@ public class EnemyController : UnitController {
         checkHealth();
         Vector3 shipPosition = thisShip.transform.position;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+        if (vision.sightingExists)
+        {
+            setTarget();
+        }
+        if (hasTarget && !facingTarget)
+        {
+            rotate(shipPosition);
+        }
+
+=======
         getShipSelected(shipPosition);
         setTarget();
         if (hasTarget && !facingTarget)
         {
             rotate(shipPosition);
         }
+>>>>>>> 06cf173bf403eb8760417ad9fd0a40ea3dc812e6
+=======
+        getShipSelected(shipPosition);
+        setTarget();
+        if (hasTarget && !facingTarget)
+        {
+            rotate(shipPosition);
+        }
+>>>>>>> 06cf173bf403eb8760417ad9fd0a40ea3dc812e6
         if (hasTarget && facingTarget)
         {
             move(shipPosition);
@@ -89,25 +113,9 @@ public class EnemyController : UnitController {
     public override void setTarget()
     {
         // Assign movement orders to ship
-        if (Input.GetMouseButtonDown(1) && isSelected == true)
-        {
-            if (hasTarget == false)
-            {
-                hasTarget = true;
-                targetDest = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                targetDest.z = 0.0f;
-                Debug.Log("Orders: GOTO " + targetDest);
-            }
-            else if (hasTarget == true && Input.GetMouseButtonDown(1) && isSelected == true)
-            {
-                this.rigidbody.velocity = new Vector3(0, 0, 0);
-                targetDest = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                targetDest.z = 0.0f;
-                Debug.Log("New Orders: GOTO " + targetDest);
-            }
-            this.rigidbody.angularVelocity = Vector3.zero;
-            facingTarget = false;
-        }
+        targetDest = vision.previousSighting;
+        hasTarget = true;
+        vision.sightingExists = false;
     }
 
     protected override void move(Vector3 shipPosition)
