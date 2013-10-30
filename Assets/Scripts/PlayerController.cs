@@ -34,18 +34,18 @@ public class PlayerController : UnitController {
         if (isSelected)
         {
             setTarget();
-            if (hasTarget && !facingTarget)
-            {
-                rotate(shipPosition);
-            }
-            if (hasTarget && facingTarget)
-            {
-                move(shipPosition);
-            }
             if(shipCanFire())
             {
                 checkShoot();
             }
+        }
+        if (hasTarget && !facingTarget)
+        {
+            rotate(shipPosition);
+        }
+        if (hasTarget && facingTarget)
+        {
+            move(shipPosition);
         }
 	}
 
