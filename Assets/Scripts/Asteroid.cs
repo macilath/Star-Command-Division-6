@@ -19,7 +19,7 @@ public class Asteroid : MonoBehaviour {
 	{
 		if(other.gameObject.tag == "PlayerShip" || other.gameObject.tag == "EnemyShip")
 		{
-			((UnitController)((other.gameObject).GetComponent("UnitController"))).takeDamage(asteroidDamage);
+			((UnitController)((other.gameObject).GetComponent<UnitController>())).takeDamage(asteroidDamage);
 		}
     }
 }
