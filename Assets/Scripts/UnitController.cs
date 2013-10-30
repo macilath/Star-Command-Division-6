@@ -24,6 +24,12 @@ public abstract class UnitController : MonoBehaviour {
     public abstract void setTarget();
 
     public abstract void takeDamage(int damage);
+
+    public void Awake()
+    {
+        GameObject camera = GameObject.Find("Main Camera");
+        manager = camera.GetComponent<GameManager>();
+    }
     
     protected float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)
     {
@@ -64,6 +70,14 @@ public abstract class UnitController : MonoBehaviour {
         {
             GameObject Explosion = (GameObject)Resources.Load("ShipExplode1");
             Instantiate(Explosion, thisShip.transform.position, Quaternion.identity);
+            if (thisShip.tag == "EnemyShip")
+            {
+                manager.EnemyShips.Remove(thisShip);
+            }
+            else if (thisShip.tag == "PlayerShip")
+            {
+                manager.PlayerShips.Remove(thisShip);
+            }
             Destroy(thisShip);
         }
     }
