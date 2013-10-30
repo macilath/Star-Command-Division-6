@@ -17,7 +17,7 @@ public class Asteroid : MonoBehaviour {
 	
 	void OnCollisionStay(Collision other)
 	{
-		if(other.gameObject.tag == "Ship" || other.gameObject.tag == "EnemyShip")
+		if(other.gameObject.tag == "PlayerShip" || other.gameObject.tag == "EnemyShip")
 		{
 			((UnitController)((other.gameObject).GetComponent("UnitController"))).takeDamage(asteroidDamage);
 		}
