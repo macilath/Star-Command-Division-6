@@ -34,18 +34,18 @@ public class PlayerController : UnitController {
         if (isSelected)
         {
             setTarget();
-            if (hasTarget && !facingTarget)
-            {
-                rotate(shipPosition);
-            }
-            if (hasTarget && facingTarget)
-            {
-                move(shipPosition);
-            }
             if(shipCanFire())
             {
                 checkShoot();
             }
+        }
+        if (hasTarget && !facingTarget)
+        {
+            rotate(shipPosition);
+        }
+        if (hasTarget && facingTarget)
+        {
+            move(shipPosition);
         }
 	}
 
@@ -149,12 +149,25 @@ public class PlayerController : UnitController {
         }
     }
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "SpaceStation")
         {
-            Debug.Log("Next Level");
-            Application.LoadLevel("Level1");
+            manager.survivingShips++;
+            Debug.Log(manager.survivingShips);
+            if (manager.survivingShips == manager.PlayerShips.Count)
+            {
+                Debug.Log("Next Level");
+                Application.LoadLevel("Level2");
+            }
+
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "SpaceStation")
+        {
+            manager.survivingShips--;
         }
     }
 }
