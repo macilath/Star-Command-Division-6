@@ -1,36 +1,62 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public class GameManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		AddSelectables();		
-	}
-	
-	void Update () {
+    public List<GameObject> PlayerShips = new List<GameObject>();
+    public List<GameObject> EnemyShips = new List<GameObject>();
 
-	}
+    public Stopwatch alertStopwatch = new Stopwatch();
+    private int alertWindow = 120000;
+    public int survivingShips = 0; 
+
+    void Start()
+    {
+        AddShips();
+    }
+
+    void Update()
+    {
+        if (alertStopwatch.ElapsedMilliseconds >= alertWindow) 
+        {
+            if (Application.loadedLevelName != "Level1")
+            {
+                alertStopwatch.Reset();
+            }
+            else
+            {
+                alertStopwatch.Reset();
+                Application.LoadLevel("L1Loss");
+            }
+        }
+        if (PlayerShips.Count == 0 && Application.loadedLevelName == "Level1")
+        {
+            Application.LoadLevel("L1Loss");
+        }
+        if (PlayerShips.Count == 0 && Application.loadedLevelName == "Level2") //or we lose special ship
+        {
+            //Application.LoadLevel("L2Loss");
+        }
+    }
 	
-	public List<GameObject> Selectable = new List<GameObject>(); 
-	
-	void AddSelectables() {
-		if(Application.loadedLevelName == "Scene1") {
+	void AddShips() {
+		if(Application.loadedLevelName == "Level1" || Application.loadedLevelName == "Level2") {
 			// Add Ship object to selectable list
-			GameObject PlayerShip = GameObject.Find("Ship");
-			Selectable.Add(PlayerShip); 
-			print("Added " + PlayerShip);
+            GameObject[] players = GameObject.FindGameObjectsWithTag("PlayerShip");
+            for (int i = 0; i < players.Length; i++)
+            {
+                PlayerShips.Add(players[i]);
+            }
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyShip");
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                EnemyShips.Add(enemies[i]);
+            }
+            //Selectable.Add(PlayerShip); 
+			
 		}
 	}
 	
-    /* For Unit Selection:
-     * 
-     * The other (and probably better) way is to keep a list of all selectable units (in some kind of gamemanager) and just transform the positions of all units into screenspace. 
-     * There you can simply use Rect.Contains to test if a unit is inside a rectangle.
-     * (http://answers.unity3d.com/questions/287406/rts-rectangle-selection-system.html)
-     * So here in GameManager we're going to keep an array (or similar structure) of GameObjects that we want to be selectable 
-     * 
-     */
-
 }

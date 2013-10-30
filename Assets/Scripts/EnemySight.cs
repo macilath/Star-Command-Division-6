@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemySight : MonoBehaviour
 {
     public float detectionRadius;           // size of detection circle
-    public float fieldOfViewAngle;           // Number of degrees, centred on up, for the enemy see.
+    private float fieldOfViewAngle;           // Number of degrees, centred on up, for the enemy see.
     public bool playerInSight;                      // Whether or not the player is currently sighted.
 
     private float angle;
@@ -12,16 +12,22 @@ public class EnemySight : MonoBehaviour
     private Vector3 directionFromPlayer;
     private Vector3 pos;
 
+    public Vector3 previousSighting;
+    public bool sightingExists;
+
     void Start()
     {
+        fieldOfViewAngle = 45;
         detectionRadius = transform.localScale.x/2;
         playerInSight = false;
+        sightingExists = false;
+        previousSighting = transform.position;
     }
 
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Ship")
+        if (other.gameObject.tag == "PlayerShip")
         {
             // Create a vector from the enemy to the player and store the angle between it and forward.
             directionFromPlayer = other.transform.position - transform.position;
@@ -35,10 +41,11 @@ public class EnemySight : MonoBehaviour
                 {
                     Debug.DrawRay(transform.position, directionFromPlayer.normalized * (detectionRadius));
                     // ... and if the raycast hits the player...
-                    if (hit.collider.gameObject.tag == "Ship")
+                    if (hit.collider.gameObject.tag == "PlayerShip")
                     {
                         // ... the player is in sight.
                         playerInSight = true;
+                        previousSighting = hit.collider.gameObject.transform.position;
                     }
                 }
             }
@@ -60,6 +67,10 @@ public class EnemySight : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        playerInSight = false;
+        if (playerInSight)
+        {
+            sightingExists = true;
+            playerInSight = false;
+        }
     }
 }

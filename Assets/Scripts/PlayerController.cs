@@ -11,7 +11,6 @@ public class PlayerController : UnitController {
      */
 
 	void Start () {
-		// For level 1 we are just looking for 1 ship
 		thisShip = this.gameObject;
         targetDest = thisShip.transform.position;
 	    isSelected = false;
@@ -35,15 +34,18 @@ public class PlayerController : UnitController {
         if (isSelected)
         {
             setTarget();
-            if (hasTarget && !facingTarget)
+            if(shipCanFire())
             {
-                rotate(shipPosition);
+                checkShoot();
             }
-            if (hasTarget && facingTarget)
-            {
-                move(shipPosition);
-            }
-            checkShoot();
+        }
+        if (hasTarget && !facingTarget)
+        {
+            rotate(shipPosition);
+        }
+        if (hasTarget && facingTarget)
+        {
+            move(shipPosition);
         }
 	}
 
@@ -117,61 +119,6 @@ public class PlayerController : UnitController {
         }
     }
 
-    protected override void move(Vector3 shipPosition)
-    {
-        // Move ship
-        Vector3 forceVector = (targetDest - shipPosition);
-        forceVector.Normalize();
-        Vector3 shipVelocity = this.rigidbody.velocity;
-
-        Rect boundingRect = new Rect(shipPosition.x - (shipSizeW/2), shipPosition.y - (shipSizeH/2), shipSizeW, shipSizeH);
-        //Debug.Log(shipPosition - targetDest);
-        if (hasTarget && boundingRect.Contains(targetDest))
-        {
-            //thisShip.rigidbody.AddRelativeForce(-shipVelocity * thisShip.rigidbody.mass);
-            this.rigidbody.velocity = Vector3.zero;
-            this.rigidbody.angularVelocity = Vector3.zero;
-            Debug.Log("Destination Reached.");
-            hasTarget = false;
-            return;
-        }
-
-        //TODO: change this to compare vectors using cosine to ensure ship is always trying to move to targetDest
-        if (hasTarget)
-        {
-            if (shipVelocity.sqrMagnitude < shipSpeed)
-            {
-                forceVector = shipVelocity + (forceVector * shipAccel);
-            }
-            else
-            {
-                forceVector = new Vector3(0, 0, 0);
-            }
-        }
-        /*else //TODO: use this idea to have ship slow down at destination instead of just stop instantly
-        {
-            if (shipVelocity.sqrMagnitude > 0)
-            {
-                forceVector = new Vector3(0, -1, 0);
-                forceVector *= shipAccel;
-                thisShip.rigidbody.AddRelativeForce(forceVector);
-                return;
-            }
-        }*/
-
-        this.rigidbody.AddForce(forceVector);
-    }
-
-    protected override void checkHealth()
-    {
-        if(shipHealth <= 0)
-        {
-            GameObject Explosion = (GameObject)Resources.Load("ShipExplode1");
-            Instantiate(Explosion, thisShip.transform.position, Quaternion.identity);
-            Destroy(thisShip);
-        }
-    }
-
     public override void takeDamage(int damage)
     {
 
@@ -184,8 +131,11 @@ public class PlayerController : UnitController {
         GameObject Projectile = (GameObject)Resources.Load("Projectile");
         Vector3 projectile_position = thisShip.transform.position + (thisShip.transform.up * (shipSizeH + 1));
         GameObject projObject = Instantiate(Projectile, projectile_position, thisShip.transform.rotation) as GameObject;
-        WeaponController proj = (WeaponController)projObject.GetComponent("WeaponController");
-        proj.setParent(thisShip);
+
+        WeaponController proj = projObject.GetComponent<WeaponController>();
+        proj.setEnemyTag("EnemyShip");
+        stopwatch.Start();
+        //proj.setParent(this.gameObject);
         //TODO: set the target of the projectile
         //proj.setTarget()
     }
@@ -196,6 +146,28 @@ public class PlayerController : UnitController {
         if(Input.GetKeyDown("space"))
         {
             fireWeapons();
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "SpaceStation")
+        {
+            manager.survivingShips++;
+            Debug.Log(manager.survivingShips);
+            if (manager.survivingShips == manager.PlayerShips.Count)
+            {
+                Debug.Log("Next Level");
+                Application.LoadLevel("Level2");
+            }
+
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "SpaceStation")
+        {
+            manager.survivingShips--;
         }
     }
 }

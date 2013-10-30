@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
+using System.Diagnostics;
 
 public abstract class UnitController : MonoBehaviour {
 
@@ -18,12 +19,30 @@ public abstract class UnitController : MonoBehaviour {
     protected bool hasTarget;
     protected bool facingTarget;
     protected bool targetIsEnemy;
+    protected int fireInterval = 1000;
+    protected Stopwatch stopwatch = new Stopwatch();
+
+    protected bool shipCanFire()
+    {
+        if(stopwatch.ElapsedMilliseconds == 0 || stopwatch.ElapsedMilliseconds >= fireInterval)
+        {
+            stopwatch.Reset();
+            return true;
+        }
+        return false;
+    }
 
     protected abstract void getShipSelected(Vector3 shipPosition);
 
     public abstract void setTarget();
 
     public abstract void takeDamage(int damage);
+
+    public void Awake()
+    {
+        GameObject camera = GameObject.Find("Main Camera");
+        manager = camera.GetComponent<GameManager>();
+    }
     
     protected float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)
     {
@@ -56,9 +75,68 @@ public abstract class UnitController : MonoBehaviour {
         //TODO: make rotation fluid instead of instant
     }
 
-    protected abstract void move(Vector3 shipPosition);
+    protected void move(Vector3 shipPosition)
+    {
+        // Move ship
+        Vector3 forceVector = (targetDest - shipPosition);
+        forceVector.Normalize();
+        Vector3 shipVelocity = this.rigidbody.velocity;
 
-    protected abstract void checkHealth();
+        Rect boundingRect = new Rect(shipPosition.x - (shipSizeW/2), shipPosition.y - (shipSizeH/2), shipSizeW, shipSizeH);
+        //Debug.Log(shipPosition - targetDest);
+        if (hasTarget && boundingRect.Contains(targetDest))
+        {
+            //thisShip.rigidbody.AddRelativeForce(-shipVelocity * thisShip.rigidbody.mass);
+            this.rigidbody.velocity = Vector3.zero;
+            this.rigidbody.angularVelocity = Vector3.zero;
+            UnityEngine.Debug.Log("Destination Reached.");
+            hasTarget = false;
+            return;
+        }
+
+        //TODO: change this to compare vectors using cosine to ensure ship is always trying to move to targetDest
+        if (hasTarget)
+        {
+            if (shipVelocity.sqrMagnitude < shipSpeed)
+            {
+                forceVector = shipVelocity + (forceVector * shipAccel);
+            }
+            else
+            {
+                forceVector = new Vector3(0, 0, 0);
+            }
+        }
+        /*else //TODO: use this idea to have ship slow down at destination instead of just stop instantly
+        {
+            if (shipVelocity.sqrMagnitude > 0)
+            {
+                forceVector = new Vector3(0, -1, 0);
+                forceVector *= shipAccel;
+                thisShip.rigidbody.AddRelativeForce(forceVector);
+                return;
+            }
+        }*/
+
+        this.rigidbody.AddForce(forceVector);
+    }
+
+    protected void checkHealth()
+    {
+        if(shipHealth <= 0)
+        {
+            GameObject Explosion = (GameObject)Resources.Load("ShipExplode1");
+            Instantiate(Explosion, thisShip.transform.position, Quaternion.identity);
+            if (thisShip.tag == "EnemyShip")
+            {
+                manager.EnemyShips.Remove(thisShip);
+            }
+            else if (thisShip.tag == "PlayerShip")
+            {
+                manager.PlayerShips.Remove(thisShip);
+            }
+            Destroy(thisShip);
+        }
+    }
 
     protected abstract void fireWeapons();
 }
