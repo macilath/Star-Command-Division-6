@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour {
     public List<GameObject> EnemyShips = new List<GameObject>();
 
     public Stopwatch alertStopwatch = new Stopwatch();
-    private int alertWindow = 60000;
+    private int alertWindow = 120000;
+    public int survivingShips = 0; 
 
     void Start()
     {

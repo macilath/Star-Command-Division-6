@@ -153,8 +153,13 @@ public class PlayerController : UnitController {
     {
         if (other.gameObject.tag == "SpaceStation")
         {
-            Debug.Log("Next Level");
-            Application.LoadLevel("Level1");
+            manager.survivingShips++;
+            if (manager.survivingShips == manager.PlayerShips.Count)
+            {
+                Debug.Log("Next Level");
+                Application.LoadLevel("Level1");
+            }
+
         }
     }
 }
