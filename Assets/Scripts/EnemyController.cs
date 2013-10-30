@@ -4,12 +4,6 @@ using System;
 
 public class EnemyController : UnitController {
 
-    /*
-     * For Player Unit Selection:
-     * We can check on mouse click if the rect contains / collides with the game object
-     * Then we wait on right click (orders) to assign the unit's destination, or if another left click is detected we deselect the unit
-     */
-
     void Start () {
         // For level 1 we are just looking for 1 ship
         thisShip = this.gameObject;
@@ -183,9 +177,9 @@ public class EnemyController : UnitController {
         Debug.Log("Ship " + thisShip.name + " has fired.");
         GameObject Projectile = (GameObject)Resources.Load("Projectile");
         Vector3 projectile_position = thisShip.transform.position + (thisShip.transform.up * (shipSizeH + 1));
-        Instantiate(Projectile, projectile_position, thisShip.transform.rotation);
-        //WeaponController proj = (WeaponController)projObject.GetComponent("WeaponController");
-        //proj.setParent(this.gameObject);
+        GameObject projObject = Instantiate(Projectile, projectile_position, thisShip.transform.rotation) as GameObject;
+        projObject.setEnemytag("PlayerShip");
+
         //TODO: set the target of the projectile
         //proj.setTarget()
     }
