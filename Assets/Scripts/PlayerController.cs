@@ -184,9 +184,9 @@ public class PlayerController : UnitController {
         GameObject Projectile = (GameObject)Resources.Load("Projectile");
         Vector3 projectile_position = thisShip.transform.position + (thisShip.transform.up * (shipSizeH + 1));
         GameObject projObject = Instantiate(Projectile, projectile_position, thisShip.transform.rotation) as GameObject;
-        projObject.setEnemyTag("EnemyShip");
 
-        //WeaponController proj = (WeaponController)projObject.GetComponent("WeaponController");
+        WeaponController proj = (WeaponController)projObject.GetComponent("WeaponController");
+        proj.setEnemyTag("EnemyShip");
         //proj.setParent(this.gameObject);
         //TODO: set the target of the projectile
         //proj.setTarget()
