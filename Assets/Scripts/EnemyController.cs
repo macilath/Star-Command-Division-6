@@ -6,7 +6,6 @@ public class EnemyController : UnitController {
 
     EnemySight vision;
     void Start () {
-        // For level 1 we are just looking for 1 ship
         thisShip = this.gameObject;
         vision = thisShip.GetComponentInChildren<EnemySight>();
         targetDest = thisShip.transform.position;
@@ -27,6 +26,7 @@ public class EnemyController : UnitController {
         checkHealth();
         Vector3 shipPosition = thisShip.transform.position;
 
+
         if (vision.sightingExists)
         {
             setTarget();
@@ -35,6 +35,7 @@ public class EnemyController : UnitController {
         {
             rotate(shipPosition);
         }
+
         if (hasTarget && facingTarget)
         {
             move(shipPosition);
@@ -153,7 +154,7 @@ public class EnemyController : UnitController {
         GameObject Projectile = (GameObject)Resources.Load("Projectile");
         Vector3 projectile_position = thisShip.transform.position + (thisShip.transform.up * (shipSizeH + 1));
         GameObject projObject = Instantiate(Projectile, projectile_position, thisShip.transform.rotation) as GameObject;
-        WeaponController proj = (WeaponController)projObject.GetComponent("WeaponController");
+        WeaponController proj = projObject.GetComponent<WeaponController>();
         proj.setEnemyTag("PlayerShip");
 
         //TODO: set the target of the projectile
@@ -163,7 +164,12 @@ public class EnemyController : UnitController {
     private void checkShoot()
     {
         //temporary, until intelligent firing is in place
-        if(Input.GetKeyDown("space"))
+        /*if(Input.GetKeyDown("space"))
+        {
+            fireWeapons();
+        }*/
+        EnemySight vision = thisShip.GetComponentInChildren<EnemySight>();
+        if(vision.playerInSight)
         {
             fireWeapons();
         }

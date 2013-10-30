@@ -11,7 +11,6 @@ public class PlayerController : UnitController {
      */
 
 	void Start () {
-		// For level 1 we are just looking for 1 ship
 		thisShip = this.gameObject;
         targetDest = thisShip.transform.position;
 	    isSelected = false;
@@ -180,7 +179,7 @@ public class PlayerController : UnitController {
         Vector3 projectile_position = thisShip.transform.position + (thisShip.transform.up * (shipSizeH + 1));
         GameObject projObject = Instantiate(Projectile, projectile_position, thisShip.transform.rotation) as GameObject;
 
-        WeaponController proj = (WeaponController)projObject.GetComponent("WeaponController");
+        WeaponController proj = projObject.GetComponent<WeaponController>();
         proj.setEnemyTag("EnemyShip");
         //proj.setParent(this.gameObject);
         //TODO: set the target of the projectile

@@ -14,13 +14,15 @@ public class WeaponController : MonoBehaviour {
     private bool hasTarget;
     private string enemyTag;
 
+    private Vector3 initialPosition;
+
     private GameObject weapon;
     private GameObject target;
     private GameObject parentShip;
 
     void Start () {
     	weaponDamage = 25;
-	    weaponRange = 10;
+	    weaponRange = 20;
 	    weaponSpeed = 500;
 	    weaponAccel = 0;
 	    weaponSizeH = 3f;
@@ -28,12 +30,14 @@ public class WeaponController : MonoBehaviour {
 	    isCollided = false;
 	    hasTarget = false;
 	    weapon = this.gameObject;
+        initialPosition = weapon.transform.position;
         kick();
         //for debugging, should be determined by firing ship
         //enemyTag = "EnemyShip";
     }
     
     void Update () {
+        checkBounds();
     }
 
     private void kick()
@@ -59,24 +63,31 @@ public class WeaponController : MonoBehaviour {
     {
         if(other.gameObject.tag == enemyTag)
         {
-            ((UnitController)((other.gameObject).GetComponent("UnitController"))).takeDamage(weaponDamage);
+            ((UnitController)((other.gameObject).GetComponent<UnitController>())).takeDamage(weaponDamage);
         }
         else if(other.gameObject.tag == "Asteroid")
         {
             Vector3 point_of_contact = (other.contacts[0]).point;
             other.rigidbody.AddForceAtPosition((this.rigidbody.velocity) * 5, point_of_contact);
         }
-        Destroy(this.gameObject);
+        Destroy(weapon);
     }
 
     private void checkBounds()
     {
+        float fun = Math.Abs(Vector3.Distance(initialPosition, weapon.transform.position));
+        Debug.Log("distance: " + fun); 
+        if(fun > weaponRange)
+        {
+            Destroy(weapon);
+        }
+        /*
         float x_bounds = GameCamera.x_bounds;
         float y_bounds = GameCamera.y_bounds;
 
         if(Math.Abs(weapon.transform.position.x) > x_bounds || Math.Abs(weapon.transform.position.y) > y_bounds)
         {
-            Destroy(this.gameObject);
-        }
+            Destroy(weapon);
+        }*/
     }
 }
