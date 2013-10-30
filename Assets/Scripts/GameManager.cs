@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
     public List<GameObject> EnemyShips = new List<GameObject>();
 
     public Stopwatch alertStopwatch = new Stopwatch();
-    private int alertWindow = 120000;
+    private int alertWindow = 60000;
 
     void Start()
     {
@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        if (alertStopwatch.ElapsedMilliseconds == 0 || alertStopwatch.ElapsedMilliseconds >= alertWindow) 
+        if (alertStopwatch.ElapsedMilliseconds >= alertWindow) 
         {
             if (Application.loadedLevelName != "Level1")
             {
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour {
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyShip");
             for (int i = 0; i < enemies.Length; i++)
             {
-                EnemyShips.Add(players[i]);
+                EnemyShips.Add(enemies[i]);
             }
             //Selectable.Add(PlayerShip); 
 			

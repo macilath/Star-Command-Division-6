@@ -26,9 +26,12 @@ public class EnemyController : UnitController {
         checkHealth();
         Vector3 shipPosition = thisShip.transform.position;
 
-        if (vision.sightingExists)
+        if (vision.playerInSight)
         {
             manager.alertStopwatch.Start();
+        }
+        if (vision.sightingExists)
+        {
             setTarget();
         }
         if (hasTarget && !facingTarget)
