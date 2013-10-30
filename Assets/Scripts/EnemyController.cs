@@ -26,19 +26,16 @@ public class EnemyController : UnitController {
         Vector3 shipPosition = thisShip.transform.position;
 
         getShipSelected(shipPosition);
-        if (isSelected)
+        setTarget();
+        if (hasTarget && !facingTarget)
         {
-            setTarget();
-            if (hasTarget && !facingTarget)
-            {
-                rotate(shipPosition);
-            }
-            if (hasTarget && facingTarget)
-            {
-                move(shipPosition);
-            }
-            checkShoot();
+            rotate(shipPosition);
         }
+        if (hasTarget && facingTarget)
+        {
+            move(shipPosition);
+        }
+        checkShoot();
     }
 
     void OnDrawGizmos()
@@ -182,7 +179,7 @@ public class EnemyController : UnitController {
         {
             fireWeapons();
         }*/
-        EnemySight vision = weapon.GetComponentInChildren<EnemySight>();
+        EnemySight vision = thisShip.GetComponentInChildren<EnemySight>();
         if(vision.playerInSight)
         {
             fireWeapons();
