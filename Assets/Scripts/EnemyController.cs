@@ -156,16 +156,6 @@ public class EnemyController : UnitController {
         this.rigidbody.AddForce(forceVector);
     }
 
-    protected override void checkHealth()
-    {
-        if(shipHealth <= 0)
-        {
-            GameObject Explosion = (GameObject)Resources.Load("ShipExplode1");
-            Instantiate(Explosion, thisShip.transform.position, Quaternion.identity);
-            Destroy(thisShip);
-        }
-    }
-
     public override void takeDamage(int damage)
     {
 
@@ -179,7 +169,7 @@ public class EnemyController : UnitController {
         Vector3 projectile_position = thisShip.transform.position + (thisShip.transform.up * (shipSizeH + 1));
         GameObject projObject = Instantiate(Projectile, projectile_position, thisShip.transform.rotation) as GameObject;
         WeaponController proj = (WeaponController)projObject.GetComponent("WeaponController");
-        proj.setEnemytag("PlayerShip");
+        proj.setEnemyTag("PlayerShip");
 
         //TODO: set the target of the projectile
         //proj.setTarget()

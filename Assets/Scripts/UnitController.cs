@@ -58,7 +58,15 @@ public abstract class UnitController : MonoBehaviour {
 
     protected abstract void move(Vector3 shipPosition);
 
-    protected abstract void checkHealth();
+    protected void checkHealth()
+    {
+        if(shipHealth <= 0)
+        {
+            GameObject Explosion = (GameObject)Resources.Load("ShipExplode1");
+            Instantiate(Explosion, thisShip.transform.position, Quaternion.identity);
+            Destroy(thisShip);
+        }
+    }
 
     protected abstract void fireWeapons();
 }
