@@ -28,6 +28,7 @@ public class EnemyController : UnitController {
 
         if (vision.sightingExists)
         {
+            manager.alertStopwatch.Start();
             setTarget();
         }
         if (hasTarget && !facingTarget)
