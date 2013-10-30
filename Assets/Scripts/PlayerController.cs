@@ -162,16 +162,6 @@ public class PlayerController : UnitController {
         this.rigidbody.AddForce(forceVector);
     }
 
-    protected override void checkHealth()
-    {
-        if(shipHealth <= 0)
-        {
-            GameObject Explosion = (GameObject)Resources.Load("ShipExplode1");
-            Instantiate(Explosion, thisShip.transform.position, Quaternion.identity);
-            Destroy(thisShip);
-        }
-    }
-
     public override void takeDamage(int damage)
     {
 
