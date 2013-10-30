@@ -182,7 +182,7 @@ public class EnemyController : UnitController {
         {
             fireWeapons();
         }*/
-        EnemySight vision = (weapon.transform.Find("Vision")).GetComponent<EnemySight>();
+        EnemySight vision = (thisShip.transform.GetChild(0)).gameObject.GetComponent<EnemySight>();
         if(vision.playerInSight)
         {
             fireWeapons();
