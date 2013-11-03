@@ -20,7 +20,7 @@ public class WeaponController : MonoBehaviour {
     protected GameObject target;
     protected GameObject parentShip;
 
-    void Start () {
+    protected void Start () {
     	weaponDamage = 25;
 	    weaponRange = 20;
 	    weaponSpeed = 500;
@@ -36,7 +36,7 @@ public class WeaponController : MonoBehaviour {
         //enemyTag = "EnemyShip";
     }
     
-    void Update () {
+    protected void Update () {
         checkBounds();
     }
 
@@ -59,7 +59,7 @@ public class WeaponController : MonoBehaviour {
         enemyTag = tag;
     }
 
-    void OnCollisionEnter(Collision other)
+    protected virtual void OnCollisionEnter(Collision other)
     {
         if(other.gameObject.tag == enemyTag)
         {
@@ -76,7 +76,7 @@ public class WeaponController : MonoBehaviour {
     protected void checkBounds()
     {
         float fun = Math.Abs(Vector3.Distance(initialPosition, weapon.transform.position));
-        Debug.Log("distance: " + fun); 
+        //Debug.Log("distance: " + fun); 
         if(fun > weaponRange)
         {
             Destroy(weapon);

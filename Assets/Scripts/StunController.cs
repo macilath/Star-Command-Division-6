@@ -4,19 +4,19 @@ using System;
 
 public class StunController : WeaponController {
 
-    Start()
+    void Start()
     {
         base.Start();
         weaponDamage = 1000;
         weaponSpeed = 400;
     }
 
-    Update()
+    void Update()
     {
         base.Update();
     }
 
-    override void OnCollisionEnter(Collision other)
+    protected override void OnCollisionEnter(Collision other)
     {
         if(other.gameObject.tag == enemyTag)
         {

@@ -10,7 +10,7 @@ public class PlayerController : UnitController {
      * Then we wait on right click (orders) to assign the unit's destination, or if another left click is detected we deselect the unit
      */
 
-	void Start () {
+	protected void Start () {
 		thisShip = this.gameObject;
         targetDest = thisShip.transform.position;
 	    isSelected = false;
@@ -26,7 +26,7 @@ public class PlayerController : UnitController {
         targetIsEnemy = false;
 	}
 	
-	void Update () {
+	protected void Update () {
         checkHealth();
         Vector3 shipPosition = thisShip.transform.position;
         if(isActive)

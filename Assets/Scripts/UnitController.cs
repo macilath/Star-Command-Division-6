@@ -43,7 +43,8 @@ public abstract class UnitController : MonoBehaviour {
     public void deactivate(int time)
     {
         isActive = false;
-        stunTimer.Restart();
+        stunTimer.Reset();
+        stunTimer.Start();
         stunDuration = time;
     }
 
@@ -51,7 +52,7 @@ public abstract class UnitController : MonoBehaviour {
     {
         if(stunTimer.ElapsedMilliseconds >= stunDuration)
         {
-            stunTimer.Stop;
+            stunTimer.Stop();
             isActive = true;
         }
     }
