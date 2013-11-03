@@ -99,12 +99,12 @@ public abstract class UnitController : MonoBehaviour {
         //this.transform.rotation = Quaternion.AngleAxis(targetAngle, Vector3.forward);
         //facingTarget = true;
         //TODO: make rotation fluid instead of instant
-        if(shipAngle == targetAngle)
+        if(this.transform.up == toTarget.Normalize())
         {
             this.rigidbody.angularVelocity = 0;
             facingTarget = true;
         }
-        else if(this.rigidbody.angularVelocity < shipRotSpeed)
+        else if(this.rigidbody.angularVelocity.z < shipRotSpeed)
         {
             Vector3 rotate = new Vector3(0, 0, 5 * angleDir);
             this.rigidbody.AddTorque(rotate);
