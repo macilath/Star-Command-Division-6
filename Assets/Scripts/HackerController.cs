@@ -4,7 +4,7 @@ using System;
 
 public class HackerController : PlayerController {
 
-    override Start()
+    Start()
     {
         base.Start();
         shipSpeed = 25;
@@ -16,7 +16,7 @@ public class HackerController : PlayerController {
         shipHealth = 150;
     }
 
-    override Update()
+    Update()
     {
         base.Update();
     }

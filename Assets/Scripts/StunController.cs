@@ -4,13 +4,14 @@ using System;
 
 public class StunController : WeaponController {
 
-    override Start()
+    Start()
     {
         base.Start();
         weaponDamage = 1000;
+        weaponSpeed = 400;
     }
 
-    override Update()
+    Update()
     {
         base.Update();
     }
