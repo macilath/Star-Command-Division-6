@@ -87,7 +87,8 @@ public abstract class UnitController : MonoBehaviour {
     {
         Vector3 toTarget = targetDest - shipPosition;
         float shipAngle = this.transform.rotation.eulerAngles.z;
-        float targetAngle = Vector3.Angle(Vector3.up, toTarget) * AngleDir(Vector3.up, toTarget, Vector3.forward);
+        float angleDir = AngleDir(Vector3.up, toTarget, Vector3.forward);
+        float targetAngle = Vector3.Angle(Vector3.up, toTarget) * angleDir;
         if (targetAngle < 0)
         {
             targetAngle += 360;
@@ -95,9 +96,19 @@ public abstract class UnitController : MonoBehaviour {
         float rotationAngle = targetAngle - shipAngle;
         //Debug.Log("Rotate from " + shipAngle + " to " + targetAngle);
         //Debug.Log(rotationAngle + " degrees");
-        this.transform.rotation = Quaternion.AngleAxis(targetAngle, Vector3.forward);
-        facingTarget = true;
+        //this.transform.rotation = Quaternion.AngleAxis(targetAngle, Vector3.forward);
+        //facingTarget = true;
         //TODO: make rotation fluid instead of instant
+        if(shipAngle == targetAngle)
+        {
+            this.rigidbody.angularVelocity = 0;
+            facingTarget = true;
+        }
+        else if(this.rigidbody.angularVelocity < shipRotSpeed)
+        {
+            Vector3 rotate = new Vector3(0, 0, 5 * angleDir);
+            this.rigidbody.AddTorque(rotate);
+        }
     }
 
     protected void move(Vector3 shipPosition)
