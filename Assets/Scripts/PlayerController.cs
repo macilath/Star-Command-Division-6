@@ -158,7 +158,7 @@ public class PlayerController : UnitController {
             if (manager.survivingShips == manager.PlayerShips.Count)
             {
                 Debug.Log("Next Level");
-                Application.LoadLevel("Level2");
+                Application.LoadLevel("1to2");
             }
 
         }
