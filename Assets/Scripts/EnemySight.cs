@@ -4,6 +4,7 @@ using System.Collections;
 public class EnemySight : MonoBehaviour
 {
     public float detectionRadius;           // size of detection circle
+    public float detectionScale = 2;
     private float fieldOfViewAngle;           // Number of degrees, centred on up, for the enemy see.
     public bool playerInSight;                      // Whether or not the player is currently sighted.
 
@@ -17,8 +18,8 @@ public class EnemySight : MonoBehaviour
 
     void Start()
     {
-        fieldOfViewAngle = 45;
-        detectionRadius = transform.localScale.x/2;
+        fieldOfViewAngle = 60;
+        detectionRadius = detectionScale * transform.localScale.x/2;
         playerInSight = false;
         sightingExists = false;
         previousSighting = transform.position;

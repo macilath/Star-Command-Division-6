@@ -21,6 +21,9 @@ public abstract class UnitController : MonoBehaviour {
     protected bool targetIsEnemy;
     protected int fireInterval = 1000;
     protected Stopwatch stopwatch = new Stopwatch();
+    protected Stopwatch stunTimer = new Stopwatch();
+    protected int stunDuration;
+    protected bool isActive = true;
 
     protected bool shipCanFire()
     {
@@ -30,6 +33,27 @@ public abstract class UnitController : MonoBehaviour {
             return true;
         }
         return false;
+    }
+
+    protected bool shipIsActive()
+    {
+        return isActive;
+    }
+
+    public void deactivate(int time)
+    {
+        isActive = false;
+        stunTimer.Restart();
+        stunDuration = time;
+    }
+
+    public void checkStun()
+    {
+        if(stunTimer.ElapsedMilliseconds >= stunDuration)
+        {
+            stunTimer.Stop;
+            isActive = true;
+        }
     }
 
     protected abstract void getShipSelected(Vector3 shipPosition);

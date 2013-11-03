@@ -19,8 +19,8 @@ public class PlayerController : UnitController {
         shipSizeH = 3f;
         shipSizeW = 3f;
         shipRotSpeed = 10f;
-        shipHealth = 100;
         maxHealth = 100;
+        shipHealth = 100;
         hasTarget = false;
         facingTarget = true;
         targetIsEnemy = false;
@@ -29,23 +29,29 @@ public class PlayerController : UnitController {
 	void Update () {
         checkHealth();
         Vector3 shipPosition = thisShip.transform.position;
-
-        getShipSelected(shipPosition);
-        if (isSelected)
+        if(isActive)
         {
-            setTarget();
-            if(shipCanFire())
+            getShipSelected(shipPosition);
+            if (isSelected)
             {
-                checkShoot();
+                setTarget();
+                if(shipCanFire())
+                {
+                    checkShoot();
+                }
+            }
+            if (hasTarget && !facingTarget)
+            {
+                rotate(shipPosition);
+            }
+            if (hasTarget && facingTarget)
+            {
+                move(shipPosition);
             }
         }
-        if (hasTarget && !facingTarget)
+        else
         {
-            rotate(shipPosition);
-        }
-        if (hasTarget && facingTarget)
-        {
-            move(shipPosition);
+            checkStun();
         }
 	}
 
