@@ -24,7 +24,7 @@ public class HackerController : PlayerController {
     protected override void fireWeapons()
     {
         Debug.Log("Ship " + thisShip.name + " has fired.");
-        GameObject Projectile = (GameObject)Resources.Load("Projectile");
+        GameObject Projectile = (GameObject)Resources.Load("StunProjectile");
         Vector3 projectile_position = thisShip.transform.position + (thisShip.transform.up * (shipSizeH + 1));
         GameObject projObject = Instantiate(Projectile, projectile_position, thisShip.transform.rotation) as GameObject;
 

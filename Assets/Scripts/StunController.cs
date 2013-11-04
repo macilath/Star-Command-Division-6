@@ -7,7 +7,7 @@ public class StunController : WeaponController {
     void Start()
     {
         base.Start();
-        weaponDamage = 1000;
+        weaponDamage = 2000;
         weaponSpeed = 400;
     }
 

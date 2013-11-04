@@ -87,7 +87,7 @@ public abstract class UnitController : MonoBehaviour {
     {
         Vector3 toTarget = targetDest - shipPosition;
         float shipAngle = this.transform.rotation.eulerAngles.z;
-        float angleDir = AngleDir(Vector3.up, toTarget, Vector3.forward);
+        float angleDir = AngleDir(this.transform.up, toTarget, Vector3.forward);
         float targetAngle = Vector3.Angle(Vector3.up, toTarget) * angleDir;
         if (targetAngle < 0)
         {
@@ -100,7 +100,7 @@ public abstract class UnitController : MonoBehaviour {
         //facingTarget = true;
         //TODO: make rotation fluid instead of instant
 
-        if(Math.Abs(rotationAngle) < 20)
+        if(Math.Abs(rotationAngle) < 5)
         {
             this.rigidbody.angularVelocity = Vector3.zero;
             this.transform.rotation = Quaternion.AngleAxis(targetAngle, Vector3.forward);
