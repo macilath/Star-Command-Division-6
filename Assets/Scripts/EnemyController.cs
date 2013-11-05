@@ -25,26 +25,32 @@ public class EnemyController : UnitController {
     void Update () {
         checkHealth();
         Vector3 shipPosition = thisShip.transform.position;
-
-        if (vision.playerInSight)
+        if(isActive)
         {
-            manager.alertStopwatch.Start();
+            if (vision.playerInSight)
+            {
+                manager.alertStopwatch.Start();
+            }
+            if (vision.sightingExists)
+            {
+                setTarget();
+            }
+            if (hasTarget && !facingTarget)
+            {
+                rotate(shipPosition);
+            }
+            if (hasTarget && facingTarget)
+            {
+                move(shipPosition);
+            }
+            if(shipCanFire())
+            {
+                checkShoot();
+            }
         }
-        if (vision.sightingExists)
+        else
         {
-            setTarget();
-        }
-        if (hasTarget && !facingTarget)
-        {
-            rotate(shipPosition);
-        }
-        if (hasTarget && facingTarget)
-        {
-            move(shipPosition);
-        }
-        if(shipCanFire())
-        {
-            checkShoot();
+            checkStun();
         }
     }
 

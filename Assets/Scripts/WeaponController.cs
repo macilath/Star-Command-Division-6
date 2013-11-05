@@ -4,23 +4,23 @@ using System;
 
 public class WeaponController : MonoBehaviour {
 
-    private int weaponDamage;
-    private int weaponRange;
-    private int weaponSpeed;
-    private int weaponAccel;
-    private float weaponSizeH;
-    private float weaponSizeW;
-    private bool isCollided;
-    private bool hasTarget;
-    private string enemyTag;
+    protected int weaponDamage;
+    protected int weaponRange;
+    protected int weaponSpeed;
+    protected int weaponAccel;
+    protected float weaponSizeH;
+    protected float weaponSizeW;
+    protected bool isCollided;
+    protected bool hasTarget;
+    protected string enemyTag;
 
-    private Vector3 initialPosition;
+    protected Vector3 initialPosition;
 
-    private GameObject weapon;
-    private GameObject target;
-    private GameObject parentShip;
+    protected GameObject weapon;
+    protected GameObject target;
+    protected GameObject parentShip;
 
-    void Start () {
+    protected void Start () {
     	weaponDamage = 25;
 	    weaponRange = 20;
 	    weaponSpeed = 500;
@@ -36,11 +36,11 @@ public class WeaponController : MonoBehaviour {
         //enemyTag = "EnemyShip";
     }
     
-    void Update () {
+    protected void Update () {
         checkBounds();
     }
 
-    private void kick()
+    protected void kick()
     {
         Vector3 forceVector = weapon.transform.up * weaponSpeed;
         Debug.Log("projectile force vector: " + forceVector);
@@ -59,7 +59,7 @@ public class WeaponController : MonoBehaviour {
         enemyTag = tag;
     }
 
-    void OnCollisionEnter(Collision other)
+    protected virtual void OnCollisionEnter(Collision other)
     {
         if(other.gameObject.tag == enemyTag)
         {
@@ -73,10 +73,10 @@ public class WeaponController : MonoBehaviour {
         Destroy(weapon);
     }
 
-    private void checkBounds()
+    protected void checkBounds()
     {
         float fun = Math.Abs(Vector3.Distance(initialPosition, weapon.transform.position));
-        Debug.Log("distance: " + fun); 
+        //Debug.Log("distance: " + fun); 
         if(fun > weaponRange)
         {
             Destroy(weapon);

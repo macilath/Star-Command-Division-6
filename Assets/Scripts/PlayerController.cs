@@ -10,7 +10,7 @@ public class PlayerController : UnitController {
      * Then we wait on right click (orders) to assign the unit's destination, or if another left click is detected we deselect the unit
      */
 
-	void Start () {
+	protected void Start () {
 		thisShip = this.gameObject;
         targetDest = thisShip.transform.position;
 	    isSelected = false;
@@ -19,33 +19,39 @@ public class PlayerController : UnitController {
         shipSizeH = 3f;
         shipSizeW = 3f;
         shipRotSpeed = 10f;
-        shipHealth = 100;
         maxHealth = 100;
+        shipHealth = 100;
         hasTarget = false;
         facingTarget = true;
         targetIsEnemy = false;
 	}
 	
-	void Update () {
+	protected void Update () {
         checkHealth();
         Vector3 shipPosition = thisShip.transform.position;
-
-        getShipSelected(shipPosition);
-        if (isSelected)
+        if(isActive)
         {
-            setTarget();
-            if(shipCanFire())
+            getShipSelected(shipPosition);
+            if (isSelected)
             {
-                checkShoot();
+                setTarget();
+                if(shipCanFire())
+                {
+                    checkShoot();
+                }
+            }
+            if (hasTarget && !facingTarget)
+            {
+                rotate(shipPosition);
+            }
+            if (hasTarget && facingTarget)
+            {
+                move(shipPosition);
             }
         }
-        if (hasTarget && !facingTarget)
+        else
         {
-            rotate(shipPosition);
-        }
-        if (hasTarget && facingTarget)
-        {
-            move(shipPosition);
+            checkStun();
         }
 	}
 
@@ -158,7 +164,7 @@ public class PlayerController : UnitController {
             if (manager.survivingShips == manager.PlayerShips.Count)
             {
                 Debug.Log("Next Level");
-                Application.LoadLevel("Level2");
+                Application.LoadLevel("1to2");
             }
 
         }

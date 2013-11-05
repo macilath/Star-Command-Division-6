@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemySight : MonoBehaviour
-{
-    public float detectionRadius;           // size of detection circle
-    public float detectionScale = 2;
+public class EnemyFarSight : MonoBehaviour {
+
+	public float detectionRadius;           // size of detection circle
+    public float detectionScale = 20;
     private float fieldOfViewAngle;           // Number of degrees, centred on up, for the enemy see.
     public bool playerInSight;                      // Whether or not the player is currently sighted.
 
@@ -24,9 +24,13 @@ public class EnemySight : MonoBehaviour
         sightingExists = false;
         previousSighting = transform.position;
     }
-
-
-    void OnTriggerStay(Collider other)
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
+	
+	void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "PlayerShip")
         {
@@ -54,7 +58,13 @@ public class EnemySight : MonoBehaviour
             {
                 playerInSight = false;
             }
-
+			
+			if (playerInSight)
+	        {
+	            sightingExists = true;
+	            playerInSight = false;
+	        }
+			
             if (playerInSight)
             {
                 Debug.Log(string.Format("Angle: {0}, In Sight", angle));
@@ -63,15 +73,6 @@ public class EnemySight : MonoBehaviour
             {
                 Debug.Log(string.Format("Angle: {0}, NOT IN SIGHT", angle));
             }
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (playerInSight)
-        {
-            sightingExists = true;
-            playerInSight = false;
         }
     }
 }

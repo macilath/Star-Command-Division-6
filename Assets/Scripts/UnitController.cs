@@ -21,6 +21,9 @@ public abstract class UnitController : MonoBehaviour {
     protected bool targetIsEnemy;
     protected int fireInterval = 1000;
     protected Stopwatch stopwatch = new Stopwatch();
+    protected Stopwatch stunTimer = new Stopwatch();
+    protected int stunDuration;
+    protected bool isActive = true;
 
     protected bool shipCanFire()
     {
@@ -30,6 +33,28 @@ public abstract class UnitController : MonoBehaviour {
             return true;
         }
         return false;
+    }
+
+    protected bool shipIsActive()
+    {
+        return isActive;
+    }
+
+    public void deactivate(int time)
+    {
+        isActive = false;
+        stunTimer.Reset();
+        stunTimer.Start();
+        stunDuration = time;
+    }
+
+    public void checkStun()
+    {
+        if(stunTimer.ElapsedMilliseconds >= stunDuration)
+        {
+            stunTimer.Stop();
+            isActive = true;
+        }
     }
 
     protected abstract void getShipSelected(Vector3 shipPosition);
@@ -62,7 +87,8 @@ public abstract class UnitController : MonoBehaviour {
     {
         Vector3 toTarget = targetDest - shipPosition;
         float shipAngle = this.transform.rotation.eulerAngles.z;
-        float targetAngle = Vector3.Angle(Vector3.up, toTarget) * AngleDir(Vector3.up, toTarget, Vector3.forward);
+        float angleDir = AngleDir(this.transform.up, toTarget, Vector3.forward);
+        float targetAngle = Vector3.Angle(Vector3.up, toTarget) * angleDir;
         if (targetAngle < 0)
         {
             targetAngle += 360;
@@ -70,9 +96,21 @@ public abstract class UnitController : MonoBehaviour {
         float rotationAngle = targetAngle - shipAngle;
         //Debug.Log("Rotate from " + shipAngle + " to " + targetAngle);
         //Debug.Log(rotationAngle + " degrees");
-        this.transform.rotation = Quaternion.AngleAxis(targetAngle, Vector3.forward);
-        facingTarget = true;
+        //this.transform.rotation = Quaternion.AngleAxis(targetAngle, Vector3.forward);
+        //facingTarget = true;
         //TODO: make rotation fluid instead of instant
+
+        if(Math.Abs(rotationAngle) < 5)
+        {
+            this.rigidbody.angularVelocity = Vector3.zero;
+            this.transform.rotation = Quaternion.AngleAxis(targetAngle, Vector3.forward);
+            facingTarget = true;
+        }
+        else if(this.rigidbody.angularVelocity.z < shipRotSpeed)
+        {
+            Vector3 rotate = new Vector3(0, 0, 5 * angleDir);
+            this.rigidbody.AddTorque(rotate);
+        }
     }
 
     protected void move(Vector3 shipPosition)
