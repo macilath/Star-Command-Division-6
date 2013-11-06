@@ -4,6 +4,7 @@ using System.Collections;
 public class GameCamera : MonoBehaviour {
 
     public Camera camera;
+	public static GameManager manager;
 	public float moveSpeed;
     public static float y_bounds;
     public static float x_bounds;
@@ -12,6 +13,13 @@ public class GameCamera : MonoBehaviour {
     private int nebulaMoveFraction;
     private int dustMoveFraction;
     private int edgeSensitivity;
+	private int shipIndex;
+	
+	public void Awake()
+    {
+        manager = this.GetComponent<GameManager>();
+		shipIndex = 0;
+    }
 	
 	void Start()
 	{
@@ -24,6 +32,11 @@ public class GameCamera : MonoBehaviour {
         nebulaMoveFraction = 4;
         dustMoveFraction = 2;
         edgeSensitivity = 5;
+	}
+	
+	void Update()
+	{
+		ShipIterate();
 	}
 	
 	void FixedUpdate()
@@ -106,5 +119,38 @@ public class GameCamera : MonoBehaviour {
                 dust.transform.Translate(movement / dustMoveFraction);
             }
         }
+	}
+	
+	void ShipIterate()
+	{
+		if(Input.GetKeyDown("q"))
+        {
+			
+			NextShip();
+            Vector3 shipPos = manager.PlayerShips[shipIndex].transform.position;
+			shipPos.z = camera.transform.position.z;
+			
+			Vector3 amountMoved = shipPos - camera.transform.position;
+			
+			nebula.transform.Translate(amountMoved / nebulaMoveFraction);
+            dust.transform.Translate(amountMoved / dustMoveFraction);
+			
+			
+			camera.transform.position = shipPos;
+        }	
+	}
+	
+	void NextShip()
+	{
+		// iterate through the list of playerships, with wrapping around
+		
+		if(shipIndex >= manager.PlayerShips.Count-1)
+		{
+			shipIndex = 0;	
+		}
+		else
+		{
+			shipIndex++;
+		}
 	}
 }
