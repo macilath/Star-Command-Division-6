@@ -42,8 +42,8 @@ public class GameCamera : MonoBehaviour {
 
     void ScrollCamera()
     {
-        int orthoSizeMin = 10;
-        int orthoSizeMax = 30;
+        int orthoSizeMin = 15;
+        int orthoSizeMax = 20;
 
         if (Input.GetAxis("Mouse ScrollWheel") < 0) // move back
         {
