@@ -37,8 +37,24 @@ public class GameCamera : MonoBehaviour {
 	void Update()
 	{
 		ShipIterate();
+        ScrollCamera();
 	}
-	
+
+    void ScrollCamera()
+    {
+        int orthoSizeMin = 10;
+        int orthoSizeMax = 30;
+
+        if (Input.GetAxis("Mouse ScrollWheel") < 0) // move back
+        {
+            Camera.main.orthographicSize--;
+        }
+        if (Input.GetAxis("Mouse ScrollWheel") > 0) // forward
+        {
+            Camera.main.orthographicSize++;
+        }
+        Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, orthoSizeMin, orthoSizeMax);
+    }
 	void FixedUpdate()
 	{
         float x_pos = camera.transform.position.x;
