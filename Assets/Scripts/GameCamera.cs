@@ -14,6 +14,8 @@ public class GameCamera : MonoBehaviour {
     private int dustMoveFraction;
     private int edgeSensitivity;
 	private int shipIndex;
+    private int minZoom;
+    private int maxZoom;
 	
 	public void Awake()
     {
@@ -32,6 +34,8 @@ public class GameCamera : MonoBehaviour {
         nebulaMoveFraction = 4;
         dustMoveFraction = 2;
         edgeSensitivity = 5;
+        minZoom = 15;
+        maxZoom = 20;
 	}
 	
 	void Update()
@@ -42,8 +46,6 @@ public class GameCamera : MonoBehaviour {
 
     void ScrollCamera()
     {
-        int orthoSizeMin = 15;
-        int orthoSizeMax = 20;
 
         if (Input.GetAxis("Mouse ScrollWheel") < 0) // move back
         {
@@ -53,7 +55,7 @@ public class GameCamera : MonoBehaviour {
         {
             Camera.main.orthographicSize++;
         }
-        Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, orthoSizeMin, orthoSizeMax);
+        Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, minZoom, maxZoom);
     }
 	void FixedUpdate()
 	{
