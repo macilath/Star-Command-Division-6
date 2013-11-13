@@ -1,8 +1,12 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using System.Diagnostics;
 
 public class HackerController : PlayerController {
+
+    private Stopwatch hackWatch = new Stopwatch();
+    //private int hackedStations = 0; 
 
     void Start()
     {
@@ -19,11 +23,15 @@ public class HackerController : PlayerController {
     void Update()
     {
         base.Update();
+        if (this.shipHealth <= 0)
+        {
+            manager.hackerAlive = false;
+        }
     }
 
     protected override void fireWeapons()
     {
-        Debug.Log("Ship " + thisShip.name + " has fired.");
+        UnityEngine.Debug.Log("Ship " + thisShip.name + " has fired.");
         GameObject Projectile = (GameObject)Resources.Load("StunProjectile");
         Vector3 projectile_position = thisShip.transform.position + (thisShip.transform.up * (shipSizeH + 1));
         GameObject projObject = Instantiate(Projectile, projectile_position, thisShip.transform.rotation) as GameObject;
@@ -35,4 +43,37 @@ public class HackerController : PlayerController {
         //TODO: set the target of the projectile
         //proj.setTarget()
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "HackStation")
+        {
+            UnityEngine.Debug.Log("Met hackstation");
+            hackWatch.Reset();
+            hackWatch.Start();
+        }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "HackStation")
+        {
+            if (hackWatch.ElapsedMilliseconds >= 5000)
+            {
+                // Set tag to hacked?
+                other.gameObject.tag = "Hacked";
+                hackWatch.Stop();
+                manager.hackedStations++;
+                print("Hacked stations: " + manager.hackedStations);
+            }
+        }
+    }
+    /*
+    void OnTriggerLeave(Collider other)
+    {
+        if (other.gameObject.tag == "HackStation" || other.gameObject.tag == "Hacked")
+        {
+            hackWatch.Reset();
+        }
+    } */
 }
