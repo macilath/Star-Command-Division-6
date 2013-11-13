@@ -74,7 +74,9 @@ public class PlayerController : UnitController {
             // If the user simply clicks and doesn't drag, the selection box will be smaller than this
             if (Mouse.selection.width <= 10 && Mouse.selection.height <= 10)
             {
-                Rect boundingRect = new Rect(Input.mousePosition.x - 75, Input.mousePosition.y - 75, 150, 150);
+                GameCamera cam = GameObject.Find("Main Camera").GetComponent<GameCamera>();
+                float zoomFactor = 0.5f * (1 - ((cam.maxZoom - cam.currentZoom) / cam.maxZoom));
+                Rect boundingRect = new Rect(Input.mousePosition.x - (75 * zoomFactor), Input.mousePosition.y - (75 * zoomFactor), 150 * zoomFactor, 150 * zoomFactor);
                 if (boundingRect.Contains(camPos))
                 {
                     Debug.Log("Found object: " + this.name);

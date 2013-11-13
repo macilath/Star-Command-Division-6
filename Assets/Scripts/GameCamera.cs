@@ -14,8 +14,9 @@ public class GameCamera : MonoBehaviour {
     private int dustMoveFraction;
     private int edgeSensitivity;
 	private int shipIndex;
-    private int minZoom;
-    private int maxZoom;
+    public int minZoom;
+    public int maxZoom;
+    public float currentZoom;
 	
 	public void Awake()
     {
@@ -47,15 +48,16 @@ public class GameCamera : MonoBehaviour {
     void ScrollCamera()
     {
 
-        if (Input.GetAxis("Mouse ScrollWheel") < 0) // move back
+        if (Input.GetAxis("Mouse ScrollWheel") > 0) // move back
         {
             Camera.main.orthographicSize--;
         }
-        if (Input.GetAxis("Mouse ScrollWheel") > 0) // forward
+        if (Input.GetAxis("Mouse ScrollWheel") < 0) // forward
         {
             Camera.main.orthographicSize++;
         }
         Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, minZoom, maxZoom);
+        currentZoom = Camera.main.orthographicSize;
     }
 	void FixedUpdate()
 	{
