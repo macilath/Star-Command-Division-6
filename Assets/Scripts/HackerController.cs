@@ -6,7 +6,7 @@ using System.Diagnostics;
 public class HackerController : PlayerController {
 
     private Stopwatch hackWatch = new Stopwatch();
-    private int hackedStations = 0; 
+    //private int hackedStations = 0; 
 
     void Start()
     {
@@ -23,6 +23,10 @@ public class HackerController : PlayerController {
     void Update()
     {
         base.Update();
+        if (this.shipHealth <= 0)
+        {
+            Application.LoadLevel("L2Loss");
+        }
     }
 
     protected override void fireWeapons()
@@ -59,8 +63,8 @@ public class HackerController : PlayerController {
                 // Set tag to hacked?
                 other.gameObject.tag = "Hacked";
                 hackWatch.Stop();
-                hackedStations++;
-                print("Hacked stations: " + hackedStations);
+                manager.hackedStations++;
+                print("Hacked stations: " + manager.hackedStations);
             }
         }
     }

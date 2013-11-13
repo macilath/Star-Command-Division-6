@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour {
 
     public Stopwatch alertStopwatch = new Stopwatch();
     private int alertWindow = 60000; //in ms, 1 min 
-    public int survivingShips = 0; 
+    public int survivingShips = 0;
+    public int hackedStations = 0;
 
     void Start()
     {
