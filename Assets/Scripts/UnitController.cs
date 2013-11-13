@@ -64,6 +64,7 @@ public abstract class UnitController : MonoBehaviour {
             {
                 Destroy(ElectricEffect);
             }
+            
         }
     }
 
