@@ -7,6 +7,7 @@ public class EnemyController : UnitController {
     EnemySight vision;
     void Start () {
         thisShip = this.gameObject;
+        Electric = (GameObject)Resources.Load("EnemyStun");
         vision = thisShip.GetComponentInChildren<EnemySight>();
         targetDest = thisShip.transform.position;
         isSelected = false;

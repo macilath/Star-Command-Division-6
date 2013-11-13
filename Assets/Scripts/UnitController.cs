@@ -6,6 +6,8 @@ using System.Diagnostics;
 public abstract class UnitController : MonoBehaviour {
 
     protected GameObject thisShip;
+    protected GameObject Electric;
+    protected GameObject ElectricEffect;
     protected bool isSelected;
     public static GameManager manager; 
     protected int shipSpeed;
@@ -46,14 +48,22 @@ public abstract class UnitController : MonoBehaviour {
         stunTimer.Reset();
         stunTimer.Start();
         stunDuration = time;
+        Vector3 effectPos = thisShip.transform.position;
+        effectPos.z -= 0.5f;
+        ElectricEffect = Instantiate(Electric, effectPos, thisShip.transform.rotation) as GameObject;
+        ElectricEffect.transform.parent = thisShip.transform;
     }
 
-    public void checkStun()
+    public virtual void checkStun()
     {
         if(stunTimer.ElapsedMilliseconds >= stunDuration)
         {
             stunTimer.Stop();
             isActive = true;
+            if(ElectricEffect.activeInHierarchy)
+            {
+                Destroy(ElectricEffect);
+            }
         }
     }
 
