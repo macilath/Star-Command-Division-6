@@ -21,12 +21,7 @@ public class WeaponController : MonoBehaviour {
     protected GameObject parentShip;
 
     protected void Start () {
-    	weaponDamage = 25;
-	    weaponRange = 20;
-	    weaponSpeed = 500;
-	    weaponAccel = 0;
-	    weaponSizeH = 3f;
-	    weaponSizeW = 0.3f;
+        Init();
 	    isCollided = false;
 	    hasTarget = false;
 	    weapon = this.gameObject;
@@ -34,6 +29,16 @@ public class WeaponController : MonoBehaviour {
         kick();
         //for debugging, should be determined by firing ship
         //enemyTag = "EnemyShip";
+    }
+
+    protected virtual void Init()
+    {
+        weaponDamage = 25;
+        weaponRange = 30;
+        weaponSpeed = 1000;
+        weaponAccel = 0;
+        weaponSizeH = 3f;
+        weaponSizeW = 0.3f;
     }
     
     protected void Update () {

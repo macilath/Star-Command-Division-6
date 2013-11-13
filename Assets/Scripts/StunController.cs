@@ -7,8 +7,16 @@ public class StunController : WeaponController {
     void Start()
     {
         base.Start();
+    }
+
+    protected override void Init()
+    {
         weaponDamage = 2000;
-        weaponSpeed = 400;
+        weaponRange = 20;
+        weaponSpeed = 500;
+        weaponAccel = 0;
+        weaponSizeH = 3f;
+        weaponSizeW = 0.3f;
     }
 
     void Update()
