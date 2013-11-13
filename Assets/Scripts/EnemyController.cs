@@ -10,7 +10,7 @@ public class EnemyController : UnitController {
         vision = thisShip.GetComponentInChildren<EnemySight>();
         targetDest = thisShip.transform.position;
         isSelected = false;
-        shipSpeed = 30;
+        shipSpeed = 95;
         shipAccel = 3;
         shipSizeH = 3f;
         shipSizeW = 3f;
