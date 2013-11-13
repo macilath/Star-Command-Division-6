@@ -25,7 +25,7 @@ public class HackerController : PlayerController {
         base.Update();
         if (this.shipHealth <= 0)
         {
-            Application.LoadLevel("L2Loss");
+            manager.hackerAlive = false;
         }
     }
 
