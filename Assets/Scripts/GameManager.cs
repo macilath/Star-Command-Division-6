@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour {
             {
                 PlayerShips.Add(players[i]);
             }
+            survivingShips = 0;
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyShip");
             for (int i = 0; i < enemies.Length; i++)
             {
