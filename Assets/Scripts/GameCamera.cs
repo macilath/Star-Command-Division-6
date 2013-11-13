@@ -13,7 +13,7 @@ public class GameCamera : MonoBehaviour {
     private int nebulaMoveFraction;
     private int dustMoveFraction;
     private int edgeSensitivity;
-	private int shipIndex;
+	public int shipIndex;
     public int minZoom;
     public int maxZoom;
     public float currentZoom;
@@ -29,7 +29,7 @@ public class GameCamera : MonoBehaviour {
 		camera = GetComponent<Camera>();
         nebula = GameObject.Find("Nebula");
         dust = GameObject.Find("SpaceDust");
-        moveSpeed = 0.2f;
+        moveSpeed = 0.6f;
         y_bounds = 90;
         x_bounds = 30;
         nebulaMoveFraction = 4;
@@ -40,8 +40,11 @@ public class GameCamera : MonoBehaviour {
 	}
 	
 	void Update()
-	{
-		ShipIterate();
+	{        
+		if(Input.GetKeyDown("q"))
+        {
+		    ShipIterate();
+        }
         ScrollCamera();
 	}
 
@@ -141,23 +144,18 @@ public class GameCamera : MonoBehaviour {
         }
 	}
 	
-	void ShipIterate()
+	public void ShipIterate()
 	{
-		if(Input.GetKeyDown("q"))
-        {
+		NextShip();
+        Vector3 shipPos = manager.PlayerShips[shipIndex].transform.position;
+		shipPos.z = camera.transform.position.z;
 			
-			NextShip();
-            Vector3 shipPos = manager.PlayerShips[shipIndex].transform.position;
-			shipPos.z = camera.transform.position.z;
+		Vector3 amountMoved = shipPos - camera.transform.position;
 			
-			Vector3 amountMoved = shipPos - camera.transform.position;
+		nebula.transform.Translate(amountMoved / nebulaMoveFraction);
+        dust.transform.Translate(amountMoved / dustMoveFraction);
 			
-			nebula.transform.Translate(amountMoved / nebulaMoveFraction);
-            dust.transform.Translate(amountMoved / dustMoveFraction);
-			
-			
-			camera.transform.position = shipPos;
-        }	
+		camera.transform.position = shipPos;
 	}
 	
 	void NextShip()

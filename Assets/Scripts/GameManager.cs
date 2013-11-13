@@ -55,6 +55,9 @@ public class GameManager : MonoBehaviour {
             {
                 EnemyShips.Add(enemies[i]);
             }
+            GameCamera cam = GameObject.Find("Main Camera").GetComponent<GameCamera>();
+            cam.shipIndex = PlayerShips.Count;
+            cam.ShipIterate();
             //Selectable.Add(PlayerShip); 
 			
 		}
