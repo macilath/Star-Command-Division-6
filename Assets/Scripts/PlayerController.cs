@@ -21,6 +21,7 @@ public class PlayerController : UnitController {
         shipRotSpeed = 10f;
         maxHealth = 100;
         shipHealth = 100;
+        fireInterval = 750;
         hasTarget = false;
         facingTarget = true;
         targetIsEnemy = false;

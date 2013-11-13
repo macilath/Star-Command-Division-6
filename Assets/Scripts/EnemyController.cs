@@ -17,6 +17,7 @@ public class EnemyController : UnitController {
         shipRotSpeed = 10f;
         shipHealth = 100;
         maxHealth = 100;
+        fireInterval = 800;
         hasTarget = false;
         facingTarget = true;
         targetIsEnemy = false;
