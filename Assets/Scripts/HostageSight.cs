@@ -9,8 +9,12 @@ public class HostageSight : MonoBehaviour {
         followPlayer = false;
 	}
 	
+	void Update()
+	{
+		Debug.Log(followPlayer);	
+	}
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
@@ -18,11 +22,11 @@ public class HostageSight : MonoBehaviour {
         }
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            followPlayer = false;
-        }
-    }
+//    void OnTriggerExit(Collider other)
+//    {
+//        if (other.gameObject.tag == "Player")
+//        {
+//            followPlayer = false;
+//        }
+//    }
 }
