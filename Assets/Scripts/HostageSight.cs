@@ -11,7 +11,7 @@ public class HostageSight : MonoBehaviour {
 	
 	void Update()
 	{
-		Debug.Log(followPlayer);	
+		//Debug.Log(followPlayer);	
 	}
 
     void OnTriggerEnter(Collider other)
@@ -21,12 +21,4 @@ public class HostageSight : MonoBehaviour {
             followPlayer = true;
         }
     }
-
-//    void OnTriggerExit(Collider other)
-//    {
-//        if (other.gameObject.tag == "Player")
-//        {
-//            followPlayer = false;
-//        }
-//    }
 }

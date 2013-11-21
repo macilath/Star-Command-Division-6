@@ -12,8 +12,6 @@ public class CharMovement : MonoBehaviour
         float h_axis = Input.GetAxisRaw("Horizontal");
         float v_axis = Input.GetAxisRaw("Vertical");
 		
-        float mouse_x = Input.mousePosition.x;
-        float mouse_y = Input.mousePosition.z;
         if(h_axis != 0)
         {
             Vector3 movement;
