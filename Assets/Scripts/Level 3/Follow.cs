@@ -15,7 +15,6 @@ public class Follow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //m_NavMeshAgent.destination = m_Player.position;
         if (vision.followPlayer)
             m_NavMeshAgent.destination = m_Player.position;
         else
