@@ -13,17 +13,19 @@ public class GeneratorController : MonoBehaviour {
 	protected string hackedSprite = "HackingStation2";
 	protected static GameManager manager;
 
-	Awake()
+	void Awake()
 	{
-		img.SetSprite(baseSprite);
+        img = this.GetComponent<tk2dSprite>();
+
+        GameObject camera = GameObject.Find("Main Camera");
         manager = camera.GetComponent<GameManager>();
 	}
 
-	Start()
+	void Start()
 	{
 	}
 
-	Update()
+	void Update()
 	{
 		if( ! hacked )
 		{
@@ -31,17 +33,19 @@ public class GeneratorController : MonoBehaviour {
 		}
 	}
 
-	public checkHack()
+	public void checkHack()
 	{
+        UnityEngine.Debug.Log(hackWatch.ElapsedMilliseconds + " ms");
 		if( hackWatch.ElapsedMilliseconds >= timeToHack)
 		{
 			hacked = true;
 			++manager.hackedStations;
+            UnityEngine.Debug.Log("Setting sprite");
 			img.SetSprite(hackedSprite);
 		}
 	}
 
-	public startHack()
+	public void startHack()
 	{
 		if( ! hacked )
 		{
@@ -50,7 +54,7 @@ public class GeneratorController : MonoBehaviour {
     	}
 	}
 
-	public stopHack()
+	public void stopHack()
 	{
 		if( ! hacked )
 		{
