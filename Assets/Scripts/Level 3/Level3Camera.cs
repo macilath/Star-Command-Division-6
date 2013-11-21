@@ -18,19 +18,18 @@ public class Level3Camera : MonoBehaviour {
 	
 	void Update()
 	{
+		snapToPlayer();
 	}
 
 	void FixedUpdate()
 	{
-		snapToPlayer();
+		//snapToPlayer();
 	}
 	
 	public void snapToPlayer()
 	{
         Vector3 playerPos = player.transform.position;
 		playerPos.y = camera.transform.position.y;
-			
-		Vector3 amountMoved = shipPos - camera.transform.position;
 			
 		camera.transform.position = playerPos;
 	}
