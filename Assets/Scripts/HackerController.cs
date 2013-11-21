@@ -5,7 +5,6 @@ using System.Diagnostics;
 
 public class HackerController : PlayerController {
 
-    private Stopwatch hackWatch = new Stopwatch();
     //private int hackedStations = 0; 
 
     void Start()
@@ -49,12 +48,12 @@ public class HackerController : PlayerController {
         if (other.gameObject.tag == "HackStation")
         {
             UnityEngine.Debug.Log("Met hackstation");
-            hackWatch.Reset();
-            hackWatch.Start();
+            GeneratorController gen = other.gameObject.GetComponent<GeneratorController>();
+            gen.startHack();
         }
     }
 
-    void OnTriggerStay(Collider other)
+    /*void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "HackStation")
         {
@@ -67,13 +66,14 @@ public class HackerController : PlayerController {
                 print("Hacked stations: " + manager.hackedStations);
             }
         }
-    }
-    /*
+    }*/
+    
     void OnTriggerLeave(Collider other)
     {
-        if (other.gameObject.tag == "HackStation" || other.gameObject.tag == "Hacked")
+        if (other.gameObject.tag == "HackStation")
         {
-            hackWatch.Reset();
+            GeneratorController gen = other.gameObject.GetComponent<GeneratorController>();
+            gen.stopHack();
         }
-    } */
+    }
 }
