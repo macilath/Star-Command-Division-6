@@ -7,13 +7,16 @@ public class GeneratorController : MonoBehaviour {
 
 	protected bool hacked = false;
 	protected int timeToHack = 5000;
+    private Stopwatch hackWatch = new Stopwatch();
 	protected tk2dSprite img;
-	protected string baseSprite = "hackingStation";
-	protected string hackedSprite = "hackedStation";
+	protected string baseSprite = "HackingStation1";
+	protected string hackedSprite = "HackingStation2";
+	protected static GameManager manager;
 
 	Awake()
 	{
 		img.SetSprite(baseSprite);
+        manager = camera.GetComponent<GameManager>();
 	}
 
 	Start()
@@ -22,18 +25,40 @@ public class GeneratorController : MonoBehaviour {
 
 	Update()
 	{
+		if( ! hacked )
+		{
+			checkHack();
+		}
 	}
 
-	public hackStation()
+	public checkHack()
 	{
-		if( !hacked )
+		if( hackWatch.ElapsedMilliseconds >= timeToHack)
 		{
-			--timeToHack;
-			if( timeToHack == 0 )
-			{
-				hacked = true;
-				img.SetSprite(hackedSprite);
-			}
+			hacked = true;
+			++manager.hackedStations;
+			img.SetSprite(hackedSprite);
+		}
+	}
+
+	public startHack()
+	{
+		if( ! hacked )
+		{
+	        hackWatch.Reset();
+	        hackWatch.Start();
+    	}
+	}
+
+	public stopHack()
+	{
+		if( ! hacked )
+		{
+			hackWatch.Reset();
+		}
+		else
+		{
+			hackWatch.Stop();
 		}
 	}
 }
