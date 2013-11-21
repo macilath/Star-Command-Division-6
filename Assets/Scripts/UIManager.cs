@@ -50,30 +50,24 @@ public class UIManager : MonoBehaviour {
         else if (Application.loadedLevelName == "L2Loss")
         {
             // GUI for losing in level 2
+            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 60, 100, 40), "Try Again"))
+            {
+                print("Replay from L2Loss");
+                Application.LoadLevel("Level2");
+            }
         }
 
         else if (Application.loadedLevelName == "L3Loss")
         {
             // GUI for losing in the last level
+            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 60, 100, 40), "Try Again"))
+            {
+                print("Replay from L3Loss");
+                Application.LoadLevel("Level3");
+            }
         }
 
-        // Victory
-        else if (Application.loadedLevelName == "L1Victory")
-        {
-            // GUI for passing level 1 (continuing story)
-        }
-
-        else if (Application.loadedLevelName == "L2Victory")
-        {
-            // GUI for passing level 2 (continuing story)
-        }
-
-        else if (Application.loadedLevelName == "L3Victory")
-        {
-            // GUI for passing level 3 (winning game)
-        }
-
-        // Transitional scenes
+        // Transitional scenes - If scene is loaded then we won the previous level
         else if (Application.loadedLevelName == "1to2")
         {
             if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 100, 100, 40), "PLAY"))
