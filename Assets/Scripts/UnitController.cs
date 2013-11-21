@@ -44,14 +44,17 @@ public abstract class UnitController : MonoBehaviour {
 
     public void deactivate(int time)
     {
-        isActive = false;
         stunTimer.Reset();
         stunTimer.Start();
         stunDuration = time;
         Vector3 effectPos = thisShip.transform.position;
         effectPos.z -= 0.5f;
-        ElectricEffect = Instantiate(Electric, effectPos, thisShip.transform.rotation) as GameObject;
-        ElectricEffect.transform.parent = thisShip.transform;
+        if( isActive )
+        {
+            ElectricEffect = Instantiate(Electric, effectPos, thisShip.transform.rotation) as GameObject;
+            ElectricEffect.transform.parent = thisShip.transform;
+        }
+        isActive = false;
     }
 
     public virtual void checkStun()

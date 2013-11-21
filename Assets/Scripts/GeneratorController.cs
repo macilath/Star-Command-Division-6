@@ -8,14 +8,14 @@ public class GeneratorController : MonoBehaviour {
 	protected bool hacked = false;
 	protected int timeToHack = 5000;
     private Stopwatch hackWatch = new Stopwatch();
-	protected tk2dSprite img;
-	protected string baseSprite = "HackingStation1";
-	protected string hackedSprite = "HackingStation2";
+	protected tk2dSpriteAnimator img;
+	protected string baseSprite = "HackingStation";
+	protected string hackedSprite = "HackedStation";
 	protected static GameManager manager;
 
 	void Awake()
 	{
-        img = this.GetComponent<tk2dSprite>();
+        img = this.GetComponent<tk2dSpriteAnimator>();
 
         GameObject camera = GameObject.Find("Main Camera");
         manager = camera.GetComponent<GameManager>();
@@ -35,13 +35,13 @@ public class GeneratorController : MonoBehaviour {
 
 	public void checkHack()
 	{
-        UnityEngine.Debug.Log(hackWatch.ElapsedMilliseconds + " ms");
+        //UnityEngine.Debug.Log(hackWatch.ElapsedMilliseconds + " ms");
 		if( hackWatch.ElapsedMilliseconds >= timeToHack)
 		{
 			hacked = true;
 			++manager.hackedStations;
             UnityEngine.Debug.Log("Setting sprite");
-			img.SetSprite(hackedSprite);
+			img.Play(hackedSprite);
 		}
 	}
 
