@@ -8,6 +8,9 @@ public class EnemyController : UnitController {
     void Start () {
         thisShip = this.gameObject;
         Electric = (GameObject)Resources.Load("EnemyStun");
+        Afterburn = (GameObject)Resources.Load("EnemyAfterburner");
+        burnFull = "EnemyAfterburnFull";
+        burnHalf = "EnemyAfterburnHalf";
         vision = thisShip.GetComponentInChildren<EnemySight>();
         targetDest = thisShip.transform.position;
         isSelected = false;

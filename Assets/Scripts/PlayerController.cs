@@ -13,6 +13,9 @@ public class PlayerController : UnitController {
 	protected void Start () {
 		thisShip = this.gameObject;
         targetDest = thisShip.transform.position;
+        Afterburn = (GameObject)Resources.Load("EnemyAfterburner");
+        burnFull = "EnemyAfterburnFull";
+        burnHalf = "EnemyAfterburnHalf";
 	    isSelected = false;
 	    shipSpeed = 100;
 	    shipAccel = 3;

@@ -8,6 +8,10 @@ public abstract class UnitController : MonoBehaviour {
     protected GameObject thisShip;
     protected GameObject Electric;
     protected GameObject ElectricEffect;
+    protected GameObject Afterburn;
+    protected GameObject AfterburnEffect;
+    protected string burnFull;
+    protected string burnHalf;
     protected bool isSelected;
     public static GameManager manager; 
     protected int shipSpeed;
@@ -67,7 +71,6 @@ public abstract class UnitController : MonoBehaviour {
             {
                 Destroy(ElectricEffect);
             }
-            
         }
     }
 
@@ -143,6 +146,10 @@ public abstract class UnitController : MonoBehaviour {
             this.rigidbody.angularVelocity = Vector3.zero;
             UnityEngine.Debug.Log("Destination Reached.");
             hasTarget = false;
+            if(AfterburnEffect.activeInHierarchy)
+            {
+                Destroy(AfterburnEffect);
+            }
             return;
         }
 
@@ -152,9 +159,37 @@ public abstract class UnitController : MonoBehaviour {
             if (shipVelocity.sqrMagnitude < shipSpeed)
             {
                 forceVector = shipVelocity + (forceVector * shipAccel);
+                //UnityEngine.Debug.Log("Accelerating");
+                if( AfterburnEffect == null)
+                {
+                    UnityEngine.Debug.Log("Engaging Afterburner");
+                    Vector3 enginePos = thisShip.transform.position;
+                    enginePos.z += 0.5f;
+                    AfterburnEffect = Instantiate(Afterburn, enginePos, thisShip.transform.rotation) as GameObject;
+                    AfterburnEffect.transform.parent = thisShip.transform;
+                }
+                else
+                {
+                    tk2dSprite burner = AfterburnEffect.GetComponent<tk2dSprite>();
+                    //UnityEngine.Debug.Log("Constant Speed");
+                    //UnityEngine.Debug.Log("Current Sprite name: " + burner.CurrentSprite.name);
+                    if( burner.CurrentSprite.name == burnHalf )
+                    {
+                        UnityEngine.Debug.Log("Engine full speed");
+                        burner.SetSprite(burnFull);
+                    }
+                }
             }
             else
             {
+                tk2dSprite burner = AfterburnEffect.GetComponent<tk2dSprite>();
+                //UnityEngine.Debug.Log("Constant Speed");
+                //UnityEngine.Debug.Log("Current Sprite name: " + burner.CurrentSprite.name);
+                if( burner.CurrentSprite.name == burnFull )
+                {
+                    UnityEngine.Debug.Log("Engine half speed");
+                    burner.SetSprite(burnHalf);
+                }
                 forceVector = new Vector3(0, 0, 0);
             }
         }
