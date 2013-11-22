@@ -64,7 +64,7 @@ public class WeaponController : MonoBehaviour {
         enemyTag = tag;
     }
 
-    protected virtual void OnCollisionEnter(Collision other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == enemyTag)
         {
@@ -72,10 +72,19 @@ public class WeaponController : MonoBehaviour {
         }
         else if(other.gameObject.tag == "Asteroid")
         {
-            Vector3 point_of_contact = (other.contacts[0]).point;
+            //Vector3 point_of_contact = (other.contacts[0]).point;
+            Vector3 point_of_contact = other.ClosestPointOnBounds(weapon.transform.position);
             other.rigidbody.AddForceAtPosition((this.rigidbody.velocity) * 5, point_of_contact);
         }
-        Destroy(weapon);
+
+        if( other.gameObject.tag == "Vision" )
+        {
+            //do nothing
+        }
+        else
+        {
+            Destroy(weapon);
+        }
     }
 
     protected void checkBounds()
