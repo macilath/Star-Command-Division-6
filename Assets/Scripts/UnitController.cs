@@ -172,20 +172,13 @@ public abstract class UnitController : MonoBehaviour {
         this.rigidbody.AddForce(forceVector);
     }
 
-    protected void checkHealth()
+    protected virtual void checkHealth()
     {
         if(shipHealth <= 0)
         {
             GameObject Explosion = (GameObject)Resources.Load("ShipExplode1");
             Instantiate(Explosion, thisShip.transform.position, Quaternion.identity);
-            if (thisShip.tag == "EnemyShip")
-            {
-                manager.EnemyShips.Remove(thisShip);
-            }
-            else if (thisShip.tag == "PlayerShip")
-            {
-                manager.PlayerShips.Remove(thisShip);
-            }
+
             Destroy(thisShip);
         }
     }

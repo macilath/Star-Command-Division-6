@@ -19,9 +19,11 @@ public class WeaponController : MonoBehaviour {
     protected GameObject weapon;
     protected GameObject target;
     protected GameObject parentShip;
+    protected static GameManager manager;
 
     protected void Start () {
         Init();
+        manager = GameObject.Find("Main Camera").GetComponent<GameManager>();
 	    isCollided = false;
 	    hasTarget = false;
 	    weapon = this.gameObject;
@@ -70,14 +72,19 @@ public class WeaponController : MonoBehaviour {
         {
             ((UnitController)((other.gameObject).GetComponent<UnitController>())).takeDamage(weaponDamage);
         }
-        else if(other.gameObject.tag == "Asteroid")
+
+        constantTriggerActions(other);
+    }
+
+    protected void constantTriggerActions(Collider other)
+    {
+        if(other.gameObject.tag == "Asteroid")
         {
-            //Vector3 point_of_contact = (other.contacts[0]).point;
             Vector3 point_of_contact = other.ClosestPointOnBounds(weapon.transform.position);
             other.rigidbody.AddForceAtPosition((this.rigidbody.velocity) * 5, point_of_contact);
         }
 
-        if( other.gameObject.tag == "Vision" )
+        if( other.gameObject.tag == "Vision" || (manager.hackedStations == 4 && other.gameObject.name == "Shield"))
         {
             //do nothing
         }

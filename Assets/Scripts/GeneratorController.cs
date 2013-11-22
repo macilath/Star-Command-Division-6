@@ -6,7 +6,7 @@ using System.Diagnostics;
 public class GeneratorController : MonoBehaviour {
 
 	protected bool hacked = false;
-	protected int timeToHack = 5000;
+	public int timeToHack = 5000;
     private Stopwatch hackWatch = new Stopwatch();
 	protected tk2dSpriteAnimator img;
 	protected string baseSprite = "HackingStation";

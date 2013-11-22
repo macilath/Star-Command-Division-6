@@ -158,6 +158,15 @@ public class PlayerController : UnitController {
         }
     }
 
+    protected override void checkHealth()
+    {
+        base.checkHealth();
+        if( shipHealth <= 0 )
+        {
+            manager.PlayerShips.Remove(thisShip);
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "SpaceStation")

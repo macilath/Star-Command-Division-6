@@ -153,4 +153,13 @@ public class EnemyController : UnitController {
             fireWeapons();
         }
     }
+
+    protected override void checkHealth()
+    {
+        base.checkHealth();
+        if( shipHealth <= 0 )
+        {
+            manager.EnemyShips.Remove(thisShip);
+        }
+    }
 }

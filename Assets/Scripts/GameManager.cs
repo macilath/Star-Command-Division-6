@@ -21,25 +21,42 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        if (alertStopwatch.ElapsedMilliseconds >= alertWindow) 
+        if( Application.loadedLevelName == "Level1")
         {
-            if (Application.loadedLevelName != "Level1")
-            {
-                alertStopwatch.Reset();
-            }
-            else
-            {
-                alertStopwatch.Reset();
-                Application.LoadLevel("L1Loss");
-            }
+            Level2Logic();
         }
-        if (PlayerShips.Count == 0 && Application.loadedLevelName == "Level1")
+        if( Application.loadedLevelName == "Level2")
+        {
+            Level2Logic();
+        }
+    }
+
+    void Level1Logic()
+    {
+        if ( PlayerShips.Count == 0 )
         {
             Application.LoadLevel("L1Loss");
         }
-        if (!hackerAlive && Application.loadedLevelName == "Level2") //or we lose special ship
+
+        if (alertStopwatch.ElapsedMilliseconds >= alertWindow || !hackerAlive) 
         {
-			Application.LoadLevel("L2Loss");
+            alertStopwatch.Reset();
+            Application.LoadLevel("L1Loss");
+        }
+    }
+
+    void Level2Logic()
+    {
+        if ( !hackerAlive ) //or we lose special ship
+        {
+            Application.LoadLevel("L2Loss");
+        }
+
+        if( hackedStations == 4 )
+        {
+            GameObject shield = GameObject.Find("Shield");
+            shield.GetComponent<MeshRenderer>().enabled = false;
+            shield.GetComponent<MeshCollider>().isTrigger = true;
         }
     }
 	

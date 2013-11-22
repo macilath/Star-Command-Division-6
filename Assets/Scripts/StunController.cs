@@ -30,19 +30,7 @@ public class StunController : WeaponController {
         {
             ((UnitController)((other.gameObject).GetComponent<UnitController>())).deactivate(weaponDamage);
         }
-        else if(other.gameObject.tag == "Asteroid")
-        {
-            Vector3 point_of_contact = other.ClosestPointOnBounds(weapon.transform.position);
-            other.rigidbody.AddForceAtPosition((this.rigidbody.velocity) * 5, point_of_contact);
-        }
 
-        if( other.gameObject.tag == "Vision" )
-        {
-            //do nothing
-        }
-        else
-        {
-            Destroy(weapon);
-        }
+        constantTriggerActions(other);
     }
 }

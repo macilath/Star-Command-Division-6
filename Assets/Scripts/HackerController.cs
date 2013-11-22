@@ -22,10 +22,6 @@ public class HackerController : PlayerController {
     void Update()
     {
         base.Update();
-        if (this.shipHealth <= 0)
-        {
-            manager.hackerAlive = false;
-        }
     }
 
     protected override void fireWeapons()
@@ -41,6 +37,15 @@ public class HackerController : PlayerController {
         //proj.setParent(this.gameObject);
         //TODO: set the target of the projectile
         //proj.setTarget()
+    }
+
+    protected override void checkHealth()
+    {
+        base.checkHealth();
+        if( shipHealth <= 0 )
+        {
+            manager.hackerAlive = false;
+        }
     }
 
     void OnTriggerEnter(Collider other)
