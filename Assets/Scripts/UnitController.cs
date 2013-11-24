@@ -164,7 +164,7 @@ public abstract class UnitController : MonoBehaviour {
                 {
                     UnityEngine.Debug.Log("Engaging Afterburner");
                     Vector3 enginePos = thisShip.transform.position;
-                    enginePos.z += 0.5f;
+                    enginePos.z += 0.05f;
                     AfterburnEffect = Instantiate(Afterburn, enginePos, thisShip.transform.rotation) as GameObject;
                     AfterburnEffect.transform.parent = thisShip.transform;
                 }
