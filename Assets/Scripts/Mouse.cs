@@ -18,6 +18,7 @@ public class Mouse : MonoBehaviour
     {
         manager = GameObject.Find("Main Camera").GetComponent<GameManager>();
         selectionBox = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        selectionBox.name = "Selection";
         selectionBox.AddComponent<SelectionBox>();
         selectionBox.AddComponent<Rigidbody>();
         selectionBox.transform.position = Vector3.zero;
@@ -42,6 +43,7 @@ public class Mouse : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             mouseDownPoint = Input.mousePosition;
+            mouseDown = camera.ScreenToWorldPoint(mouseDownPoint);
             selectionBox.GetComponent<MeshRenderer>().enabled = true;
             selectionBox.GetComponent<BoxCollider>().enabled = true;
             foreach( GameObject obj in manager.PlayerShips )
@@ -60,7 +62,6 @@ public class Mouse : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             
-            mouseDown = camera.ScreenToWorldPoint(mouseDownPoint);
             worldMousePosition = camera.ScreenToWorldPoint(Input.mousePosition);
             /*
             //selection = new Rect(mouseDownPoint.x, InverseMouseY(mouseDownPoint.y), Input.mousePosition.x - mouseDownPoint.x,
