@@ -36,7 +36,6 @@ public class PlayerController : UnitController {
         Vector3 shipPosition = thisShip.transform.position;
         if(isActive)
         {
-            getShipSelected(shipPosition);
             if (isSelected)
             {
                 setTarget();
@@ -68,8 +67,12 @@ public class PlayerController : UnitController {
         }
     }
 
-    protected override void getShipSelected(Vector3 shipPosition)
+    public override void getShipSelected(bool select)
     {
+        //UnityEngine.Debug.Log("Selection: " + select);
+        isSelected = select;
+
+        /*
         Vector3 camPos = Camera.main.WorldToScreenPoint(shipPosition);
         if (Input.GetMouseButtonUp(0))
         {
@@ -104,7 +107,7 @@ public class PlayerController : UnitController {
                     isSelected = false;
                 }
             }
-        }
+        }*/
     }
 
     //TODO: have ship decide whether target is an object to fire on or just a destination

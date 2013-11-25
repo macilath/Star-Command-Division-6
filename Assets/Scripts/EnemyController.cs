@@ -67,7 +67,7 @@ public class EnemyController : UnitController {
         }
     }
 
-    protected override void getShipSelected(Vector3 shipPosition)
+    /*public override void getShipSelected(Vector3 shipPosition)
     {
         Vector3 camPos = Camera.main.WorldToScreenPoint(shipPosition);
         if (Input.GetMouseButtonUp(0))
@@ -102,6 +102,11 @@ public class EnemyController : UnitController {
                 }
             }
         }
+    }*/
+
+    public override void getShipSelected(bool selected)
+    {
+        throw new NotImplementedException();
     }
 
     void OnCollisionExit(Collision other)

@@ -74,7 +74,7 @@ public abstract class UnitController : MonoBehaviour {
         }
     }
 
-    protected abstract void getShipSelected(Vector3 shipPosition);
+    public abstract void getShipSelected(bool selected);
 
     public abstract void setTarget();
 
