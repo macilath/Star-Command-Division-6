@@ -146,7 +146,7 @@ public abstract class UnitController : MonoBehaviour {
             this.rigidbody.angularVelocity = Vector3.zero;
             UnityEngine.Debug.Log("Destination Reached.");
             hasTarget = false;
-            if(AfterburnEffect.activeInHierarchy)
+            if(AfterburnEffect != null)
             {
                 Destroy(AfterburnEffect);
             }

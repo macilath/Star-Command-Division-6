@@ -9,6 +9,22 @@ public class Mouse : MonoBehaviour
     public Texture2D selectionHighlight;
     public static Rect selection = new Rect(0, 0, 0, 0);
     private Vector3 mouseDownPoint = -Vector3.one;
+    private Vector3 mouseDown = -Vector3.one;
+    private Vector3 worldMousePosition = -Vector3.one;
+    public GameObject selectionBox;
+
+    void Awake()
+    {
+        selectionBox = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        selectionBox.transform.position = Vector3.zero;
+        Color c = selectionBox.renderer.material.color;
+        c.a = 0.1f;
+        Shader shade = Shader.Find("Transparent/Diffuse");
+        selectionBox.renderer.material.shader = shade;
+        selectionBox.renderer.material.color = c;
+        selectionBox.GetComponent<MeshRenderer>().enabled = false;
+        selectionBox.GetComponent<BoxCollider>().isTrigger = true;
+    }
 
     // Update is called once per frame
     void Update()
@@ -21,16 +37,30 @@ public class Mouse : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             mouseDownPoint = Input.mousePosition;
+            selectionBox.GetComponent<MeshRenderer>().enabled = true;
+
         }
         else if (Input.GetMouseButtonUp(0))
         {
             mouseDownPoint = -Vector3.one;
+            selectionBox.GetComponent<MeshRenderer>().enabled = false;
         }
 
         if (Input.GetMouseButton(0))
         {
-            selection = new Rect(mouseDownPoint.x, InverseMouseY(mouseDownPoint.y), Input.mousePosition.x - mouseDownPoint.x,
-                                InverseMouseY(Input.mousePosition.y) - InverseMouseY(mouseDownPoint.y));
+            mouseDown = camera.ScreenToWorldPoint(mouseDownPoint);
+            worldMousePosition = camera.ScreenToWorldPoint(Input.mousePosition);
+            //selection = new Rect(mouseDownPoint.x, InverseMouseY(mouseDownPoint.y), Input.mousePosition.x - mouseDownPoint.x,
+            //                    InverseMouseY(Input.mousePosition.y) - InverseMouseY(mouseDownPoint.y));
+            selection = new Rect(mouseDown.x, mouseDown.y, worldMousePosition.x - mouseDown.x, worldMousePosition.y - mouseDown.y);
+
+            mouseDown.z = 0;
+            selectionBox.transform.position = mouseDown;
+            selectionBox.transform.localScale = worldMousePosition - mouseDown; 
+            selectionBox.transform.Translate((worldMousePosition-mouseDown) / 2 , Space.World);
+            Vector3 boxPos = selectionBox.transform.position;
+            boxPos.z = 0;
+            selectionBox.transform.position = boxPos;
 
             if (selection.width < 0)
             {
@@ -48,7 +78,8 @@ public class Mouse : MonoBehaviour
 
     private void OnGUI()
     {
-        if (mouseDownPoint != -Vector3.one)
+        //if (mouseDownPoint != -Vector3.one)
+        if (mouseDown != -Vector3.one) 
         {
             GUI.color = new Color(1, 1, 1, 0.5f);
             GUI.DrawTexture(selection, selectionHighlight);

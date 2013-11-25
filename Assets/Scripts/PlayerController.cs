@@ -32,6 +32,7 @@ public class PlayerController : UnitController {
 	
 	protected void Update () {
         checkHealth();
+        if (thisShip == null) { Debug.Break(); }
         Vector3 shipPosition = thisShip.transform.position;
         if(isActive)
         {
