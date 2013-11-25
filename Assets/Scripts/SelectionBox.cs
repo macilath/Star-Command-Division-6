@@ -15,20 +15,20 @@ public class SelectionBox : MonoBehaviour {
     
     void OnTriggerStay(Collider other)
     {
-        Debug.Log("Found something");
+        //Debug.Log("Found something");
         if (other.gameObject.tag == "PlayerShip")
         {
-            Debug.Log("It's a ship!");
+            //Debug.Log("It's a ship!");
             other.gameObject.GetComponent<PlayerController>().getShipSelected(true);
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Entering thing");
+        //Debug.Log("Entering thing");
         if (other.gameObject.tag == "PlayerShip")
         {
-            Debug.Log("Found me a ship");
+            //Debug.Log("Found me a ship");
         }
     }
 }

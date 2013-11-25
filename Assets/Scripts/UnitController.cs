@@ -166,6 +166,8 @@ public abstract class UnitController : MonoBehaviour {
                     Vector3 enginePos = thisShip.transform.position;
                     enginePos.z += 0.05f;
                     AfterburnEffect = Instantiate(Afterburn, enginePos, thisShip.transform.rotation) as GameObject;
+                    tk2dSprite burner = AfterburnEffect.GetComponent<tk2dSprite>();
+                    burner.SetSprite(burnFull);
                     AfterburnEffect.transform.parent = thisShip.transform;
                 }
                 else
