@@ -14,16 +14,12 @@ public class Level3Camera : MonoBehaviour {
 	
 	void Start()
 	{
+		
 	}
 	
 	void Update()
 	{
 		snapToPlayer();
-	}
-
-	void FixedUpdate()
-	{
-		//snapToPlayer();
 	}
 	
 	public void snapToPlayer()

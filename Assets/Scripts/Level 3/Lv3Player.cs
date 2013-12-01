@@ -2,8 +2,14 @@
 using System.Collections;
 
 public class Lv3Player : MonoBehaviour {
-
+	
+	public bool hasKey1;
 	private Vector3 lookRotationPoint;
+	
+	void Awake()
+	{
+		hasKey1 = false;
+	}
 	
     void Update () 
     {        
