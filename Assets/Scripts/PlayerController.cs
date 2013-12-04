@@ -69,45 +69,7 @@ public class PlayerController : UnitController {
 
     public override void getShipSelected(bool select)
     {
-        //UnityEngine.Debug.Log("Selection: " + select);
         isSelected = select;
-
-        /*
-        Vector3 camPos = Camera.main.WorldToScreenPoint(shipPosition);
-        if (Input.GetMouseButtonUp(0))
-        {
-            //camPos.y = Mouse.InverseMouseY(camPos.y);
-
-            // if the user simply clicks then we will want to be able to select that ship
-            // If the user simply clicks and doesn't drag, the selection box will be smaller than this
-            if (Mouse.selection.width <= 10 && Mouse.selection.height <= 10)
-            {
-                GameCamera cam = GameObject.Find("Main Camera").GetComponent<GameCamera>();
-                float zoomFactor = 0.5f * (1 - ((cam.maxZoom - cam.currentZoom) / cam.maxZoom));
-                Rect boundingRect = new Rect(Input.mousePosition.x - (75 * zoomFactor), Input.mousePosition.y - (75 * zoomFactor), 150 * zoomFactor, 150 * zoomFactor);
-                if (boundingRect.Contains(camPos))
-                {
-                    Debug.Log("Found object: " + this.name);
-                    isSelected = true;
-                }
-                else
-                {
-                    isSelected = false;
-                }
-            }
-            else
-            {
-                if (Mouse.selection.Contains(camPos))
-                {
-                    Debug.Log("Found object: " + this.name);
-                    isSelected = true;
-                }
-                else
-                {
-                    isSelected = false;
-                }
-            }
-        }*/
     }
 
     //TODO: have ship decide whether target is an object to fire on or just a destination
@@ -151,14 +113,10 @@ public class PlayerController : UnitController {
         WeaponController proj = projObject.GetComponent<WeaponController>();
         proj.setEnemyTag("EnemyShip");
         stopwatch.Start();
-        //proj.setParent(this.gameObject);
-        //TODO: set the target of the projectile
-        //proj.setTarget()
     }
 
     private void checkShoot()
     {
-        //temporary, until intelligent firing is in place
         if(Input.GetKeyDown("space"))
         {
             fireWeapons();
@@ -179,7 +137,6 @@ public class PlayerController : UnitController {
         if (other.gameObject.tag == "SpaceStation")
         {
             manager.AddSurvivor(thisShip);
-            //Debug.Log("surviving ships: " + manager.survivingShips);
         }
     }
     public virtual void OnTriggerExit(Collider other)
@@ -187,7 +144,6 @@ public class PlayerController : UnitController {
         if (other.gameObject.tag == "SpaceStation")
         {
             manager.RemoveSurvivor(thisShip);
-            //Debug.Log("surviving ships: " + manager.survivingShips);
         }
     }
 }

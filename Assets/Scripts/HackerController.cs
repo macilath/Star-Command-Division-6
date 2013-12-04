@@ -58,21 +58,6 @@ public class HackerController : PlayerController {
             gen.startHack();
         }
     }
-
-    /*void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.tag == "HackStation")
-        {
-            if (hackWatch.ElapsedMilliseconds >= 5000)
-            {
-                // Set tag to hacked?
-                other.gameObject.tag = "Hacked";
-                hackWatch.Stop();
-                manager.hackedStations++;
-                print("Hacked stations: " + manager.hackedStations);
-            }
-        }
-    }*/
     
     public override void OnTriggerExit(Collider other)
     {

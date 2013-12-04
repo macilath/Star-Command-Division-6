@@ -67,43 +67,6 @@ public class EnemyController : UnitController {
         }
     }
 
-    /*public override void getShipSelected(Vector3 shipPosition)
-    {
-        Vector3 camPos = Camera.main.WorldToScreenPoint(shipPosition);
-        if (Input.GetMouseButtonUp(0))
-        {
-            //camPos.y = Mouse.InverseMouseY(camPos.y);
-
-            // if the user simply clicks then we will want to be able to select that ship
-            // If the user simply clicks and doesn't drag, the selection box will be smaller than this
-            if (Mouse.selection.width <= 10 && Mouse.selection.height <= 10)
-            {
-                Rect boundingRect = new Rect(Input.mousePosition.x - 75, Input.mousePosition.y - 75, 150, 150);
-                if (boundingRect.Contains(camPos))
-                {
-                    Debug.Log("Found object: " + this.name);
-                    isSelected = true;
-                }
-                else
-                {
-                    isSelected = false;
-                }
-            }
-            else
-            {
-                if (Mouse.selection.Contains(camPos))
-                {
-                    Debug.Log("Found object: " + this.name);
-                    isSelected = true;
-                }
-                else
-                {
-                    isSelected = false;
-                }
-            }
-        }
-    }*/
-
     public override void getShipSelected(bool selected)
     {
         throw new NotImplementedException();
@@ -144,17 +107,10 @@ public class EnemyController : UnitController {
         WeaponController proj = projObject.GetComponent<WeaponController>();
         proj.setEnemyTag("PlayerShip");
         stopwatch.Start();
-        //TODO: set the target of the projectile
-        //proj.setTarget()
     }
 
     private void checkShoot()
     {
-        //temporary, until intelligent firing is in place
-        /*if(Input.GetKeyDown("space"))
-        {
-            fireWeapons();
-        }*/
         EnemySight vision = thisShip.GetComponentInChildren<EnemySight>();
         if(vision.playerInSight)
         {

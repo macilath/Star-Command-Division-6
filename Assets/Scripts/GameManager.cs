@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour {
                 ++numSurvivors;
             }
         }
-        UnityEngine.Debug.Log("num survivors: " + numSurvivors);
+        //UnityEngine.Debug.Log("num survivors: " + numSurvivors);
         return (numSurvivors == PlayerShips.Count);
     }
 
