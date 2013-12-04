@@ -9,6 +9,22 @@ public class PlayerController : UnitController {
      * We can check on mouse click if the rect contains / collides with the game object
      * Then we wait on right click (orders) to assign the unit's destination, or if another left click is detected we deselect the unit
      */
+     protected MeshRenderer sel;
+
+     protected void Awake()
+     {
+        GameObject selectionBorder;
+        foreach( Transform child in transform )
+        {
+            if( child.gameObject.name == "Selection" )
+            {
+                selectionBorder = child.gameObject;
+                sel = selectionBorder.GetComponent<MeshRenderer>();
+                break;
+            }
+        }
+        sel.enabled = false;
+     }
 
 	protected void Start () {
 		thisShip = this.gameObject;
@@ -38,11 +54,20 @@ public class PlayerController : UnitController {
         {
             if (isSelected)
             {
+                
+                if( !sel.enabled )
+                {
+                    sel.enabled = true;
+                }
                 setTarget();
                 if(shipCanFire())
                 {
                     checkShoot();
                 }
+            }
+            else if( sel.enabled )
+            {
+                sel.enabled = false;
             }
             if (hasTarget && !facingTarget)
             {
