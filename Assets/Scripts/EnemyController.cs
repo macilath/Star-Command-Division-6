@@ -164,10 +164,10 @@ public class EnemyController : UnitController {
 
     protected override void checkHealth()
     {
-        base.checkHealth();
         if( shipHealth <= 0 )
         {
             manager.EnemyShips.Remove(thisShip);
         }
+        base.checkHealth();
     }
 }

@@ -6,11 +6,11 @@ using System.Diagnostics;
 public class GameManager : MonoBehaviour {
 
     public List<GameObject> PlayerShips = new List<GameObject>();
+    public List<bool> Survivors = new List<bool>();
     public List<GameObject> EnemyShips = new List<GameObject>();
 
     public Stopwatch alertStopwatch = new Stopwatch();
     private int alertWindow = 60000; //in ms, 1 min 
-    public int survivingShips = 0;
     public int hackedStations = 0;
     public bool hackerAlive = true;
 
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
     {
         if( Application.loadedLevelName == "Level1")
         {
-            Level2Logic();
+            Level1Logic();
         }
         if( Application.loadedLevelName == "Level2")
         {
@@ -36,6 +36,12 @@ public class GameManager : MonoBehaviour {
         if ( PlayerShips.Count == 0 )
         {
             Application.LoadLevel("L1Loss");
+        }
+
+        if ( AllShipsAccountedFor() )
+        {
+            UnityEngine.Debug.Log("Next Level");
+            Application.LoadLevel("1to2");
         }
 
         if (alertStopwatch.ElapsedMilliseconds >= alertWindow || !hackerAlive) 
@@ -59,6 +65,39 @@ public class GameManager : MonoBehaviour {
             shield.GetComponent<MeshCollider>().isTrigger = true;
         }
     }
+
+    bool AllShipsAccountedFor()
+    {
+        int numSurvivors = 0;
+        foreach(bool saved in Survivors)
+        {
+            if(saved)
+            {
+                ++numSurvivors;
+            }
+        }
+        UnityEngine.Debug.Log("num survivors: " + numSurvivors);
+        return (numSurvivors == PlayerShips.Count);
+    }
+
+    public void AddSurvivor(GameObject ship)
+    {
+        int index = PlayerShips.IndexOf(ship);
+        Survivors[index] = true;
+    }
+
+    public void RemoveSurvivor(GameObject ship)
+    {
+        int index = PlayerShips.IndexOf(ship);
+        Survivors[index] = false;
+    }
+
+    public void KillShip(GameObject ship)
+    {
+        int index = PlayerShips.IndexOf(ship);
+        Survivors.RemoveAt(index);
+        PlayerShips.RemoveAt(index);
+    }
 	
 	void AddShips() {
 		if(Application.loadedLevelName == "Level1" || Application.loadedLevelName == "Level2") {
@@ -67,8 +106,8 @@ public class GameManager : MonoBehaviour {
             for (int i = 0; i < players.Length; i++)
             {
                 PlayerShips.Add(players[i]);
+                Survivors.Add(false);
             }
-            survivingShips = 0;
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyShip");
             for (int i = 0; i < enemies.Length; i++)
             {

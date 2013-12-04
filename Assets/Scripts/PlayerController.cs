@@ -167,32 +167,27 @@ public class PlayerController : UnitController {
 
     protected override void checkHealth()
     {
-        base.checkHealth();
         if( shipHealth <= 0 )
         {
-            manager.PlayerShips.Remove(thisShip);
+            manager.KillShip(thisShip);
         }
+        base.checkHealth();
     }
 
-    void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "SpaceStation")
         {
-            manager.survivingShips++;
-            Debug.Log(manager.survivingShips);
-            if (manager.survivingShips == manager.PlayerShips.Count)
-            {
-                Debug.Log("Next Level");
-                Application.LoadLevel("1to2");
-            }
-
+            manager.AddSurvivor(thisShip);
+            //Debug.Log("surviving ships: " + manager.survivingShips);
         }
     }
-    void OnTriggerExit(Collider other)
+    public virtual void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "SpaceStation")
         {
-            manager.survivingShips--;
+            manager.RemoveSurvivor(thisShip);
+            //Debug.Log("surviving ships: " + manager.survivingShips);
         }
     }
 }

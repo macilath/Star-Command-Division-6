@@ -48,8 +48,9 @@ public class HackerController : PlayerController {
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    public override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
         if (other.gameObject.tag == "HackStation")
         {
             UnityEngine.Debug.Log("Met hackstation");
@@ -73,8 +74,9 @@ public class HackerController : PlayerController {
         }
     }*/
     
-    void OnTriggerLeave(Collider other)
+    public override void OnTriggerExit(Collider other)
     {
+        base.OnTriggerExit(other);
         if (other.gameObject.tag == "HackStation")
         {
             GeneratorController gen = other.gameObject.GetComponent<GeneratorController>();
