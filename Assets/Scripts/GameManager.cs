@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour {
     public List<GameObject> EnemyShips = new List<GameObject>();
 
     public Stopwatch alertStopwatch = new Stopwatch();
-    private int alertWindow = 60000; //in ms, 1 min 
+    public int alertWindow = 60000; //in ms, 1 min 
     public int hackedStations = 0;
     public bool hackerAlive = true;
 
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour {
 
     void Level2Logic()
     {
-        if ( !hackerAlive ) //or we lose special ship
+        if ( !hackerAlive )
         {
             Application.LoadLevel("L2Loss");
         }

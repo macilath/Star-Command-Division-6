@@ -5,9 +5,13 @@ public class UIManager : MonoBehaviour {
 
     GUIStyle myStyle = new GUIStyle();
     Font myFont;
+    public static GameManager manager; 
 
     void OnGUI()
     {
+        GameObject camera = GameObject.Find("Main Camera");
+        manager = camera.GetComponent<GameManager>();
+
         // Title Screen
         if (Application.loadedLevelName == "Title")
         {
@@ -21,7 +25,13 @@ public class UIManager : MonoBehaviour {
         // Level 1
         else if (Application.loadedLevelName == "Level1")
         {
+
             // GUI elements for first level
+            if (manager.alertStopwatch.ElapsedMilliseconds != 0)
+            {
+                string timeRemaining = string.Format("Death In: {0} Seconds", (manager.alertWindow - manager.alertStopwatch.ElapsedMilliseconds)/1000);
+                GUI.Label(new Rect(10, 10, 200, 40), "You've been spotted!\n" + timeRemaining);
+            }
         }
 
         // Level 2
