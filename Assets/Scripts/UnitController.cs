@@ -19,7 +19,7 @@ public abstract class UnitController : MonoBehaviour {
     protected float shipSizeH;
     protected float shipSizeW;
     protected float shipRotSpeed;
-    protected int shipHealth;
+    public int shipHealth;
     protected int maxHealth;
     protected Vector3 targetDest;
     protected bool hasTarget;

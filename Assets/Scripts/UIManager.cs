@@ -5,12 +5,14 @@ public class UIManager : MonoBehaviour {
 
     GUIStyle myStyle = new GUIStyle();
     Font myFont;
-    public static GameManager manager; 
+    public static GameManager manager;
+    private static HackerController hacker; 
 
     void OnGUI()
     {
         GameObject camera = GameObject.Find("Main Camera");
         manager = camera.GetComponent<GameManager>();
+        hacker = manager.GetComponent<HackerController>(); 
 
         // Title Screen
         if (Application.loadedLevelName == "Title")
@@ -20,6 +22,7 @@ public class UIManager : MonoBehaviour {
                 print("Play");
                 Application.LoadLevel("Level1");
             }
+            // TODO: Add Difficulty Selectors
         }
 
         // Level 1
@@ -30,14 +33,19 @@ public class UIManager : MonoBehaviour {
             if (manager.alertStopwatch.ElapsedMilliseconds != 0)
             {
                 string timeRemaining = string.Format("Death In: {0} Seconds", (manager.alertWindow - manager.alertStopwatch.ElapsedMilliseconds)/1000);
-                GUI.Label(new Rect(10, 10, 200, 40), "You've been spotted!\n" + timeRemaining);
+                GUI.Label(new Rect(40, Screen.height - 40, 200, 40), "You've been spotted!\n" + timeRemaining);
             }
+            string shipsRemaining = string.Format("Ships Left: {0}", manager.PlayerShips.Count);
+            GUI.Label(new Rect(Screen.width - 100, Screen.height - 20, 200, 40), shipsRemaining);
         }
 
         // Level 2
         else if (Application.loadedLevelName == "Level2")
         {
             // GUI elements for second level
+            string hackerHealth = string.Format("Hacker Health: {0}", hacker.shipHealth);
+            GUI.Label(new Rect(Screen.width - 100, Screen.height - 20, 200, 40), hackerHealth);
+            
         }
 
         // Level 3
