@@ -3,7 +3,7 @@ using System.Collections;
 
 public class UIManager : MonoBehaviour {
 
-    Font digiFont;
+    public Font digiFont;
     public static GameManager manager;
     private static HackerController hacker; 
 	GUIStyle warningClock = new GUIStyle();
@@ -15,8 +15,7 @@ public class UIManager : MonoBehaviour {
     {
         GameObject camera = GameObject.Find("Main Camera");
         manager = camera.GetComponent<GameManager>();
-        digiFont = (Font)Resources.Load("Fonts/Digitalism", typeof(Font));
-		if(digiFont == null) { Debug.Log("Didn't load font."); }
+        //digiFont = (Font)Resources.Load("Fonts/Digitalism", typeof(Font));
 
         // Title Screen
         if (Application.loadedLevelName == "Title")
@@ -36,7 +35,9 @@ public class UIManager : MonoBehaviour {
 			dangerClock.normal.textColor = Color.red;
 
 			warningClock.font = digiFont;
-			dangerClock.font = digiFont; 
+			dangerClock.font = digiFont;
+			warningClock.fontSize = 20;
+			dangerClock.fontSize = 20;
 			warningStyle.normal.textColor = Color.yellow;
 			dangerStyle.normal.textColor = Color.red;
 			
@@ -49,11 +50,11 @@ public class UIManager : MonoBehaviour {
                 if((manager.alertWindow - manager.alertStopwatch.ElapsedMilliseconds)/1000 <= 30) {
 					//GUI.Label(new Rect(40, Screen.height - 40, 200, 40), "You've been spotted!\n" + timeRemaining, dangerStyle);
 					GUI.Label(new Rect(40, Screen.height - 60, 200, 40), "You've been spotted!\n Time Remaining:", dangerStyle);
-					GUI.Label(new Rect(40, Screen.height - 20, 200, 40), timeRemaining.ToString(), dangerClock);
+					GUI.Label(new Rect(100, Screen.height - 30, 200, 40), timeRemaining.ToString(), dangerClock);
 				}
 				else {
 					GUI.Label(new Rect(40, Screen.height - 60, 200, 40), "You've been spotted!\n Time Remaining:", warningStyle);
-					GUI.Label(new Rect(40, Screen.height - 20, 200, 40), timeRemaining.ToString(), warningClock);
+					GUI.Label(new Rect(100, Screen.height - 30, 200, 40), timeRemaining.ToString(), warningClock);
 				}
             string shipsRemaining = string.Format("Ships Left: {0}", manager.PlayerShips.Count);
             GUI.Label(new Rect(Screen.width - 100, Screen.height - 20, 200, 40), shipsRemaining);
