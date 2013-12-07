@@ -14,9 +14,9 @@ public class StunController : WeaponController {
         weaponDamage = 2000;
         weaponRange = 20;
         weaponSpeed = 500;
-        weaponAccel = 0;
-        weaponSizeH = 3f;
-        weaponSizeW = 0.3f;
+        //weaponAccel = 0;
+        //weaponSizeH = 3f;
+        //weaponSizeW = 0.3f;
     }
 
     void Update()

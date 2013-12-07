@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Diagnostics;
 
 public class Lv3EnemyAI : MonoBehaviour
 {
@@ -17,11 +18,17 @@ public class Lv3EnemyAI : MonoBehaviour
     private float chaseTimer;                               // A timer for the chaseWaitTime.
     private float patrolTimer;                              // A timer for the patrolWaitTime.
     private int wayPointIndex;                              // A counter for the way point array.
+    private Stopwatch shotTimer = new Stopwatch();
+    private int fireInterval = 1000;
+    private MeshRenderer enemyRenderer;
+    private Transform enemy;
 
 
     void Awake()
     {
         nav = GetComponent<NavMeshAgent>();
+        enemy = this.transform.FindChild("HumanEnemy");
+        enemyRenderer = GetComponentInChildren<MeshRenderer>();
 		enemySight = GetComponentInChildren<Lv3EnemySight>();
 		player = GameObject.FindGameObjectWithTag(Lv3Tags.player).transform;
 		lastPlayerSighting = GameObject.FindGameObjectWithTag(Lv3Tags.gameController).GetComponent<LastPlayerSighting>();
@@ -44,18 +51,46 @@ public class Lv3EnemyAI : MonoBehaviour
 		}
     }
 
+    protected bool canShoot()
+    {
+        if (shotTimer.ElapsedMilliseconds == 0 || shotTimer.ElapsedMilliseconds >= fireInterval)
+        {
+            shotTimer.Reset();
+            return true;
+        }
+        return false;
+    }
 
     void Shooting()
     {
-		Debug.Log("Shooting");
+		UnityEngine.Debug.Log("Shooting");
         // Stop the enemy where it is.
         nav.Stop();
+        if (canShoot())
+        {
+            fireWeapons();
+        }
     }
 
+    protected void fireWeapons()
+    {
+        GameObject Projectile = (GameObject)Resources.Load("PersonalProjectile");
+        Vector3 projectile_position = enemy.position + (enemy.up * 10);
+        /*Quaternion rot = enemy.rotation;
+        Vector3 angles = rot.eulerAngles;
+        angles.x += 90;
+        rot.SetEulerAngles(angles);*/
+        GameObject projObject = Instantiate(Projectile, projectile_position, enemy.rotation) as GameObject;
+
+        PersonalProjectile proj = projObject.GetComponent<PersonalProjectile>();
+        proj.setEnemyTag(Lv3Tags.player);
+
+        shotTimer.Start();
+    }
 
     void Chasing()
     {
-       Debug.Log("Chasing");
+       UnityEngine.Debug.Log("Chasing");
 		
 		// Create a vector from the enemy to the last sighting of the player.
         Vector3 sightingDeltaPos = enemySight.personalLastSighting - transform.position;
@@ -93,7 +128,7 @@ public class Lv3EnemyAI : MonoBehaviour
 
     void Patrolling()
     {
-		Debug.Log("Patrolling");
+		UnityEngine.Debug.Log("Patrolling");
         // Set an appropriate speed for the NavMeshAgent.
         nav.speed = patrolSpeed;
 

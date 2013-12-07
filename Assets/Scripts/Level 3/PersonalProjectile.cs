@@ -1,8 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System;
 
-public class WeaponController : MonoBehaviour {
+public class PersonalProjectile : MonoBehaviour
+{
 
     protected int weaponDamage;
     protected int weaponRange;
@@ -17,16 +18,17 @@ public class WeaponController : MonoBehaviour {
     protected Vector3 initialPosition;
 
     protected GameObject weapon;
-    protected GameObject target;
-    protected GameObject parentShip;
+    //protected GameObject target;
+    //protected GameObject parentShip;
     protected static GameManager manager;
 
-    protected void Start () {
+    protected void Start()
+    {
         Init();
         manager = GameObject.Find("Main Camera").GetComponent<GameManager>();
-	    //isCollided = false;
-	    //hasTarget = false;
-	    weapon = this.gameObject;
+        //isCollided = false;
+        //hasTarget = false;
+        weapon = this.gameObject;
         initialPosition = weapon.transform.position;
         kick();
         //for debugging, should be determined by firing ship
@@ -36,14 +38,15 @@ public class WeaponController : MonoBehaviour {
     protected virtual void Init()
     {
         weaponDamage = 25;
-        weaponRange = 30;
-        weaponSpeed = 1000;
+        weaponRange = 1000;
+        weaponSpeed = 500;
         //weaponAccel = 0;
         //weaponSizeH = 3f;
         //weaponSizeW = 0.3f;
     }
-    
-    protected void Update () {
+
+    protected void Update()
+    {
         checkBounds();
     }
 
@@ -54,12 +57,12 @@ public class WeaponController : MonoBehaviour {
         weapon.rigidbody.AddForce(forceVector);
     }
 
-    public void setTarget(GameObject t, string tag)
+    /*public void setTarget(GameObject t, string tag)
     {
-    	target = t;
-    	//enemyTag = tag;
-    	//hasTarget = true;
-    }
+        target = t;
+        //enemyTag = tag;
+        //hasTarget = true;
+    }*/
 
     public void setEnemyTag(string tag)
     {
@@ -68,23 +71,33 @@ public class WeaponController : MonoBehaviour {
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == enemyTag)
+        if (other.gameObject.tag == enemyTag)
         {
             ((UnitController)((other.gameObject).GetComponent<UnitController>())).takeDamage(weaponDamage);
+            Destroy(weapon);
+        }
+        else if (other.gameObject.tag == "Wall")
+        {
+            Destroy(weapon);
+        }
+        else
+        {
+            //do nothing
         }
 
-        constantTriggerActions(other);
+        //constantTriggerActions(other);
     }
 
     protected void constantTriggerActions(Collider other)
     {
-        if(other.gameObject.tag == "Asteroid")
+        UnityEngine.Debug.Log(other.name);
+        if (other.gameObject.tag == "Asteroid")
         {
             Vector3 point_of_contact = other.ClosestPointOnBounds(weapon.transform.position);
             other.rigidbody.AddForceAtPosition((this.rigidbody.velocity) * 5, point_of_contact);
         }
 
-        if( other.gameObject.tag == "Vision" || (manager.hackedStations == 4 && other.gameObject.name == "Shield"))
+        if (other.gameObject.name == "Sphere" || other.gameObject.tag == "EnemyShip")
         {
             //do nothing
         }
@@ -98,7 +111,7 @@ public class WeaponController : MonoBehaviour {
     {
         float fun = Math.Abs(Vector3.Distance(initialPosition, weapon.transform.position));
         //Debug.Log("distance: " + fun); 
-        if(fun > weaponRange)
+        if (fun > weaponRange)
         {
             Destroy(weapon);
         }
