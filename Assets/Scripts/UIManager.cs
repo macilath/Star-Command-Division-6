@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour {
         GameObject camera = GameObject.Find("Main Camera");
         manager = camera.GetComponent<GameManager>();
         digiFont = (Font)Resources.Load("Fonts/Digitalism", typeof(Font));
-		if(digiFont == null) { Debug.Log("Didn't load font.");
+		if(digiFont == null) { Debug.Log("Didn't load font."); }
 
         // Title Screen
         if (Application.loadedLevelName == "Title")
