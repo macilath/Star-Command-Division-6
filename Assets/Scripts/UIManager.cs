@@ -3,16 +3,20 @@ using System.Collections;
 
 public class UIManager : MonoBehaviour {
 
-    GUIStyle myStyle = new GUIStyle();
-    Font myFont;
+    Font digiFont;
     public static GameManager manager;
     private static HackerController hacker; 
+	GUIStyle warningClock = new GUIStyle();
+	GUIStyle dangerClock = new GUIStyle();
+	GUIStyle warningStyle = new GUIStyle();
+	GUIStyle dangerStyle = new GUIStyle();
 
     void OnGUI()
     {
         GameObject camera = GameObject.Find("Main Camera");
         manager = camera.GetComponent<GameManager>();
-        
+        digiFont = (Font)Resources.Load("Fonts/Digitalism", typeof(Font));
+		if(digiFont == null) { Debug.Log("Didn't load font.");
 
         // Title Screen
         if (Application.loadedLevelName == "Title")
@@ -28,15 +32,32 @@ public class UIManager : MonoBehaviour {
         // Level 1
         else if (Application.loadedLevelName == "Level1")
         {
+			warningClock.normal.textColor = Color.yellow;
+			dangerClock.normal.textColor = Color.red;
+
+			warningClock.font = digiFont;
+			dangerClock.font = digiFont; 
+			warningStyle.normal.textColor = Color.yellow;
+			dangerStyle.normal.textColor = Color.red;
+			
+			
 			hacker = manager.GetComponent<HackerController>(); 
             // GUI elements for first level
             if (manager.alertStopwatch.ElapsedMilliseconds != 0)
             {
-                string timeRemaining = string.Format("Death In: {0} Seconds", (manager.alertWindow - manager.alertStopwatch.ElapsedMilliseconds)/1000);
-                GUI.Label(new Rect(40, Screen.height - 40, 200, 40), "You've been spotted!\n" + timeRemaining);
-            }
+                string timeRemaining = string.Format("{0}", (manager.alertWindow - manager.alertStopwatch.ElapsedMilliseconds)/1000);
+                if((manager.alertWindow - manager.alertStopwatch.ElapsedMilliseconds)/1000 <= 30) {
+					//GUI.Label(new Rect(40, Screen.height - 40, 200, 40), "You've been spotted!\n" + timeRemaining, dangerStyle);
+					GUI.Label(new Rect(40, Screen.height - 60, 200, 40), "You've been spotted!\n Time Remaining:", dangerStyle);
+					GUI.Label(new Rect(40, Screen.height - 20, 200, 40), timeRemaining.ToString(), dangerClock);
+				}
+				else {
+					GUI.Label(new Rect(40, Screen.height - 60, 200, 40), "You've been spotted!\n Time Remaining:", warningStyle);
+					GUI.Label(new Rect(40, Screen.height - 20, 200, 40), timeRemaining.ToString(), warningClock);
+				}
             string shipsRemaining = string.Format("Ships Left: {0}", manager.PlayerShips.Count);
             GUI.Label(new Rect(Screen.width - 100, Screen.height - 20, 200, 40), shipsRemaining);
+			}
         }
 
         // Level 2
