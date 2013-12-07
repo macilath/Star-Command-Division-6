@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour {
     {
         GameObject camera = GameObject.Find("Main Camera");
         manager = camera.GetComponent<GameManager>();
-        hacker = manager.GetComponent<HackerController>(); 
+        
 
         // Title Screen
         if (Application.loadedLevelName == "Title")
@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour {
         // Level 1
         else if (Application.loadedLevelName == "Level1")
         {
-
+			hacker = manager.GetComponent<HackerController>(); 
             // GUI elements for first level
             if (manager.alertStopwatch.ElapsedMilliseconds != 0)
             {
@@ -42,6 +42,7 @@ public class UIManager : MonoBehaviour {
         // Level 2
         else if (Application.loadedLevelName == "Level2")
         {
+			hacker = manager.GetComponent<HackerController>(); 
             // GUI elements for second level
             string hackerHealth = string.Format("Hacker Health: {0}", hacker.shipHealth);
             GUI.Label(new Rect(Screen.width - 100, Screen.height - 20, 200, 40), hackerHealth);
