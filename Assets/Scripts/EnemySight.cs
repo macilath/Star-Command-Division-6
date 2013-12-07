@@ -18,7 +18,7 @@ public class EnemySight : MonoBehaviour
 
     void Start()
     {
-        fieldOfViewAngle = 60;
+        fieldOfViewAngle = 135;
         detectionRadius = detectionScale * transform.localScale.x/2;
         playerInSight = false;
         sightingExists = false;

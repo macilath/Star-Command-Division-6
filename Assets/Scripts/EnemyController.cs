@@ -5,6 +5,7 @@ using System;
 public class EnemyController : UnitController {
 
     EnemySight vision;
+    EnemyFarSight farVis;
     void Start () {
         thisShip = this.gameObject;
         Electric = (GameObject)Resources.Load("EnemyStun");
@@ -12,6 +13,7 @@ public class EnemyController : UnitController {
         burnFull = "EnemyAfterburnFull";
         burnHalf = "EnemyAfterburnHalf";
         vision = thisShip.GetComponentInChildren<EnemySight>();
+        farVis = thisShip.GetComponentInChildren<EnemyFarSight>();
         targetDest = thisShip.transform.position;
         isSelected = false;
         shipSpeed = 95;
@@ -36,9 +38,24 @@ public class EnemyController : UnitController {
             {
                 manager.alertStopwatch.Start();
             }
-            if (vision.sightingExists)
+            switch(manager.difficultyLevel)
             {
-                setTarget();
+                case 1:
+                {
+                    if (vision.sightingExists)
+                    {
+                        setTarget();
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    if (farVis.sightingExists)
+                    {
+                        setTarget();
+                    }
+                    break;
+                }
             }
             if (hasTarget && !facingTarget)
             {
@@ -86,10 +103,23 @@ public class EnemyController : UnitController {
     public override void setTarget()
     {
         // Assign movement orders to ship
-        targetDest = vision.previousSighting;
+        switch(manager.difficultyLevel)
+        {
+            case 1:
+            {
+                targetDest = vision.previousSighting;
+                vision.sightingExists = false;
+                break;
+            }
+            case 2:
+            {
+                targetDest = farVis.previousSighting;
+                farVis.sightingExists = false;
+                break;
+            }
+        }
         facingTarget = false;
         hasTarget = true;
-        vision.sightingExists = false;
     }
 
     public override void takeDamage(int damage)
@@ -111,7 +141,6 @@ public class EnemyController : UnitController {
 
     private void checkShoot()
     {
-        EnemySight vision = thisShip.GetComponentInChildren<EnemySight>();
         if(vision.playerInSight)
         {
             fireWeapons();

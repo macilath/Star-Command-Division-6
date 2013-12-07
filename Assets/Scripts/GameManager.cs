@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour {
     public int hackedStations = 0;
     public bool hackerAlive = true;
 
+    public int difficultyLevel = 2;
+
     void Start()
     {
         AddShips();

@@ -9,6 +9,7 @@ public class Asteroid : MonoBehaviour {
 	public float currentSpinSpeed = 0;
 	private GameManager manager;
 	private System.Random rand;
+	public const bool spinEnabled = true;
 
 	public void Awake()
     {
@@ -20,14 +21,18 @@ public class Asteroid : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		// set random spin speed
-		int neg = rand.Next(0, 3);
+		/*int neg = rand.Next(0, 3);
 		int spinSpeed = 0;
 		if(neg == 0)
 			spinSpeed = rand.Next(maxSpinSpeed);
 		else
-			spinSpeed = -1 * rand.Next(maxSpinSpeed);
-		Vector3 torque = new Vector3(0, 0, spinSpeed);
-		this.gameObject.rigidbody.AddTorque(torque);
+			spinSpeed = -1 * rand.Next(maxSpinSpeed);*/
+		if(spinEnabled)
+		{
+			int spinSpeed = rand.Next(-maxSpinSpeed, maxSpinSpeed);
+			Vector3 torque = new Vector3(0, 0, spinSpeed);
+			this.gameObject.rigidbody.AddTorque(torque);
+		}
 	}
 	
 	// Update is called once per frame
