@@ -13,14 +13,13 @@ public class Lv3EnemyAI : MonoBehaviour
 
     private Lv3EnemySight enemySight;                          // Reference to the EnemySight script.
     private NavMeshAgent nav;                               // Reference to the nav mesh agent.
-    private Transform player;                               // Reference to the player's transform.
+    //private Transform player;                               // Reference to the player's transform.
 	private LastPlayerSighting lastPlayerSighting;          // Reference to the last global sighting of the player.
     private float chaseTimer;                               // A timer for the chaseWaitTime.
     private float patrolTimer;                              // A timer for the patrolWaitTime.
     private int wayPointIndex;                              // A counter for the way point array.
     private Stopwatch shotTimer = new Stopwatch();
     private int fireInterval = 1000;
-    private MeshRenderer enemyRenderer;
     private Transform enemy;
 
 
@@ -28,9 +27,8 @@ public class Lv3EnemyAI : MonoBehaviour
     {
         nav = GetComponent<NavMeshAgent>();
         enemy = this.transform.FindChild("HumanEnemy");
-        enemyRenderer = GetComponentInChildren<MeshRenderer>();
 		enemySight = GetComponentInChildren<Lv3EnemySight>();
-		player = GameObject.FindGameObjectWithTag(Lv3Tags.player).transform;
+		//player = GameObject.FindGameObjectWithTag(Lv3Tags.player).transform;
 		lastPlayerSighting = GameObject.FindGameObjectWithTag(Lv3Tags.gameController).GetComponent<LastPlayerSighting>();
     }
 

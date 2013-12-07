@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
     public List<GameObject> PlayerShips = new List<GameObject>();
     public List<bool> Survivors = new List<bool>();
     public List<GameObject> EnemyShips = new List<GameObject>();
+    public System.Random rand = new System.Random();
 
     public Stopwatch alertStopwatch = new Stopwatch();
     public int alertWindow = 60000; //in ms, 1 min 
