@@ -35,18 +35,21 @@ public class Lv3EnemyAI : MonoBehaviour
 
     void Update()
     {
-		if(enemySight.playerInSight)
-		{
-			Shooting();	
-		}
-		else if(enemySight.personalLastSighting != lastPlayerSighting.resetPosition)
-		{
-			Chasing();	
-		}
-		else
-		{
-        	Patrolling();
-		}
+        if (enemySight != null)
+        {
+            if (enemySight.playerInSight)
+            {
+                Shooting();
+            }
+            else if (enemySight.personalLastSighting != lastPlayerSighting.resetPosition)
+            {
+                Chasing();
+            }
+            else
+            {
+                Patrolling();
+            }
+        }
     }
 
     protected bool canShoot()
