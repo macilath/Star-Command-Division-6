@@ -5,17 +5,19 @@ public class UIManager : MonoBehaviour {
 
     public Font digiFont;
     public static GameManager manager;
-    private static HackerController hacker; 
+    private static HackerController hacker;
 	GUIStyle warningClock = new GUIStyle();
 	GUIStyle dangerClock = new GUIStyle();
 	GUIStyle warningStyle = new GUIStyle();
 	GUIStyle dangerStyle = new GUIStyle();
+    public int loadedLevel = 0;
 
     void OnGUI()
     {
         GameObject camera = GameObject.Find("Main Camera");
         manager = camera.GetComponent<GameManager>();
         //digiFont = (Font)Resources.Load("Fonts/Digitalism", typeof(Font));
+        loadedLevel = GameObject.Find("LevelLoader").GetComponent<LevelLoader>().lastLoadedLevel; 
 
         // Title Screen
         if (Application.loadedLevelName == "Title")
@@ -77,7 +79,31 @@ public class UIManager : MonoBehaviour {
             // GUI elements for last level
         }
 
-        // Lose 
+        // Lose
+        else if (Application.loadedLevelName == "Loss")
+        {
+            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 60, 100, 40), "Try Again"))
+            {
+                //loadedLevel = GameObject.Find("Level Loader").GetComponent<LevelLoader>().lastLoadedLevel; 
+
+                print("Level: " + loadedLevel);
+                switch (loadedLevel) {
+                    case 0: break;
+                    case 1:
+                        print("Reload level 1");
+                        Application.LoadLevel("Level1");
+                        break;
+                    case 2:
+                        print("Reload level 2");
+                        Application.LoadLevel("Level2");
+                        break;
+                    case 3:
+                        break;
+                }
+            }
+        }
+
+        /*
         else if (Application.loadedLevelName == "L1Loss")
         {
             // GUI for losing in level 1
@@ -107,7 +133,7 @@ public class UIManager : MonoBehaviour {
                 Application.LoadLevel("Level3");
             }
         }
-
+        */
         // Transitional scenes - If scene is loaded then we won the previous level
         else if (Application.loadedLevelName == "1to2")
         {

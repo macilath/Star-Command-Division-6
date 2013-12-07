@@ -16,10 +16,25 @@ public class GameManager : MonoBehaviour {
     public bool hackerAlive = true;
 
     public int difficultyLevel = 2;
+    //public int loadedLevel = 0; 
 
     void Start()
     {
         AddShips();
+        //loadedLevel = GameObject.Find("LevelLoader").GetComponent<LevelLoader>().lastLoadedLevel;
+        if (Application.loadedLevelName == "Level1")
+        {
+            GameObject.Find("LevelLoader").GetComponent<LevelLoader>().lastLoadedLevel = 1;
+            print("Loaded level 1");
+            int load = GameObject.Find("LevelLoader").GetComponent<LevelLoader>().lastLoadedLevel;
+            print(load);
+        }
+        if (Application.loadedLevelName == "Level2")
+        {
+            GameObject.Find("LevelLoader").GetComponent<LevelLoader>().lastLoadedLevel = 2;
+            int load = GameObject.Find("LevelLoader").GetComponent<LevelLoader>().lastLoadedLevel;
+            print(load);
+        }
     }
 
     void Update()
@@ -38,7 +53,7 @@ public class GameManager : MonoBehaviour {
     {
         if ( PlayerShips.Count == 0 )
         {
-            Application.LoadLevel("L1Loss");
+            Application.LoadLevel("Loss");
         }
 
         if ( AllShipsAccountedFor() )
@@ -50,7 +65,7 @@ public class GameManager : MonoBehaviour {
         if (alertStopwatch.ElapsedMilliseconds >= alertWindow || !hackerAlive) 
         {
             alertStopwatch.Reset();
-            Application.LoadLevel("L1Loss");
+            Application.LoadLevel("Loss");
         }
     }
 
@@ -58,7 +73,7 @@ public class GameManager : MonoBehaviour {
     {
         if ( !hackerAlive )
         {
-            Application.LoadLevel("L2Loss");
+            Application.LoadLevel("Loss");
         }
 
         if( hackedStations == 4 )
