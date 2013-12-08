@@ -104,8 +104,6 @@ public class UIManager : MonoBehaviour {
         {
             if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 60, 100, 40), "Try Again"))
             {
-                //loadedLevel = GameObject.Find("Level Loader").GetComponent<LevelLoader>().lastLoadedLevel; 
-
                 print("Level: " + loadedLevel);
                 switch (loadedLevel)
                 {
