@@ -73,7 +73,7 @@ public class PlayerController : UnitController {
             {
                 rotate(shipPosition);
             }
-            if (hasTarget && facingTarget)
+            if (hasTarget)
             {
                 move(shipPosition);
             }
