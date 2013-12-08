@@ -53,7 +53,7 @@ public class EnemyController : UnitController {
                 }
                 case 2:
                 {
-                    if (farVis.sightingExists)
+                    if (farVis != null && farVis.sightingExists)
                     {
                         setTarget();
                     }
@@ -134,7 +134,7 @@ public class EnemyController : UnitController {
 
     protected override void fireWeapons()
     {
-        Debug.Log("Ship " + thisShip.name + " has fired.");
+        //Debug.Log("Ship " + thisShip.name + " has fired.");
         GameObject Projectile = (GameObject)Resources.Load("Projectile");
         Vector3 projectile_position = thisShip.transform.position + (thisShip.transform.up * (shipSizeH + 1));
         GameObject projObject = Instantiate(Projectile, projectile_position, thisShip.transform.rotation) as GameObject;

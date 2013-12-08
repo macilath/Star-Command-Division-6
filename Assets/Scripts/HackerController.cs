@@ -26,7 +26,7 @@ public class HackerController : PlayerController {
 
     protected override void fireWeapons()
     {
-        UnityEngine.Debug.Log("Ship " + thisShip.name + " has fired.");
+        //UnityEngine.Debug.Log("Ship " + thisShip.name + " has fired.");
         GameObject Projectile = (GameObject)Resources.Load("StunProjectile");
         Vector3 projectile_position = thisShip.transform.position + (thisShip.transform.up * (shipSizeH + 1));
         GameObject projObject = Instantiate(Projectile, projectile_position, thisShip.transform.rotation) as GameObject;
@@ -53,7 +53,7 @@ public class HackerController : PlayerController {
         base.OnTriggerEnter(other);
         if (other.gameObject.tag == "HackStation")
         {
-            UnityEngine.Debug.Log("Met hackstation");
+            //UnityEngine.Debug.Log("Met hackstation");
             GeneratorController gen = other.gameObject.GetComponent<GeneratorController>();
             gen.startHack();
         }

@@ -50,7 +50,7 @@ public class WeaponController : MonoBehaviour {
     protected void kick()
     {
         Vector3 forceVector = weapon.transform.up * weaponSpeed;
-        Debug.Log("projectile force vector: " + forceVector);
+        //Debug.Log("projectile force vector: " + forceVector);
         weapon.rigidbody.AddForce(forceVector);
     }
 

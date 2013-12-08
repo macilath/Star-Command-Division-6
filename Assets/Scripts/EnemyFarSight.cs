@@ -65,14 +65,14 @@ public class EnemyFarSight : MonoBehaviour {
 	            playerInSight = false;
 	        }
 			
-            if (playerInSight)
+            /*if (playerInSight)
             {
                 Debug.Log(string.Format("Angle: {0}, In Sight", angle));
             }
             else
             {
                 Debug.Log(string.Format("Angle: {0}, NOT IN SIGHT", angle));
-            }
+            }*/
         }
     }
 }

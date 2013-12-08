@@ -108,14 +108,14 @@ public class PlayerController : UnitController {
                 hasTarget = true;
                 targetDest = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 targetDest.z = 0.0f;
-                Debug.Log("Orders: GOTO " + targetDest);
+                //Debug.Log("Orders: GOTO " + targetDest);
             }
             else if (hasTarget == true && Input.GetMouseButtonDown(1) && isSelected == true)
             {
                 this.rigidbody.velocity = new Vector3(0, 0, 0);
                 targetDest = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 targetDest.z = 0.0f;
-                Debug.Log("New Orders: GOTO " + targetDest);
+                //Debug.Log("New Orders: GOTO " + targetDest);
             }
             this.rigidbody.angularVelocity = Vector3.zero;
             facingTarget = false;
@@ -130,7 +130,7 @@ public class PlayerController : UnitController {
 
     protected override void fireWeapons()
     {
-        Debug.Log("Ship " + thisShip.name + " has fired.");
+        //Debug.Log("Ship " + thisShip.name + " has fired.");
         GameObject Projectile = (GameObject)Resources.Load("Projectile");
         Vector3 projectile_position = thisShip.transform.position + (thisShip.transform.up * (shipSizeH + 1));
         GameObject projObject = Instantiate(Projectile, projectile_position, thisShip.transform.rotation) as GameObject;

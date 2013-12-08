@@ -144,7 +144,7 @@ public abstract class UnitController : MonoBehaviour {
             //thisShip.rigidbody.AddRelativeForce(-shipVelocity * thisShip.rigidbody.mass);
             this.rigidbody.velocity = Vector3.zero;
             this.rigidbody.angularVelocity = Vector3.zero;
-            UnityEngine.Debug.Log("Destination Reached.");
+            //UnityEngine.Debug.Log("Destination Reached.");
             hasTarget = false;
             if(AfterburnEffect != null)
             {
@@ -162,13 +162,14 @@ public abstract class UnitController : MonoBehaviour {
                 //UnityEngine.Debug.Log("Accelerating");
                 if( AfterburnEffect == null)
                 {
-                    UnityEngine.Debug.Log("Engaging Afterburner");
+                    //UnityEngine.Debug.Log("Engaging Afterburner");
                     Vector3 enginePos = thisShip.transform.position;
                     enginePos.z += 0.05f;
                     AfterburnEffect = Instantiate(Afterburn, enginePos, thisShip.transform.rotation) as GameObject;
                     tk2dSprite burner = AfterburnEffect.GetComponent<tk2dSprite>();
                     burner.SetSprite(burnFull);
                     AfterburnEffect.transform.parent = thisShip.transform;
+                    AfterburnEffect.GetComponent<MeshCollider>().enabled = false;
                 }
                 else
                 {
@@ -177,7 +178,7 @@ public abstract class UnitController : MonoBehaviour {
                     //UnityEngine.Debug.Log("Current Sprite name: " + burner.CurrentSprite.name);
                     if( burner.CurrentSprite.name == burnHalf )
                     {
-                        UnityEngine.Debug.Log("Engine full speed");
+                        //UnityEngine.Debug.Log("Engine full speed");
                         burner.SetSprite(burnFull);
                     }
                 }
@@ -189,7 +190,7 @@ public abstract class UnitController : MonoBehaviour {
                 //UnityEngine.Debug.Log("Current Sprite name: " + burner.CurrentSprite.name);
                 if( burner.CurrentSprite.name == burnFull )
                 {
-                    UnityEngine.Debug.Log("Engine half speed");
+                    //UnityEngine.Debug.Log("Engine half speed");
                     burner.SetSprite(burnHalf);
                 }
                 forceVector = new Vector3(0, 0, 0);
