@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour {
     public int alertWindow = 60000; //in ms, 1 min 
     public int hackedStations = 0;
     public bool hackerAlive = true;
+    public static bool playerAlive = true;
+    public static bool hostageAlive = true;
+    public static bool hostageSafe = false;
 
     public int difficultyLevel = 2;
     //public int loadedLevel = 0; 
@@ -29,11 +32,19 @@ public class GameManager : MonoBehaviour {
             int load = GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel;
             //print(load);
         }
+
         if (Application.loadedLevelName == "Level2")
         {
             GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel = 2;
             int load = GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel;
             //print(load);
+        }
+
+        if (Application.loadedLevelName == "AlternativeLevel4")
+        {
+            GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel = 3;
+            int load = GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel;
+            print(load);
         }
     }
 
@@ -46,6 +57,10 @@ public class GameManager : MonoBehaviour {
         if( Application.loadedLevelName == "Level2")
         {
             Level2Logic();
+        }
+        if (Application.loadedLevelName == "AlternativeLevel4")
+        {
+            Level3Logic();
         }
     }
 
@@ -71,16 +86,30 @@ public class GameManager : MonoBehaviour {
 
     void Level2Logic()
     {
-        if ( !hackerAlive )
+        if (!hackerAlive)
         {
             Application.LoadLevel("Loss");
         }
 
-        if( hackedStations == 4 )
+        if (hackedStations == 4)
         {
             GameObject shield = GameObject.Find("Shield");
             shield.GetComponent<MeshRenderer>().enabled = false;
             shield.GetComponent<MeshCollider>().isTrigger = true;
+        }
+    }
+
+    void Level3Logic()
+    {
+        if (!playerAlive || !hostageAlive)
+        {
+            Application.LoadLevel("Loss");
+        }
+
+        if (playerAlive && hostageAlive && hostageSafe)
+        {
+            // Should load win screen here, but that doesn't seem to exist yet
+            Application.LoadLevel("Title");
         }
     }
 
