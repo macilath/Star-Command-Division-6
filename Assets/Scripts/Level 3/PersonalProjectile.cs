@@ -51,6 +51,8 @@ public class PersonalProjectile : MonoBehaviour
             //((UnitController)((other.gameObject).GetComponent<UnitController>())).takeDamage(weaponDamage);
             Destroy(weapon);
             Destroy(other.gameObject);
+
+            GameManager.playerAlive = false;
         }
         else if (other.gameObject.tag == "Wall")
         {

@@ -5,7 +5,6 @@ public class Safety : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
@@ -19,6 +18,7 @@ public class Safety : MonoBehaviour {
         if (other.gameObject.tag == "Hostage")
         {
             Debug.Log("safe");
+            GameManager.hostageSafe = true;
         }
     }
 }
