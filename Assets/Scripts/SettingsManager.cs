@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LevelLoader : MonoBehaviour {
+public class SettingsManager : MonoBehaviour {
 
-    public int lastLoadedLevel = 0; 
+    public int lastLoadedLevel = 0;
+    public int difficultyLevel = 1;
 
     void Awake()
     {

@@ -6,6 +6,8 @@ public class EnemyController : UnitController {
 
     EnemySight vision;
     EnemyFarSight farVis;
+    SettingsManager settingManager;
+
     void Start () {
         thisShip = this.gameObject;
         Electric = (GameObject)Resources.Load("EnemyStun");
@@ -27,6 +29,7 @@ public class EnemyController : UnitController {
         hasTarget = false;
         facingTarget = true;
         targetIsEnemy = false;
+        settingManager = GameObject.Find("SettingsManager").GetComponent<SettingsManager>();
     }
     
     void Update () {
@@ -103,7 +106,8 @@ public class EnemyController : UnitController {
     public override void setTarget()
     {
         // Assign movement orders to ship
-        switch(manager.difficultyLevel)
+        switch(settingManager.difficultyLevel)
+        //switch(manager.difficultyLevel)
         {
             case 1:
             {

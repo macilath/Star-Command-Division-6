@@ -24,15 +24,15 @@ public class GameManager : MonoBehaviour {
         //loadedLevel = GameObject.Find("LevelLoader").GetComponent<LevelLoader>().lastLoadedLevel;
         if (Application.loadedLevelName == "Level1")
         {
-            GameObject.Find("LevelLoader").GetComponent<LevelLoader>().lastLoadedLevel = 1;
+            GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel = 1;
             print("Loaded level 1");
-            int load = GameObject.Find("LevelLoader").GetComponent<LevelLoader>().lastLoadedLevel;
+            int load = GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel;
             print(load);
         }
         if (Application.loadedLevelName == "Level2")
         {
-            GameObject.Find("LevelLoader").GetComponent<LevelLoader>().lastLoadedLevel = 2;
-            int load = GameObject.Find("LevelLoader").GetComponent<LevelLoader>().lastLoadedLevel;
+            GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel = 2;
+            int load = GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel;
             print(load);
         }
     }
@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour {
                 ++numSurvivors;
             }
         }
-        //UnityEngine.Debug.Log("num survivors: " + numSurvivors);
+        UnityEngine.Debug.Log("num survivors: " + numSurvivors);
         return (numSurvivors == PlayerShips.Count);
     }
 

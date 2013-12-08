@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour {
         GameObject camera = GameObject.Find("Main Camera");
         manager = camera.GetComponent<GameManager>();
         //digiFont = (Font)Resources.Load("Fonts/Digitalism", typeof(Font));
-        loadedLevel = GameObject.Find("LevelLoader").GetComponent<LevelLoader>().lastLoadedLevel; 
+        loadedLevel = GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel; 
 
         // Title Screen
         if (Application.loadedLevelName == "Title")
