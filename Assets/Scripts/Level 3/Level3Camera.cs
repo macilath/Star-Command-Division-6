@@ -9,7 +9,7 @@ public class Level3Camera : MonoBehaviour {
 	public void Awake()
     {
 		camera = GetComponent<Camera>();
-        player = GameObject.Find("PlayerAnchor");
+        player = GameObject.Find("Player");
     }
 	
 	void Start()

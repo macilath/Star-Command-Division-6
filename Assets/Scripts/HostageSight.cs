@@ -4,6 +4,7 @@ using System.Collections;
 public class HostageSight : MonoBehaviour {
 
     public bool followPlayer;
+    public bool onStay;
 	// Use this for initialization
 	void Start () {
         followPlayer = false;

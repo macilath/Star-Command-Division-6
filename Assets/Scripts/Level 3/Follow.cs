@@ -15,9 +15,18 @@ public class Follow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (vision.followPlayer)
-            m_NavMeshAgent.destination = m_Player.position;
-        else
-            m_NavMeshAgent.Stop();
+        if (m_Player != null)
+        {
+            Vector3 behindPlayerPosition = m_Player.position + (m_Player.forward.normalized * -5);
+
+            if (vision.followPlayer)
+            {
+                m_NavMeshAgent.destination = behindPlayerPosition;
+            }
+            else
+            {
+                m_NavMeshAgent.Stop();
+            }
+        }
 	}
 }

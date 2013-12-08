@@ -50,7 +50,6 @@ public class Lv3EnemySight : MonoBehaviour
             Vector3 direction = other.transform.position - transform.position;
             float angle = Vector3.Angle(direction, transform.forward);
             
-			//Debug.DrawRay(transform.position, direction.normalized * col.radius*2);
 			
             // If the angle between forward and where the player is, is less than half the angle of view...
             if(angle < fieldOfViewAngle * 0.5f)
@@ -58,7 +57,7 @@ public class Lv3EnemySight : MonoBehaviour
                 RaycastHit hit;
                 
                 // ... and if a raycast towards the player hits something...
-                if(Physics.Raycast(transform.position + transform.forward, direction.normalized, out hit, col.radius))
+                if(Physics.Raycast(transform.position + transform.forward, direction.normalized, out hit, col.radius*2))
                 {
 					 Debug.DrawRay(transform.position, direction.normalized * col.radius*2);
                     // ... and if the raycast hits the player...
