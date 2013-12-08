@@ -24,9 +24,11 @@ public class Level3Camera : MonoBehaviour {
 	
 	public void snapToPlayer()
 	{
-        Vector3 playerPos = player.transform.position;
-		playerPos.y = camera.transform.position.y;
-			
-		camera.transform.position = playerPos;
+        if (player != null)
+        {
+            Vector3 playerPos = player.transform.position;
+            playerPos.y = camera.transform.position.y;
+            camera.transform.position = playerPos;
+        }
 	}
 }

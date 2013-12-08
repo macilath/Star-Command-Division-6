@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections;
 using System;
 
@@ -13,40 +13,44 @@ public class PersonalProjectile : MonoBehaviour
     protected Vector3 initialPosition;
 
     protected GameObject weapon;
-
     protected static GameManager manager;
 
     protected void Start()
     {
-        weaponDamage = 25;
-        weaponRange = 1000;
-        weaponSpeed = 500;
-        enemyTag = Lv3Tags.player;
-
+        Init();
         manager = GameObject.Find("Main Camera").GetComponent<GameManager>();
         weapon = this.gameObject;
         initialPosition = weapon.transform.position;
         kick();
     }
 
-    protected void Update()
+    protected virtual void Init()
     {
-        checkBounds();
+        weaponDamage = 25;
+        weaponRange = 1000;
+        weaponSpeed = 1000;
     }
 
     protected void kick()
     {
-        Vector3 forceVector = weapon.transform.forward * weaponSpeed;
+        Vector3 forceVector = weapon.transform.up * weaponSpeed;
         Debug.Log("projectile force vector: " + forceVector);
         weapon.rigidbody.AddForce(forceVector);
+    }
+
+    public void setEnemyTag(string tag)
+    {
+        enemyTag = tag;
     }
 
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == enemyTag)
         {
-            ((UnitController)((other.gameObject).GetComponent<UnitController>())).takeDamage(weaponDamage);
+            Debug.Log("HIT PLAYER");
+            //((UnitController)((other.gameObject).GetComponent<UnitController>())).takeDamage(weaponDamage);
             Destroy(weapon);
+            Destroy(other.gameObject);
         }
         else if (other.gameObject.tag == "Wall")
         {
@@ -55,19 +59,6 @@ public class PersonalProjectile : MonoBehaviour
         else
         {
             //do nothing
-        }
-    }
-
-    protected void checkBounds()
-    {
-        if (weapon != null)
-        {
-            float fun = Math.Abs(Vector3.Distance(initialPosition, weapon.transform.position));
-            //Debug.Log("distance: " + fun); 
-            if (fun > weaponRange)
-            {
-                Destroy(weapon);
-            }
         }
     }
 }

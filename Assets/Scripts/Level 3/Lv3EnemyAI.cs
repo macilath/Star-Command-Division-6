@@ -52,21 +52,24 @@ public class Lv3EnemyAI : MonoBehaviour
 
     protected bool canShoot()
     {
-        if (shotTimer.ElapsedMilliseconds == 0 || shotTimer.ElapsedMilliseconds >= fireInterval)
+        if (enemy.gameObject != null)
         {
-            if (enemySight != null)
+            if (shotTimer.ElapsedMilliseconds == 0 || shotTimer.ElapsedMilliseconds >= fireInterval)
             {
-                transform.LookAt(enemySight.personalLastSighting);
+                if (enemySight != null)
+                {
+                    transform.LookAt(enemySight.personalLastSighting);
+                }
+                shotTimer.Reset();
+                return true;
             }
-            shotTimer.Reset();
-            return true;
         }
         return false;
     }
 
     void Shooting()
     {
-		UnityEngine.Debug.Log("Shooting");
+		//UnityEngine.Debug.Log("Shooting");
         // Stop the enemy where it is.
         nav.Stop();
 
@@ -81,12 +84,17 @@ public class Lv3EnemyAI : MonoBehaviour
         GameObject Projectile = (GameObject)Resources.Load("PersonalProjectile");
         Vector3 projectile_position = enemy.position + (enemy.up * 10);
         GameObject projObject = Instantiate(Projectile, projectile_position, enemy.rotation) as GameObject;
+
+        PersonalProjectile proj = projObject.GetComponent<PersonalProjectile>();
+        proj.setEnemyTag(Lv3Tags.player);
+
         shotTimer.Start();
     }
 
+
     void Chasing()
     {
-       UnityEngine.Debug.Log("Chasing");
+       //UnityEngine.Debug.Log("Chasing");
 		
 		// Create a vector from the enemy to the last sighting of the player.
         Vector3 sightingDeltaPos = enemySight.personalLastSighting - transform.position;
@@ -124,7 +132,7 @@ public class Lv3EnemyAI : MonoBehaviour
 
     void Patrolling()
     {
-		UnityEngine.Debug.Log("Patrolling");
+		//UnityEngine.Debug.Log("Patrolling");
         // Set an appropriate speed for the NavMeshAgent.
         nav.speed = patrolSpeed;
 

@@ -64,7 +64,7 @@ public class Lv3EnemySight : MonoBehaviour
                     // ... and if the raycast hits the player...
                     if(hit.collider.gameObject == player)
                     {
-						Debug.Log("Player in sight!");
+						//Debug.Log("Player in sight!");
                         // ... the player is in sight.
                         playerInSight = true;
                         
