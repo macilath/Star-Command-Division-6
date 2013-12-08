@@ -9,7 +9,7 @@ public class Asteroid : MonoBehaviour {
 	public float currentSpinSpeed = 0;
 	private GameManager manager;
 	private System.Random rand;
-	public const bool spinEnabled = true;
+	public const bool spinEnabled = false;
 
 	public void Awake()
     {
