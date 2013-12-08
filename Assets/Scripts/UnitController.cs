@@ -103,6 +103,10 @@ public abstract class UnitController : MonoBehaviour {
     protected void rotate(Vector3 shipPosition)
     {
         Vector3 toTarget = targetDest - shipPosition;
+        Vector3 normalizedTarget = toTarget;
+        toTarget.Normalize();
+        Vector3 shipDir = this.transform.up;
+        shipDir.Normalize();
         float shipAngle = this.transform.rotation.eulerAngles.z;
         float angleDir = AngleDir(this.transform.up, toTarget, Vector3.forward);
         float targetAngle = Vector3.Angle(Vector3.up, toTarget) * angleDir;
@@ -115,9 +119,9 @@ public abstract class UnitController : MonoBehaviour {
         //Debug.Log(rotationAngle + " degrees");
         //this.transform.rotation = Quaternion.AngleAxis(targetAngle, Vector3.forward);
         //facingTarget = true;
-        //TODO: make rotation fluid instead of instant
 
-        if(Math.Abs(rotationAngle) < 5)
+        float dotProduct = Vector3.Dot(normalizedTarget, shipDir);
+        if(/*Math.Abs(rotationAngle) < 5*/ dotProduct < 0.5 && dotProduct >= -0.5 )
         {
             this.rigidbody.angularVelocity = Vector3.zero;
             this.transform.rotation = Quaternion.AngleAxis(targetAngle, Vector3.forward);
@@ -136,6 +140,8 @@ public abstract class UnitController : MonoBehaviour {
         Vector3 forceVector = (targetDest - shipPosition);
         forceVector.Normalize();
         Vector3 shipVelocity = this.rigidbody.velocity;
+        Vector3 normalizedVelocity = shipVelocity;
+        normalizedVelocity.Normalize();
 
         Rect boundingRect = new Rect(shipPosition.x - (shipSizeW/2), shipPosition.y - (shipSizeH/2), shipSizeW, shipSizeH);
         //Debug.Log(shipPosition - targetDest);
@@ -156,7 +162,7 @@ public abstract class UnitController : MonoBehaviour {
         //TODO: change this to compare vectors using cosine to ensure ship is always trying to move to targetDest
         if (hasTarget)
         {
-            if (shipVelocity.sqrMagnitude < shipSpeed)
+            if (shipVelocity.sqrMagnitude < shipSpeed || Vector3.Dot(normalizedVelocity, forceVector) == 0)
             {
                 forceVector = shipVelocity + (forceVector * shipAccel);
                 //UnityEngine.Debug.Log("Accelerating");

@@ -68,7 +68,7 @@ public class EnemyController : UnitController {
             {
                 move(shipPosition);
             }
-            if(shipCanFire())
+            if(shipCanFire() && facingTarget)
             {
                 checkShoot();
             }
@@ -107,7 +107,6 @@ public class EnemyController : UnitController {
     {
         // Assign movement orders to ship
         switch(settingManager.difficultyLevel)
-        //switch(manager.difficultyLevel)
         {
             case 1:
             {

@@ -112,12 +112,12 @@ public class PlayerController : UnitController {
             }
             else if (hasTarget == true && Input.GetMouseButtonDown(1) && isSelected == true)
             {
-                this.rigidbody.velocity = new Vector3(0, 0, 0);
+                //this.rigidbody.velocity = new Vector3(0, 0, 0);
                 targetDest = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 targetDest.z = 0.0f;
                 //Debug.Log("New Orders: GOTO " + targetDest);
             }
-            this.rigidbody.angularVelocity = Vector3.zero;
+            //this.rigidbody.angularVelocity = Vector3.zero;
             facingTarget = false;
         }
     }
