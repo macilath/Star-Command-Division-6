@@ -13,7 +13,6 @@ public class Lv3EnemyAI : MonoBehaviour
 
     private Lv3EnemySight enemySight;                          // Reference to the EnemySight script.
     private NavMeshAgent nav;                               // Reference to the nav mesh agent.
-    //private Transform player;                               // Reference to the player's transform.
 	private LastPlayerSighting lastPlayerSighting;          // Reference to the last global sighting of the player.
     private float chaseTimer;                               // A timer for the chaseWaitTime.
     private float patrolTimer;                              // A timer for the patrolWaitTime.
@@ -28,7 +27,6 @@ public class Lv3EnemyAI : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
         enemy = this.transform.FindChild("HumanEnemy");
 		enemySight = GetComponentInChildren<Lv3EnemySight>();
-		//player = GameObject.FindGameObjectWithTag(Lv3Tags.player).transform;
 		lastPlayerSighting = GameObject.FindGameObjectWithTag(Lv3Tags.gameController).GetComponent<LastPlayerSighting>();
     }
 
@@ -56,6 +54,10 @@ public class Lv3EnemyAI : MonoBehaviour
     {
         if (shotTimer.ElapsedMilliseconds == 0 || shotTimer.ElapsedMilliseconds >= fireInterval)
         {
+            if (enemySight != null)
+            {
+                transform.LookAt(enemySight.personalLastSighting);
+            }
             shotTimer.Reset();
             return true;
         }
@@ -67,6 +69,7 @@ public class Lv3EnemyAI : MonoBehaviour
 		UnityEngine.Debug.Log("Shooting");
         // Stop the enemy where it is.
         nav.Stop();
+
         if (canShoot())
         {
             fireWeapons();
@@ -77,15 +80,7 @@ public class Lv3EnemyAI : MonoBehaviour
     {
         GameObject Projectile = (GameObject)Resources.Load("PersonalProjectile");
         Vector3 projectile_position = enemy.position + (enemy.up * 10);
-        /*Quaternion rot = enemy.rotation;
-        Vector3 angles = rot.eulerAngles;
-        angles.x += 90;
-        rot.SetEulerAngles(angles);*/
         GameObject projObject = Instantiate(Projectile, projectile_position, enemy.rotation) as GameObject;
-
-        PersonalProjectile proj = projObject.GetComponent<PersonalProjectile>();
-        proj.setEnemyTag(Lv3Tags.player);
-
         shotTimer.Start();
     }
 

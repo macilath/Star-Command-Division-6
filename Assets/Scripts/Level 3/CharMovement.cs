@@ -3,42 +3,29 @@ using System.Collections;
 
 public class CharMovement : MonoBehaviour
 {
-    public float speed = 1.0F;
+    public float speed = 0.25F;
     private Vector3 moveDirection = Vector3.zero;
+    private CharacterController controller;
+
+    void Awake()
+    {
+        controller = GetComponent<CharacterController>();
+    }
+
     void Update()
     {
-		float x_pos = this.transform.position.x;
-        float y_pos = this.transform.position.y;
         float h_axis = Input.GetAxisRaw("Horizontal");
         float v_axis = Input.GetAxisRaw("Vertical");
-		
-        if(h_axis != 0)
-        {
-            Vector3 movement;
-            if(h_axis != 0)
-            {
-                movement = new Vector3((Input.GetAxisRaw("Horizontal") * speed), 0, 0);
-            }
-            else
-            {
-                movement = new Vector3(speed, 0, 0);
-            }
-            
-            this.transform.Translate(movement);
-        }
-        if(v_axis != 0)
-        {
-            Vector3 movement;
-            if(v_axis != 0)
-            {
-                movement = new Vector3(0, 0, (Input.GetAxisRaw("Vertical") * speed));
-            }
-            else
-            {
-                movement = new Vector3(0, 0, speed);
-            }
 
-            this.transform.Translate(movement);
+        // Locking y position
+        Vector3 position = transform.position;
+        position.y = 0;
+        transform.position = position;
+
+        if (controller != null)
+        {
+            moveDirection = new Vector3(h_axis, 0, v_axis);
+            controller.Move(moveDirection * speed);
         }
     }
 }
