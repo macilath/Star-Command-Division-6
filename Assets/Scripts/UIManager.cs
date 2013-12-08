@@ -41,48 +41,56 @@ public class UIManager : MonoBehaviour {
                 Application.LoadLevel("Level1");
             }
         }
+        
+        // Intro Screen
+        else if (Application.loadedLevelName == "Intro")
+        {
+            // Intro UI Elements, Story, etc.
+        }
 
         // Level 1
         else if (Application.loadedLevelName == "Level1")
         {
-			warningClock.normal.textColor = Color.yellow;
-			dangerClock.normal.textColor = Color.red;
+            warningClock.normal.textColor = Color.yellow;
+            dangerClock.normal.textColor = Color.red;
 
-			warningClock.font = digiFont;
-			dangerClock.font = digiFont;
-			warningClock.fontSize = 20;
-			dangerClock.fontSize = 20;
-			warningStyle.normal.textColor = Color.yellow;
-			dangerStyle.normal.textColor = Color.red;
-			
-			
-			hacker = manager.GetComponent<HackerController>(); 
+            warningClock.font = digiFont;
+            dangerClock.font = digiFont;
+            warningClock.fontSize = 20;
+            dangerClock.fontSize = 20;
+            warningStyle.normal.textColor = Color.yellow;
+            dangerStyle.normal.textColor = Color.red;
+
+
+            hacker = manager.GetComponent<HackerController>();
             // GUI elements for first level
             if (manager.alertStopwatch.ElapsedMilliseconds != 0)
             {
-                string timeRemaining = string.Format("{0}", (manager.alertWindow - manager.alertStopwatch.ElapsedMilliseconds)/1000);
-                if((manager.alertWindow - manager.alertStopwatch.ElapsedMilliseconds)/1000 <= 30) {
-					//GUI.Label(new Rect(40, Screen.height - 40, 200, 40), "You've been spotted!\n" + timeRemaining, dangerStyle);
-					GUI.Label(new Rect(40, Screen.height - 60, 200, 40), "You've been spotted!\n Time Remaining:", dangerStyle);
-					GUI.Label(new Rect(100, Screen.height - 30, 200, 40), timeRemaining.ToString(), dangerClock);
-				}
-				else {
-					GUI.Label(new Rect(40, Screen.height - 60, 200, 40), "You've been spotted!\n Time Remaining:", warningStyle);
-					GUI.Label(new Rect(100, Screen.height - 30, 200, 40), timeRemaining.ToString(), warningClock);
-				}
-            string shipsRemaining = string.Format("Ships Left: {0}", manager.PlayerShips.Count);
-            GUI.Label(new Rect(Screen.width - 100, Screen.height - 20, 200, 40), shipsRemaining);
-			}
+                string timeRemaining = string.Format("{0}", (manager.alertWindow - manager.alertStopwatch.ElapsedMilliseconds) / 1000);
+                if ((manager.alertWindow - manager.alertStopwatch.ElapsedMilliseconds) / 1000 <= 30)
+                {
+                    //GUI.Label(new Rect(40, Screen.height - 40, 200, 40), "You've been spotted!\n" + timeRemaining, dangerStyle);
+                    GUI.Label(new Rect(40, Screen.height - 60, 200, 40), "You've been spotted!\n Time Remaining:", dangerStyle);
+                    GUI.Label(new Rect(100, Screen.height - 30, 200, 40), timeRemaining.ToString(), dangerClock);
+                }
+                else
+                {
+                    GUI.Label(new Rect(40, Screen.height - 60, 200, 40), "You've been spotted!\n Time Remaining:", warningStyle);
+                    GUI.Label(new Rect(100, Screen.height - 30, 200, 40), timeRemaining.ToString(), warningClock);
+                }
+                string shipsRemaining = string.Format("Ships Left: {0}", manager.PlayerShips.Count);
+                GUI.Label(new Rect(Screen.width - 100, Screen.height - 20, 200, 40), shipsRemaining);
+            }
         }
 
         // Level 2
         else if (Application.loadedLevelName == "Level2")
         {
-			hacker = manager.GetComponent<HackerController>(); 
+            hacker = manager.GetComponent<HackerController>();
             // GUI elements for second level
             string hackerHealth = string.Format("Hacker Health: {0}", hacker.shipHealth);
             GUI.Label(new Rect(Screen.width - 100, Screen.height - 20, 200, 40), hackerHealth);
-            
+
         }
 
         // Level 3
@@ -99,7 +107,8 @@ public class UIManager : MonoBehaviour {
                 //loadedLevel = GameObject.Find("Level Loader").GetComponent<LevelLoader>().lastLoadedLevel; 
 
                 print("Level: " + loadedLevel);
-                switch (loadedLevel) {
+                switch (loadedLevel)
+                {
                     case 0: break;
                     case 1:
                         print("Reload level 1");
@@ -115,37 +124,6 @@ public class UIManager : MonoBehaviour {
             }
         }
 
-        /*
-        else if (Application.loadedLevelName == "L1Loss")
-        {
-            // GUI for losing in level 1
-            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 60, 100, 40), "Try Again"))
-            {
-                print("Replay from L1Loss");
-                Application.LoadLevel("Level1");
-            }
-        }
-
-        else if (Application.loadedLevelName == "L2Loss")
-        {
-            // GUI for losing in level 2
-            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 60, 100, 40), "Try Again"))
-            {
-                print("Replay from L2Loss");
-                Application.LoadLevel("Level2");
-            }
-        }
-
-        else if (Application.loadedLevelName == "L3Loss")
-        {
-            // GUI for losing in the last level
-            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 60, 100, 40), "Try Again"))
-            {
-                print("Replay from L3Loss");
-                Application.LoadLevel("Level3");
-            }
-        }
-        */
         // Transitional scenes - If scene is loaded then we won the previous level
         else if (Application.loadedLevelName == "1to2")
         {
