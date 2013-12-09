@@ -182,7 +182,7 @@ public class UIManager : MonoBehaviour {
         // Lose
         else if (Application.loadedLevelName == "Loss")
         {
-            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 60, 100, 110), "Try Again"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 + 100, 200, 210), "Try Again"))
             {
                 print("Level: " + loadedLevel);
                 switch (loadedLevel)
