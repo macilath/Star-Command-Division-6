@@ -127,7 +127,7 @@ public class UIManager : MonoBehaviour {
         }
 
         // Level 3
-        else if (Application.loadedLevelName == "AlternativeLevel4")
+        else if (Application.loadedLevelName == "Level3")
         {
             // GUI elements for last level
         }
@@ -151,7 +151,10 @@ public class UIManager : MonoBehaviour {
                         break;
                     case 3:
                         print("Reload level 3");
-                        Application.LoadLevel("AlternativeLevel4");
+						GameManager.playerAlive = true;
+		 				GameManager.hostageAlive = true;
+		    			GameManager.hostageSafe = false;
+                        Application.LoadLevel("Level3");
                         break;
                 }
             }
@@ -171,6 +174,10 @@ public class UIManager : MonoBehaviour {
             if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 100, 100, 40), "PLAY"))
             {
                 print("Play");
+				GameManager.playerAlive = true;
+ 				GameManager.hostageAlive = true;
+    			GameManager.hostageSafe = false;
+				
                 Application.LoadLevel("Level3");
             }
         }
