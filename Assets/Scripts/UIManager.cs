@@ -59,32 +59,36 @@ public class UIManager : MonoBehaviour {
         GUI.skin.button.normal.background = (Texture2D)content.image;
         GUI.skin.button.hover.background = (Texture2D)content.image;
         GUI.skin.button.active.background = (Texture2D)content.image;
+        /*GUIStyle buttonText = new GUIStyle();
+        buttonText.font = cyberFont;
+        buttonText.normal.textColor = Color.white;
+        buttonText.normal.background = (Texture2D)content.image;*/
         // Title Screen
         if (Application.loadedLevelName == "Title")
         {
-            if (GUI.Button(new Rect(Screen.width / 2 - 175, Screen.height / 2 + 300, 100, 110), "Easy"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 305, Screen.height / 2 + 300, 200, 210), "Easy"))//, buttonText))
             {
                 print("Play easy");
                 GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 1;
-                Application.LoadLevel("Intro");
+                Application.LoadLevel("HowTo");
             }
-            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 + 300, 110, 110), "Medium"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 105, Screen.height / 2 + 300, 210, 210), "Medium"))
             {
                 print("Play");
                 GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 2;
-                Application.LoadLevel("Intro");
+                Application.LoadLevel("HowTo");
             }
-            if (GUI.Button(new Rect(Screen.width / 2 + 95, Screen.height / 2 + 300, 100, 110), "Hard"))
+            if (GUI.Button(new Rect(Screen.width / 2 + 105, Screen.height / 2 + 300, 200, 210), "Hard"))
             {
                 print("Play hard");
                 GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 3;
-                Application.LoadLevel("Intro");
+                Application.LoadLevel("HowTo");
             }
         }
 
         else if (Application.loadedLevelName == "HowTo")
         {
-            if (GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 100, 110, 110), "PLAY"))
+            if (GUI.Button(new Rect(Screen.width/2 - 105, Screen.height/2 - 150, 210, 210), "PLAY"))
             {
                 //GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 2;
                 Application.LoadLevel("Intro");
@@ -95,7 +99,7 @@ public class UIManager : MonoBehaviour {
         else if (Application.loadedLevelName == "Intro")
         {
             // Intro UI Elements, Story, etc.
-            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 100, 110, 110), "PLAY"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 105, Screen.height / 2 - 100, 210, 210), "PLAY"))
             {
                 //GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 2;
                 Application.LoadLevel("Level1");
