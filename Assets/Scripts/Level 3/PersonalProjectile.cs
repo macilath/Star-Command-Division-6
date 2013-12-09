@@ -46,7 +46,7 @@ public class PersonalProjectile : MonoBehaviour
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == enemyTag)
-        {
+        {	
             Debug.Log("HIT PLAYER");
             //((UnitController)((other.gameObject).GetComponent<UnitController>())).takeDamage(weaponDamage);
             Destroy(weapon);
@@ -54,6 +54,15 @@ public class PersonalProjectile : MonoBehaviour
 
             GameManager.playerAlive = false;
         }
+		else if (other.gameObject.tag == "Hostage")
+		{
+			Debug.Log("HIT Hostage");
+            //((UnitController)((other.gameObject).GetComponent<UnitController>())).takeDamage(weaponDamage);
+            Destroy(weapon);
+            Destroy(other.gameObject);
+
+            GameManager.hostageAlive = false;
+		}
         else if (other.gameObject.tag == "Wall")
         {
             Destroy(weapon);
