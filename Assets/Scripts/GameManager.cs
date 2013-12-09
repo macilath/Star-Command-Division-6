@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour {
 
     void Level1Logic()
     {
-        print("Level 1 Logics");
+        //print("Level 1 Logics");
         if ( PlayerShips.Count == 0 )
         {
             Application.LoadLevel("Loss");
@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour {
 
     void Level2Logic()
     {
-        print("Level 2 Logic");
+        //print("Level 2 Logic");
         if (!hackerAlive)
         {
             Application.LoadLevel("Loss");
