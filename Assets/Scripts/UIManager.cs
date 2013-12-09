@@ -88,7 +88,7 @@ public class UIManager : MonoBehaviour {
 
         else if (Application.loadedLevelName == "HowTo")
         {
-            if (GUI.Button(new Rect(Screen.width/2 - 105, Screen.height/2 - 100, 210, 210), "PLAY"))
+            if (GUI.Button(new Rect(Screen.width/2 - 105, Screen.height/2 - 150, 210, 210), "PLAY"))
             {
                 //GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 2;
                 Application.LoadLevel("Intro");
