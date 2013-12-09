@@ -43,8 +43,17 @@ public class UIManager : MonoBehaviour {
                 Application.LoadLevel("Intro");
             }
         }
-        
-        // Intro Screen
+
+        else if (Application.loadedLevelName == "HowTo")
+        {
+            if (GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 100, 110, 40), "PLAY"))
+            {
+                //GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 2;
+                Application.LoadLevel("Intro");
+            }
+        }
+
+        // Intro Cut Scene Screen
         else if (Application.loadedLevelName == "Intro")
         {
             // Intro UI Elements, Story, etc.
@@ -54,6 +63,8 @@ public class UIManager : MonoBehaviour {
                 Application.LoadLevel("Level1");
             }
         }
+
+
 
         // Level 1
         else if (Application.loadedLevelName == "Level1")
@@ -106,7 +117,7 @@ public class UIManager : MonoBehaviour {
             //healthBar = health.GetComponent<tk2dSprite>();
             healthBar = health.GetComponent<GUITexture>();
             GUI.Label(new Rect(Screen.width - 200, Screen.height - 60, 200, 40), "Hacker Health", warningStyle);
-                                 
+
             GameObject hacky = GameObject.Find("HackerShip");
             int hackerHealth = hacky.GetComponent<HackerController>().shipHealth;
             //string hackerHealth = string.Format("Hacker Health: {0}", hacky.GetComponent<HackerController>().shipHealth);
@@ -161,9 +172,9 @@ public class UIManager : MonoBehaviour {
                         break;
                     case 3:
                         print("Reload level 3");
-						GameManager.playerAlive = true;
-		 				GameManager.hostageAlive = true;
-		    			GameManager.hostageSafe = false;
+                        GameManager.playerAlive = true;
+                        GameManager.hostageAlive = true;
+                        GameManager.hostageSafe = false;
                         Application.LoadLevel("Level3");
                         break;
                 }
@@ -184,10 +195,10 @@ public class UIManager : MonoBehaviour {
             if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 100, 100, 40), "PLAY"))
             {
                 print("Play");
-				GameManager.playerAlive = true;
- 				GameManager.hostageAlive = true;
-    			GameManager.hostageSafe = false;
-				
+                GameManager.playerAlive = true;
+                GameManager.hostageAlive = true;
+                GameManager.hostageSafe = false;
+
                 Application.LoadLevel("Level3");
             }
         }
