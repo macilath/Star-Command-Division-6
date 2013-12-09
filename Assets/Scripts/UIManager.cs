@@ -116,6 +116,8 @@ public class UIManager : MonoBehaviour {
             GameObject health = GameObject.Find("HackerHealthBar");
             //healthBar = health.GetComponent<tk2dSprite>();
             healthBar = health.GetComponent<GUITexture>();
+            //healthBar.pixelInset = new Rect(325, -375, 200, 200);
+            healthBar.pixelInset = new Rect( (Screen.width / 2) - 200, 310 - (Screen.height), 200, 200);
             GUI.Label(new Rect(Screen.width - 200, Screen.height - 60, 200, 40), "Hacker Health", warningStyle);
 
             GameObject hacky = GameObject.Find("HackerShip");

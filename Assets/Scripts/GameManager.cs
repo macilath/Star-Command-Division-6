@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
     public static bool hostageSafe = false;
 
     public int difficultyLevel = 2;
-    //public int loadedLevel = 0; 
+    //public int loadedLevel = 0;
 
     void Start()
     {
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour {
         if (Application.loadedLevelName == "Level1")
         {
             GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel = 1;
-            print("Loaded level 1");
+            //print("Loaded level 1");
             int load = GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel;
             //print(load);
         }
@@ -99,12 +99,17 @@ public class GameManager : MonoBehaviour {
             GameObject shield = GameObject.Find("Shield");
             shield.GetComponent<MeshRenderer>().enabled = false;
             shield.GetComponent<MeshCollider>().isTrigger = true;
+            if( AllShipsAccountedFor() )
+            {
+                UnityEngine.Debug.Log("Next Level");
+                Application.LoadLevel("2to3");
+            }
         }
     }
 
     void Level3Logic()
     {
-        print("Level 3 Logic");
+        //print("Level 3 Logic");
         if (!playerAlive || !hostageAlive)
         {
             Application.LoadLevel("Loss");
