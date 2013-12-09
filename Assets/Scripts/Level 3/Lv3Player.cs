@@ -28,10 +28,10 @@ public class Lv3Player : MonoBehaviour {
 		if (Input.GetMouseButtonDown(0))
         {
 			// Not working yet, so its commented out :(
-//			if (canShoot())
-//	        {
-//	            fireWeapons();
-//	        }
+			if (canShoot())
+	        {
+	            fireWeapons();
+	        }
 		}
     }
 	

@@ -79,8 +79,6 @@ public class Lv3EnemyAI : MonoBehaviour
 
     protected bool canShoot()
     {
-        if (enemy.gameObject != null)
-        {
             if (shotTimer.ElapsedMilliseconds == 0 || shotTimer.ElapsedMilliseconds >= fireInterval)
             {
                 if (enemySight != null)
@@ -90,7 +88,6 @@ public class Lv3EnemyAI : MonoBehaviour
                 shotTimer.Reset();
                 return true;
             }
-        }
         return false;
     }
 
