@@ -151,7 +151,7 @@ public class UIManager : MonoBehaviour {
             GameObject hacky = GameObject.Find("HackerShip");
             int hackerHealth = hacky.GetComponent<HackerController>().shipHealth;
             //string hackerHealth = string.Format("Hacker Health: {0}", hacky.GetComponent<HackerController>().shipHealth);
-            //GUI.Label(new Rect(Screen.width - 150, Screen.height - 20, 200, 40), hackerHealth);
+            GUI.Label(new Rect(Screen.width - 150, Screen.height - 20, 200, 40), hackerHealth.ToString(), warningStyle);
             Vector3 camPosition = manager.camera.transform.position;
             /*Vector3 healthPosition = camPosition;
             healthPosition.x = camPosition.x + 20;
