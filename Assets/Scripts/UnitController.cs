@@ -30,6 +30,7 @@ public abstract class UnitController : MonoBehaviour {
     protected Stopwatch stunTimer = new Stopwatch();
     protected int stunDuration;
     protected bool isActive = true;
+    protected float angleToTarget = 0;
 
     protected bool shipCanFire()
     {
@@ -114,14 +115,14 @@ public abstract class UnitController : MonoBehaviour {
         {
             targetAngle += 360;
         }
-        float rotationAngle = targetAngle - shipAngle;
+        angleToTarget = targetAngle - shipAngle;
         //Debug.Log("Rotate from " + shipAngle + " to " + targetAngle);
         //Debug.Log(rotationAngle + " degrees");
         //this.transform.rotation = Quaternion.AngleAxis(targetAngle, Vector3.forward);
         //facingTarget = true;
 
         float dotProduct = Vector3.Dot(normalizedTarget, shipDir);
-        if( Math.Abs(rotationAngle) < 5 )
+        if( Math.Abs(angleToTarget) < 5 )
         {
             this.rigidbody.angularVelocity = Vector3.zero;
             this.transform.rotation = Quaternion.AngleAxis(targetAngle, Vector3.forward);
@@ -162,7 +163,7 @@ public abstract class UnitController : MonoBehaviour {
         //TODO: change this to compare vectors using cosine to ensure ship is always trying to move to targetDest
         if (hasTarget)
         {
-            if (shipVelocity.sqrMagnitude < shipSpeed || Vector3.Dot(normalizedVelocity, forceVector) == 0)
+            if (shipVelocity.sqrMagnitude < shipSpeed && Vector3.Dot(normalizedVelocity, forceVector) != 1)
             {
                 forceVector = shipVelocity + (forceVector * shipAccel);
                 //UnityEngine.Debug.Log("Accelerating");

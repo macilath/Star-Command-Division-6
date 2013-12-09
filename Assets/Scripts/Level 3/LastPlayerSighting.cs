@@ -12,12 +12,12 @@ public class LastPlayerSighting : MonoBehaviour {
 	void Awake ()
     {   
         // Setup the reference to the additonal audio source.
-        panicAudio = transform.Find("secondaryMusic").audio;
+        panicAudio = this.transform.GetChild(0).GetComponent<AudioSource>();//transform.FindChild("secondaryMusic").audio;
     }
 	
 	void Update ()
     {
-        //MusicFading();
+        MusicFading();
     }
     
     void MusicFading ()
