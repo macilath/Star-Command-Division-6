@@ -117,6 +117,8 @@ public class UIManager : MonoBehaviour {
                         Application.LoadLevel("Level2");
                         break;
                     case 3:
+                        print("Reload level 3");
+                        Application.LoadLevel("AlternativeLevel4");
                         break;
                 }
             }
