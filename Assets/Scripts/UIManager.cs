@@ -106,7 +106,7 @@ public class UIManager : MonoBehaviour {
         }
 
         // Level 3
-        else if (Application.loadedLevelName == "Level3")
+        else if (Application.loadedLevelName == "AlternativeLevel4")
         {
             // GUI elements for last level
         }
