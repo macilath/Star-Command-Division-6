@@ -4,39 +4,77 @@ using System.Collections;
 public class UIManager : MonoBehaviour {
 
     public Font digiFont;
+    public Font cyberFont;
     public static GameManager manager;
     private static HackerController hacker;
 	GUIStyle warningClock = new GUIStyle();
 	GUIStyle dangerClock = new GUIStyle();
 	GUIStyle warningStyle = new GUIStyle();
 	GUIStyle dangerStyle = new GUIStyle();
+    GUIStyle buttonStyle = new GUIStyle();
+    private GUIContent content = new GUIContent();
     public int loadedLevel = 0;
     //public tk2dSprite healthBar; 
     public GUITexture healthBar;
 
-    void OnGUI()
+    void Awake()
     {
+        loadedLevel = GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel; 
         GameObject camera = GameObject.Find("Main Camera");
         manager = camera.GetComponent<GameManager>();
+        
         //digiFont = (Font)Resources.Load("Fonts/Digitalism", typeof(Font));
-        loadedLevel = GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel; 
+        digiFont = Resources.Load("digitalism") as Font;
+        cyberFont = Resources.Load("cyberspace") as Font;
+        buttonStyle.font = cyberFont;
 
+        content.image = Resources.Load("GenericButton") as Texture2D;
+        content.text = "";
+
+        if(Application.loadedLevelName == "Level1")
+        {
+            warningClock.normal.textColor = Color.yellow;
+            dangerClock.normal.textColor = Color.red;
+            warningStyle.normal.textColor = Color.yellow;
+            dangerStyle.normal.textColor = Color.red;
+
+            warningClock.font = digiFont;
+            dangerClock.font = digiFont;
+
+            warningClock.fontSize = 20;
+            dangerClock.fontSize = 20;
+            warningStyle.fontSize = 15;
+            dangerStyle.fontSize = 15;
+        }
+        if(Application.loadedLevelName == "Level2")
+        {
+            warningStyle.font = digiFont;
+            warningStyle.normal.textColor = Color.white;
+            warningStyle.fontSize = 20;
+        }
+    }
+
+    void OnGUI()
+    {
+        GUI.skin.button.normal.background = (Texture2D)content.image;
+        GUI.skin.button.hover.background = (Texture2D)content.image;
+        GUI.skin.button.active.background = (Texture2D)content.image;
         // Title Screen
         if (Application.loadedLevelName == "Title")
         {
-            if (GUI.Button(new Rect(Screen.width / 2 - 175, Screen.height / 2 + 300, 100, 40), "PLAY - Easy"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 175, Screen.height / 2 + 300, 100, 110), "Easy"))
             {
                 print("Play easy");
                 GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 1;
                 Application.LoadLevel("Intro");
             }
-            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 + 300, 110, 40), "PLAY - Medium"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 + 300, 110, 110), "Medium"))
             {
                 print("Play");
                 GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 2;
                 Application.LoadLevel("Intro");
             }
-            if (GUI.Button(new Rect(Screen.width / 2 + 95, Screen.height / 2 + 300, 100, 40), "PLAY - Hard"))
+            if (GUI.Button(new Rect(Screen.width / 2 + 95, Screen.height / 2 + 300, 100, 110), "Hard"))
             {
                 print("Play hard");
                 GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 3;
@@ -46,7 +84,7 @@ public class UIManager : MonoBehaviour {
 
         else if (Application.loadedLevelName == "HowTo")
         {
-            if (GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 100, 110, 40), "PLAY"))
+            if (GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 100, 110, 110), "PLAY"))
             {
                 //GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 2;
                 Application.LoadLevel("Intro");
@@ -57,7 +95,7 @@ public class UIManager : MonoBehaviour {
         else if (Application.loadedLevelName == "Intro")
         {
             // Intro UI Elements, Story, etc.
-            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 100, 110, 40), "PLAY"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 100, 110, 110), "PLAY"))
             {
                 //GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 2;
                 Application.LoadLevel("Level1");
@@ -70,17 +108,6 @@ public class UIManager : MonoBehaviour {
         else if (Application.loadedLevelName == "Level1")
         {
             // GUI elements for first level
-            warningClock.normal.textColor = Color.yellow;
-            dangerClock.normal.textColor = Color.red;
-
-            warningClock.font = digiFont;
-            dangerClock.font = digiFont;
-            warningClock.fontSize = 20;
-            dangerClock.fontSize = 20;
-            warningStyle.fontSize = 15;
-            dangerStyle.fontSize = 15;
-            warningStyle.normal.textColor = Color.yellow;
-            dangerStyle.normal.textColor = Color.red;
 
             if (manager.alertStopwatch.ElapsedMilliseconds != 0)
             {
@@ -109,9 +136,6 @@ public class UIManager : MonoBehaviour {
         // Level 2
         else if (Application.loadedLevelName == "Level2")
         {
-            warningStyle.font = digiFont;
-            warningStyle.normal.textColor = Color.white;
-            warningStyle.fontSize = 20;
 
             GameObject health = GameObject.Find("HackerHealthBar");
             //healthBar = health.GetComponent<tk2dSprite>();
@@ -158,7 +182,7 @@ public class UIManager : MonoBehaviour {
         // Lose
         else if (Application.loadedLevelName == "Loss")
         {
-            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 60, 100, 40), "Try Again"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 60, 100, 110), "Try Again"))
             {
                 print("Level: " + loadedLevel);
                 switch (loadedLevel)
@@ -186,7 +210,7 @@ public class UIManager : MonoBehaviour {
         // Transitional scenes - If scene is loaded then we won the previous level
         else if (Application.loadedLevelName == "1to2")
         {
-            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 100, 100, 40), "PLAY"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 100, 100, 110), "PLAY"))
             {
                 print("Play");
                 Application.LoadLevel("Level2");
@@ -194,7 +218,7 @@ public class UIManager : MonoBehaviour {
         }
         else if (Application.loadedLevelName == "2to3")
         {
-            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 100, 100, 40), "PLAY"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 100, 100, 110), "PLAY"))
             {
                 print("Play");
                 GameManager.playerAlive = true;

@@ -33,54 +33,57 @@ public class EnemyController : UnitController {
     }
     
     void Update () {
-        checkHealth();
-        Vector3 shipPosition = thisShip.transform.position;
-        if(isActive)
+        if( manager != null )
         {
-            if (vision.playerInSight)
+            checkHealth();
+            Vector3 shipPosition = thisShip.transform.position;
+            if(isActive)
             {
-                manager.alertStopwatch.Start();
-            }
-            switch(manager.difficultyLevel)
-            {
-                case 1:
+                if (vision.playerInSight)
                 {
-                    if (vision.sightingExists)
-                    {
-                        setTarget();
-                    }
-                    break;
+                    manager.alertStopwatch.Start();
                 }
-                case 2:
-                case 3:
+                switch(manager.difficultyLevel)
                 {
-                    if (farVis != null && farVis.sightingExists)
+                    case 1:
                     {
-                        setTarget();
+                        if (vision.sightingExists)
+                        {
+                            setTarget();
+                        }
+                        break;
                     }
-                    break;
+                    case 2:
+                    case 3:
+                    {
+                        if (farVis != null && farVis.sightingExists)
+                        {
+                            setTarget();
+                        }
+                        break;
+                    }
+                }
+                if ( (hasTarget && !facingTarget) )
+                {
+                    rotate(shipPosition, targetDest);
+                }
+                if( (!vision.facingPlayer && vision.playerInSight) )
+                {
+                    rotate(shipPosition, vision.playerPos);
+                }
+                if (hasTarget && facingTarget)
+                {
+                    move(shipPosition);
+                }
+                if(shipCanFire() && vision.facingPlayer && vision.playerInSight)
+                {
+                    checkShoot();
                 }
             }
-            if ( (hasTarget && !facingTarget) )
+            else
             {
-                rotate(shipPosition, targetDest);
+                checkStun();
             }
-            if( (!vision.facingPlayer && vision.playerInSight) )
-            {
-                rotate(shipPosition, vision.playerPos);
-            }
-            if (hasTarget && facingTarget)
-            {
-                move(shipPosition);
-            }
-            if(shipCanFire() && vision.facingPlayer && vision.playerInSight)
-            {
-                checkShoot();
-            }
-        }
-        else
-        {
-            checkStun();
         }
     }
 
