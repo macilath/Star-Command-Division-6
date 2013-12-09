@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour {
 	GUIStyle warningStyle = new GUIStyle();
 	GUIStyle dangerStyle = new GUIStyle();
     public int loadedLevel = 0;
+    public tk2dSprite healthBar; 
 
     void OnGUI()
     {
@@ -96,12 +97,32 @@ public class UIManager : MonoBehaviour {
         // Level 2
         else if (Application.loadedLevelName == "Level2")
         {
-            // GUI elements for second level
-            //hacker = manager.GetComponent<HackerController>();
+            GameObject health = GameObject.Find("HackerHealthBar");
+            healthBar = health.GetComponent<tk2dSprite>(); 
+                     
             GameObject hacky = GameObject.Find("HackerShip");
-            //print(hacky.GetComponent<HackerController>().shipHealth);
-            string hackerHealth = string.Format("Hacker Health: {0}", hacky.GetComponent<HackerController>().shipHealth);
-            GUI.Label(new Rect(Screen.width - 150, Screen.height - 20, 200, 40), hackerHealth);
+            int hackerHealth = hacky.GetComponent<HackerController>().shipHealth;
+            //string hackerHealth = string.Format("Hacker Health: {0}", hacky.GetComponent<HackerController>().shipHealth);
+            //GUI.Label(new Rect(Screen.width - 150, Screen.height - 20, 200, 40), hackerHealth);
+            Vector3 camPosition = manager.camera.transform.position;
+            Vector3 healthPosition = camPosition;
+            healthPosition.x = camPosition.x + 20;
+            healthPosition.y = camPosition.y - 10;
+            healthPosition.z = 0;
+            healthBar.transform.position = healthPosition;
+
+            if (hackerHealth <= 50)
+            {
+                healthBar.SetSprite("HealthBar_3");
+            }
+            else if (hackerHealth <= 100)
+            {
+                healthBar.SetSprite("HealthBar_2");
+            }
+            else
+            {
+                healthBar.SetSprite("HealthBar_1");
+            }
 
         }
 
