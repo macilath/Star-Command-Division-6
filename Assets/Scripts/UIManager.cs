@@ -26,19 +26,19 @@ public class UIManager : MonoBehaviour {
             {
                 print("Play easy");
                 GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 1;
-                Application.LoadLevel("Level1");
+                Application.LoadLevel("Intro");
             }
             if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 100, 110, 40), "PLAY - Medium"))
             {
                 print("Play");
                 GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 2;
-                Application.LoadLevel("Level1");
+                Application.LoadLevel("Intro");
             }
             if (GUI.Button(new Rect(Screen.width / 2 + 95, Screen.height / 2 - 100, 100, 40), "PLAY - Hard"))
             {
                 print("Play hard");
                 GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 1;
-                Application.LoadLevel("Level1");
+                Application.LoadLevel("Intro");
             }
         }
         
@@ -46,6 +46,11 @@ public class UIManager : MonoBehaviour {
         else if (Application.loadedLevelName == "Intro")
         {
             // Intro UI Elements, Story, etc.
+            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 100, 110, 40), "PLAY"))
+            {
+                //GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 2;
+                Application.LoadLevel("Level1");
+            }
         }
 
         // Level 1
@@ -58,6 +63,8 @@ public class UIManager : MonoBehaviour {
             dangerClock.font = digiFont;
             warningClock.fontSize = 20;
             dangerClock.fontSize = 20;
+            warningStyle.fontSize = 15;
+            dangerStyle.fontSize = 15;
             warningStyle.normal.textColor = Color.yellow;
             dangerStyle.normal.textColor = Color.red;
 
@@ -70,16 +77,22 @@ public class UIManager : MonoBehaviour {
                 if ((manager.alertWindow - manager.alertStopwatch.ElapsedMilliseconds) / 1000 <= 30)
                 {
                     //GUI.Label(new Rect(40, Screen.height - 40, 200, 40), "You've been spotted!\n" + timeRemaining, dangerStyle);
-                    GUI.Label(new Rect(40, Screen.height - 60, 200, 40), "You've been spotted!\n Time Remaining:", dangerStyle);
-                    GUI.Label(new Rect(100, Screen.height - 30, 200, 40), timeRemaining.ToString(), dangerClock);
+                    GUI.Label(new Rect(40, Screen.height - 70, 200, 40), "You've been spotted!\n Time Remaining:", dangerStyle);
+                    GUI.Label(new Rect(100, Screen.height - 30, 200, 40), timeRemaining, dangerClock);
+                    string shipsRemaining = string.Format("{0}", manager.PlayerShips.Count);
+                    GUI.Label(new Rect(Screen.width - 125, Screen.height - 60, 200, 40), "Ships Remaining: ", dangerStyle);
+                    GUI.Label(new Rect(Screen.width - 75, Screen.height - 30, 200, 40), shipsRemaining, dangerClock);
                 }
                 else
                 {
-                    GUI.Label(new Rect(40, Screen.height - 60, 200, 40), "You've been spotted!\n Time Remaining:", warningStyle);
-                    GUI.Label(new Rect(100, Screen.height - 30, 200, 40), timeRemaining.ToString(), warningClock);
+                    GUI.Label(new Rect(40, Screen.height - 70, 200, 40), "You've been spotted!\n Time Remaining:", warningStyle);
+                    GUI.Label(new Rect(100, Screen.height - 30, 200, 40), timeRemaining, warningClock);
+                    string shipsRemaining = string.Format("{0}", manager.PlayerShips.Count);
+                    GUI.Label(new Rect(Screen.width - 125, Screen.height - 60, 200, 40), "Ships Remaining: ", warningStyle);
+                    GUI.Label(new Rect(Screen.width - 75, Screen.height - 30, 200, 40), shipsRemaining, warningClock);
                 }
-                string shipsRemaining = string.Format("Ships Left: {0}", manager.PlayerShips.Count);
-                GUI.Label(new Rect(Screen.width - 100, Screen.height - 20, 200, 40), shipsRemaining);
+                //string shipsRemaining = string.Format("Ships Remaining: {0}", manager.PlayerShips.Count);
+                //GUI.Label(new Rect(Screen.width - 100, Screen.height - 20, 200, 40), "Ships Remaining: " + shipsRemaining);
             }
         }
 
