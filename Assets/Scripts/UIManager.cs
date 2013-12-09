@@ -23,19 +23,19 @@ public class UIManager : MonoBehaviour {
         // Title Screen
         if (Application.loadedLevelName == "Title")
         {
-            if (GUI.Button(new Rect(Screen.width / 2 - 175, Screen.height / 2 - 100, 100, 40), "PLAY - Easy"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 175, Screen.height / 2 + 300, 100, 40), "PLAY - Easy"))
             {
                 print("Play easy");
                 GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 1;
                 Application.LoadLevel("Intro");
             }
-            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 - 100, 110, 40), "PLAY - Medium"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 45, Screen.height / 2 + 300, 110, 40), "PLAY - Medium"))
             {
                 print("Play");
                 GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 2;
                 Application.LoadLevel("Intro");
             }
-            if (GUI.Button(new Rect(Screen.width / 2 + 95, Screen.height / 2 - 100, 100, 40), "PLAY - Hard"))
+            if (GUI.Button(new Rect(Screen.width / 2 + 95, Screen.height / 2 + 300, 100, 40), "PLAY - Hard"))
             {
                 print("Play hard");
                 GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 1;
