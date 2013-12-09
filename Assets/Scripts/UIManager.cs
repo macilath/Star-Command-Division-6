@@ -11,7 +11,8 @@ public class UIManager : MonoBehaviour {
 	GUIStyle warningStyle = new GUIStyle();
 	GUIStyle dangerStyle = new GUIStyle();
     public int loadedLevel = 0;
-    public tk2dSprite healthBar; 
+    //public tk2dSprite healthBar; 
+    public GUITexture healthBar;
 
     void OnGUI()
     {
@@ -102,31 +103,35 @@ public class UIManager : MonoBehaviour {
             warningStyle.fontSize = 20;
 
             GameObject health = GameObject.Find("HackerHealthBar");
-            healthBar = health.GetComponent<tk2dSprite>();
-            GUI.Label(new Rect(Screen.width - 250, Screen.height - 220, 200, 40), "Hacker Health", warningStyle);
+            //healthBar = health.GetComponent<tk2dSprite>();
+            healthBar = health.GetComponent<GUITexture>();
+            GUI.Label(new Rect(Screen.width - 200, Screen.height - 60, 200, 40), "Hacker Health", warningStyle);
                                  
             GameObject hacky = GameObject.Find("HackerShip");
             int hackerHealth = hacky.GetComponent<HackerController>().shipHealth;
             //string hackerHealth = string.Format("Hacker Health: {0}", hacky.GetComponent<HackerController>().shipHealth);
             //GUI.Label(new Rect(Screen.width - 150, Screen.height - 20, 200, 40), hackerHealth);
             Vector3 camPosition = manager.camera.transform.position;
-            Vector3 healthPosition = camPosition;
+            /*Vector3 healthPosition = camPosition;
             healthPosition.x = camPosition.x + 20;
             healthPosition.y = camPosition.y - 10;
-            healthPosition.z = 0;
-            healthBar.transform.position = healthPosition;            
+            healthPosition.z = 0;J*/
+            //healthBar.transform.position = healthPosition;            
 
             if (hackerHealth <= 50)
             {
-                healthBar.SetSprite("HealthBar_3");
+                //healthBar.SetSprite("HealthBar_3");
+                healthBar.texture = Resources.Load("HealthBar_3") as Texture2D;
             }
             else if (hackerHealth <= 100)
             {
-                healthBar.SetSprite("HealthBar_2");
+                //healthBar.SetSprite("HealthBar_2");
+                healthBar.texture = Resources.Load("HealthBar_2") as Texture2D;
             }
             else
             {
-                healthBar.SetSprite("HealthBar_1");
+                //healthBar.SetSprite("HealthBar_1");
+                healthBar.texture = Resources.Load("HealthBar_1") as Texture2D;
             }
 
         }
