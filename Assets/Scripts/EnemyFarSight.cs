@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 public class EnemyFarSight : MonoBehaviour {
@@ -9,6 +10,7 @@ public class EnemyFarSight : MonoBehaviour {
     public bool playerInSight;                      // Whether or not the player is currently sighted.
 
     private float angle;
+    private SettingsManager settings;
 
     private Vector3 directionFromPlayer;
     private Vector3 pos;
@@ -16,9 +18,31 @@ public class EnemyFarSight : MonoBehaviour {
     public Vector3 previousSighting;
     public bool sightingExists;
 
+    void Awake()
+    {
+        settings = GameObject.Find("SettingsManager").GetComponent<SettingsManager>();
+    }
+
     void Start()
     {
-        fieldOfViewAngle = 60;
+        switch( settings.difficultyLevel )
+        {
+            case 1:
+            {
+                fieldOfViewAngle = 45;
+                break;
+            }
+            case 2:
+            {
+                fieldOfViewAngle = 60;
+                break;
+            }
+            case 3:
+            {
+                fieldOfViewAngle = 90;
+                break;
+            }
+        }
         detectionRadius = detectionScale * transform.localScale.x/2;
         playerInSight = false;
         sightingExists = false;
@@ -38,7 +62,7 @@ public class EnemyFarSight : MonoBehaviour {
             directionFromPlayer = other.transform.position - transform.position;
             angle = Vector3.Angle(directionFromPlayer, transform.up);
 
-            if (angle < fieldOfViewAngle)
+            if ( Math.Abs(angle) < fieldOfViewAngle )
             {
                 RaycastHit hit;
 

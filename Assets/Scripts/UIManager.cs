@@ -56,6 +56,7 @@ public class UIManager : MonoBehaviour {
         // Level 1
         else if (Application.loadedLevelName == "Level1")
         {
+            // GUI elements for first level
             warningClock.normal.textColor = Color.yellow;
             dangerClock.normal.textColor = Color.red;
 
@@ -68,15 +69,11 @@ public class UIManager : MonoBehaviour {
             warningStyle.normal.textColor = Color.yellow;
             dangerStyle.normal.textColor = Color.red;
 
-
-            hacker = manager.GetComponent<HackerController>();
-            // GUI elements for first level
             if (manager.alertStopwatch.ElapsedMilliseconds != 0)
             {
                 string timeRemaining = string.Format("{0}", (manager.alertWindow - manager.alertStopwatch.ElapsedMilliseconds) / 1000);
                 if ((manager.alertWindow - manager.alertStopwatch.ElapsedMilliseconds) / 1000 <= 30)
                 {
-                    //GUI.Label(new Rect(40, Screen.height - 40, 200, 40), "You've been spotted!\n" + timeRemaining, dangerStyle);
                     GUI.Label(new Rect(40, Screen.height - 70, 200, 40), "You've been spotted!\n Time Remaining:", dangerStyle);
                     GUI.Label(new Rect(100, Screen.height - 30, 200, 40), timeRemaining, dangerClock);
                     string shipsRemaining = string.Format("{0}", manager.PlayerShips.Count);
@@ -99,10 +96,12 @@ public class UIManager : MonoBehaviour {
         // Level 2
         else if (Application.loadedLevelName == "Level2")
         {
-            hacker = manager.GetComponent<HackerController>();
             // GUI elements for second level
-            string hackerHealth = string.Format("Hacker Health: {0}", hacker.shipHealth);
-            GUI.Label(new Rect(Screen.width - 100, Screen.height - 20, 200, 40), hackerHealth);
+            //hacker = manager.GetComponent<HackerController>();
+            GameObject hacky = GameObject.Find("HackerShip");
+            //print(hacky.GetComponent<HackerController>().shipHealth);
+            string hackerHealth = string.Format("Hacker Health: {0}", hacky.GetComponent<HackerController>().shipHealth);
+            GUI.Label(new Rect(Screen.width - 150, Screen.height - 20, 200, 40), hackerHealth);
 
         }
 

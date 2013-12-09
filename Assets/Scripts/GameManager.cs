@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour {
         if (Application.loadedLevelName == "Level1")
         {
             GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel = 1;
-            //print("Loaded level 1");
+            print("Loaded level 1");
             int load = GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel;
             //print(load);
         }
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour {
         {
             GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel = 3;
             int load = GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel;
-            print(load);
+            //print(load);
         }
     }
 
@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour {
     {
         if( Application.loadedLevelName == "Level1")
         {
+            //print("Party on.");
             Level1Logic();
         }
         if( Application.loadedLevelName == "Level2")
@@ -66,6 +67,7 @@ public class GameManager : MonoBehaviour {
 
     void Level1Logic()
     {
+        print("Level 1 Logics");
         if ( PlayerShips.Count == 0 )
         {
             Application.LoadLevel("Loss");
@@ -86,6 +88,7 @@ public class GameManager : MonoBehaviour {
 
     void Level2Logic()
     {
+        print("Level 2 Logic");
         if (!hackerAlive)
         {
             Application.LoadLevel("Loss");
@@ -101,6 +104,7 @@ public class GameManager : MonoBehaviour {
 
     void Level3Logic()
     {
+        print("Level 3 Logic");
         if (!playerAlive || !hostageAlive)
         {
             Application.LoadLevel("Loss");
@@ -108,8 +112,7 @@ public class GameManager : MonoBehaviour {
 
         if (playerAlive && hostageAlive && hostageSafe)
         {
-            // Should load win screen here, but that doesn't seem to exist yet
-            Application.LoadLevel("Title");
+            Application.LoadLevel("Victory");
         }
     }
 

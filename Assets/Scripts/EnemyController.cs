@@ -60,15 +60,19 @@ public class EnemyController : UnitController {
                     break;
                 }
             }
-            if (hasTarget && !facingTarget)
+            if ( (hasTarget && !facingTarget) )
             {
-                rotate(shipPosition);
+                rotate(shipPosition, targetDest);
+            }
+            if( (!vision.facingPlayer && vision.playerInSight) )
+            {
+                rotate(shipPosition, vision.playerPos);
             }
             if (hasTarget && facingTarget)
             {
                 move(shipPosition);
             }
-            if(shipCanFire() && facingTarget)
+            if(shipCanFire() && vision.facingPlayer && vision.playerInSight)
             {
                 checkShoot();
             }
