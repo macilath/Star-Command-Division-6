@@ -102,9 +102,9 @@ public abstract class UnitController : MonoBehaviour {
         }
     }
 
-    protected void rotate(Vector3 shipPosition)
+    protected void rotate(Vector3 shipPosition, Vector3 rotateTo)
     {
-        Vector3 toTarget = targetDest - shipPosition;
+        Vector3 toTarget = rotateTo - shipPosition;
         Vector3 normalizedTarget = toTarget;
         toTarget.Normalize();
         Vector3 shipDir = this.transform.up;

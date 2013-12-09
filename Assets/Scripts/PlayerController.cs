@@ -71,7 +71,7 @@ public class PlayerController : UnitController {
             }
             if (hasTarget && !facingTarget)
             {
-                rotate(shipPosition);
+                rotate(shipPosition, targetDest);
             }
             if (hasTarget)
             {
