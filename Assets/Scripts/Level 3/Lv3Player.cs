@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Diagnostics;
 
 public class Lv3Player : MonoBehaviour {
 	
 	public bool hasKey1;
 	private Vector3 lookRotationPoint;
+	private Stopwatch shotTimer = new Stopwatch();
+	private int fireInterval = 1000;
 	
 	void Awake()
 	{
@@ -21,5 +24,40 @@ public class Lv3Player : MonoBehaviour {
             transform.rotation = Quaternion.LookRotation(lookRotationPoint.normalized, transform.forward);
             transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
         }
+		
+		if (Input.GetMouseButtonDown(0))
+        {
+			// Not working yet, so its commented out :(
+//			if (canShoot())
+//	        {
+//	            fireWeapons();
+//	        }
+		}
+    }
+	
+	 protected bool canShoot()
+    {
+        if (this.transform.FindChild("HumanSprite").gameObject != null)
+        {
+            if (shotTimer.ElapsedMilliseconds == 0 || shotTimer.ElapsedMilliseconds >= fireInterval)
+            {
+                shotTimer.Reset();
+                return true;
+            }
+        }
+        return false;
+    }
+	
+
+    protected void fireWeapons()
+    {
+        GameObject Projectile = (GameObject)Resources.Load("PersonalProjectile2");
+        Vector3 projectile_position = this.transform.FindChild("HumanSprite").position + (this.transform.FindChild("HumanSprite").up * 10);
+        GameObject projObject = Instantiate(Projectile, projectile_position, this.transform.FindChild("HumanSprite").rotation) as GameObject;
+
+        PersonalProjectile2 proj = projObject.GetComponent<PersonalProjectile2>();
+        proj.setEnemyTag("EnemyShip");
+
+        shotTimer.Start();
     }
 }
