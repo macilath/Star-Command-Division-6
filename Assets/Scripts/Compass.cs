@@ -10,8 +10,8 @@ public class Compass : MonoBehaviour {
     private Vector3 screenMiddle; 
     private float zoom;
 
-    private float yFactor = 20;
-    private float zFactor = 30;
+    private float yFactor = 17.5f;
+    private float scaleFactor = 1.3f;//30;
 
 	// Use this for initialization
 	void Start () {
@@ -22,8 +22,8 @@ public class Compass : MonoBehaviour {
         //this.transform.position = cam.transform.position;
         Vector3 pos = this.transform.position;
         Vector3 posScreen = cam.WorldToScreenPoint(pos);
-        posScreen.y += (Screen.height / 2) - 32;
-        posScreen.x -= 32;
+        posScreen.y = (Screen.height) + 96;
+        posScreen.x = (Screen.width / 2);
         this.transform.position = cam.ScreenToWorldPoint(posScreen);
 	}
 	
@@ -57,8 +57,11 @@ public class Compass : MonoBehaviour {
         float percentZoom = (gcam.currentZoom - gcam.minZoom) / gcam.maxZoom;
         Vector3 pos = this.transform.position;
         pos.y += yFactor * (percentZoom - zoom);
-        pos.z -= zFactor * (percentZoom - zoom);
         this.transform.position = pos;
+        Vector3 scale = this.transform.localScale;
+        scale.x += scaleFactor * (percentZoom - zoom);
+        scale.y += scaleFactor * (percentZoom - zoom);
+        this.transform.localScale = scale;
         zoom = percentZoom;
     }
 }
