@@ -38,7 +38,7 @@ public class UIManager : MonoBehaviour {
             if (GUI.Button(new Rect(Screen.width / 2 + 95, Screen.height / 2 + 300, 100, 40), "PLAY - Hard"))
             {
                 print("Play hard");
-                GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 1;
+                GameObject.Find("SettingsManager").GetComponent<SettingsManager>().difficultyLevel = 3;
                 Application.LoadLevel("Intro");
             }
         }
@@ -97,9 +97,14 @@ public class UIManager : MonoBehaviour {
         // Level 2
         else if (Application.loadedLevelName == "Level2")
         {
+            warningStyle.font = digiFont;
+            warningStyle.normal.textColor = Color.white;
+            warningStyle.fontSize = 20;
+
             GameObject health = GameObject.Find("HackerHealthBar");
-            healthBar = health.GetComponent<tk2dSprite>(); 
-                     
+            healthBar = health.GetComponent<tk2dSprite>();
+            GUI.Label(new Rect(Screen.width - 250, Screen.height - 220, 200, 40), "Hacker Health", warningStyle);
+                                 
             GameObject hacky = GameObject.Find("HackerShip");
             int hackerHealth = hacky.GetComponent<HackerController>().shipHealth;
             //string hackerHealth = string.Format("Hacker Health: {0}", hacky.GetComponent<HackerController>().shipHealth);
@@ -109,7 +114,7 @@ public class UIManager : MonoBehaviour {
             healthPosition.x = camPosition.x + 20;
             healthPosition.y = camPosition.y - 10;
             healthPosition.z = 0;
-            healthBar.transform.position = healthPosition;
+            healthBar.transform.position = healthPosition;            
 
             if (hackerHealth <= 50)
             {
