@@ -6,11 +6,14 @@ public class Follow : MonoBehaviour {
     public Transform m_Player;
     private NavMeshAgent m_NavMeshAgent;
     HostageSight vision;
+	private tk2dSpriteAnimator anim;
+	private Vector3 previousPosition;
 
 	// Use this for initialization
 	void Awake () {
         m_NavMeshAgent = GetComponent<NavMeshAgent>();
         vision = this.GetComponentInChildren<HostageSight>();
+		anim = GetComponentInChildren<tk2dSpriteAnimator>();
 	}
 	
 	// Update is called once per frame
@@ -27,6 +30,25 @@ public class Follow : MonoBehaviour {
             {
                 m_NavMeshAgent.Stop();
             }
+			
+			if(anim != null)
+			{
+				if(m_NavMeshAgent.remainingDistance < 2 || transform.position == previousPosition)
+				{
+					if(!anim.IsPlaying("Hostage1Idle"))
+					{
+						anim.Play("Hostage1Idle");	
+					}
+				}
+				else
+				{
+					if(!anim.IsPlaying("Hostage1Walk"))
+					{
+						anim.Play("Hostage1Walk");
+					}
+				}
+			}
+			previousPosition = transform.position;
         }
 	}
 }
