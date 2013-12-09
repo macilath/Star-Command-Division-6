@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour {
             //print(load);
         }
 
-        if (Application.loadedLevelName == "AlternativeLevel4")
+        if (Application.loadedLevelName == "Level3")
         {
             GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel = 3;
             int load = GameObject.Find("SettingsManager").GetComponent<SettingsManager>().lastLoadedLevel;
@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour {
         {
             Level2Logic();
         }
-        if (Application.loadedLevelName == "AlternativeLevel4")
+        if (Application.loadedLevelName == "Level3")
         {
             Level3Logic();
         }
