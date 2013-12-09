@@ -52,6 +52,7 @@ public class EnemyController : UnitController {
                     break;
                 }
                 case 2:
+                case 3:
                 {
                     if (farVis != null && farVis.sightingExists)
                     {
@@ -121,6 +122,7 @@ public class EnemyController : UnitController {
                 break;
             }
             case 2:
+            case 3:
             {
                 targetDest = farVis.previousSighting;
                 farVis.sightingExists = false;
