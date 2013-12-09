@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour {
 
     void Level1Logic()
     {
+        UnityEngine.Debug.Log("level 1 logic");
         if ( PlayerShips.Count == 0 )
         {
             Application.LoadLevel("Loss");
