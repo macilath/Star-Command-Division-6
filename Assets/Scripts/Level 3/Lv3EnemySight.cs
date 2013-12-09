@@ -72,7 +72,7 @@ public class Lv3EnemySight : MonoBehaviour
                     }
 					else
 					{
-						Debug.Log("Player collided but not in sight");
+						//Debug.Log("Player collided but not in sight");
 					}
                 }
             }
@@ -84,7 +84,7 @@ public class Lv3EnemySight : MonoBehaviour
         // If the player leaves the trigger zone...
         if(other.gameObject == player)
 		{
-			Debug.Log("Player left");
+			//Debug.Log("Player left");
             // ... the player is not in sight.
             playerInSight = false;
 		}

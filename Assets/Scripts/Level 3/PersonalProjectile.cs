@@ -34,7 +34,7 @@ public class PersonalProjectile : MonoBehaviour
     protected void kick()
     {
         Vector3 forceVector = weapon.transform.up * weaponSpeed;
-        Debug.Log("projectile force vector: " + forceVector);
+        //Debug.Log("projectile force vector: " + forceVector);
         weapon.rigidbody.AddForce(forceVector);
     }
 
@@ -47,7 +47,7 @@ public class PersonalProjectile : MonoBehaviour
     {
         if (other.gameObject.tag == enemyTag)
         {	
-            Debug.Log("HIT PLAYER");
+            //Debug.Log("HIT PLAYER");
             //((UnitController)((other.gameObject).GetComponent<UnitController>())).takeDamage(weaponDamage);
             Destroy(weapon);
             Destroy(other.gameObject);
@@ -56,7 +56,7 @@ public class PersonalProjectile : MonoBehaviour
         }
 		else if (other.gameObject.tag == "Hostage")
 		{
-			Debug.Log("HIT Hostage");
+			//Debug.Log("HIT Hostage");
             //((UnitController)((other.gameObject).GetComponent<UnitController>())).takeDamage(weaponDamage);
             Destroy(weapon);
             Destroy(other.gameObject);

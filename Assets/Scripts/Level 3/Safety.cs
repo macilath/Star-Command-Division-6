@@ -17,7 +17,7 @@ public class Safety : MonoBehaviour {
         Debug.Log(other.name);
         if (other.gameObject.tag == "Hostage")
         {
-            Debug.Log("safe");
+            //Debug.Log("safe");
             GameManager.hostageSafe = true;
         }
     }

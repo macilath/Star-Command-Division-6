@@ -31,7 +31,7 @@ public class CharMovement : MonoBehaviour
 			
 			if(moveDirection != Vector3.zero)
 			{
-				Debug.Log("got here");
+				//Debug.Log("got here");
 				anim.Play("HeroWalk");
 			}
 			else
