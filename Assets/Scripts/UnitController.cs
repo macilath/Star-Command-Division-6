@@ -31,6 +31,7 @@ public abstract class UnitController : MonoBehaviour {
     protected int stunDuration;
     protected bool isActive = true;
     protected float angleToTarget = 0;
+    protected Vector3 prevTravel = Vector3.zero;
 
     protected bool shipCanFire()
     {
@@ -133,6 +134,7 @@ public abstract class UnitController : MonoBehaviour {
             Vector3 rotate = new Vector3(0, 0, 5 * angleDir);
             this.rigidbody.AddTorque(rotate);
         }
+        this.rigidbody.AddForce( -1 * (prevTravel / shipAccel) );
     }
 
     protected void move(Vector3 shipPosition)

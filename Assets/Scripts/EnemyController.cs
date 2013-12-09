@@ -105,6 +105,8 @@ public class EnemyController : UnitController {
     //TODO: have ship decide whether target is an object to fire on or just a destination
     public override void setTarget()
     {
+        prevTravel = this.rigidbody.velocity;
+        this.rigidbody.AddForce( -1 * (prevTravel / shipAccel) );
         // Assign movement orders to ship
         switch(settingManager.difficultyLevel)
         {
