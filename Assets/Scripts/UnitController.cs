@@ -119,10 +119,7 @@ public abstract class UnitController : MonoBehaviour {
         angleToTarget = targetAngle - shipAngle;
         //Debug.Log("Rotate from " + shipAngle + " to " + targetAngle);
         //Debug.Log(rotationAngle + " degrees");
-        //this.transform.rotation = Quaternion.AngleAxis(targetAngle, Vector3.forward);
-        //facingTarget = true;
 
-        float dotProduct = Vector3.Dot(normalizedTarget, shipDir);
         if( Math.Abs(angleToTarget) < 5 )
         {
             this.rigidbody.angularVelocity = Vector3.zero;
