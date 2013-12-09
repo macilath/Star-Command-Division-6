@@ -6,10 +6,12 @@ public class CharMovement : MonoBehaviour
     public float speed = 0.25F;
     private Vector3 moveDirection = Vector3.zero;
     private CharacterController controller;
+	private tk2dSpriteAnimator anim;
 
     void Awake()
     {
         controller = GetComponent<CharacterController>();
+		anim = GetComponentInChildren<tk2dSpriteAnimator>();
     }
 
     void Update()
@@ -26,6 +28,16 @@ public class CharMovement : MonoBehaviour
         {
             moveDirection = new Vector3(h_axis, 0, v_axis);
             controller.Move(moveDirection * speed);
+			
+			if(moveDirection != Vector3.zero)
+			{
+				Debug.Log("got here");
+				anim.Play("HeroWalk");
+			}
+			else
+			{
+				anim.Play("HeroIdle");	
+			}
         }
     }
 }
