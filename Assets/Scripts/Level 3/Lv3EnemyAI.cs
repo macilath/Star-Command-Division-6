@@ -20,6 +20,8 @@ public class Lv3EnemyAI : MonoBehaviour
     private Stopwatch shotTimer = new Stopwatch();
     private int fireInterval = 1000;
     private Transform enemy;
+	private tk2dSpriteAnimator anim;
+	private Vector3 previousPosition;
 
 
     void Awake()
@@ -28,11 +30,34 @@ public class Lv3EnemyAI : MonoBehaviour
         enemy = this.transform.FindChild("HumanEnemy");
 		enemySight = GetComponentInChildren<Lv3EnemySight>();
 		lastPlayerSighting = GameObject.FindGameObjectWithTag(Lv3Tags.gameController).GetComponent<LastPlayerSighting>();
+		anim = GetComponentInChildren<tk2dSpriteAnimator>();
     }
 
-
+	void Start()
+	{
+		previousPosition = transform.position;	
+	}
+	
     void Update()
     {
+		if(anim != null)
+		{
+			if(previousPosition == transform.position || nav.remainingDistance < 2)
+			{
+				if(!anim.IsPlaying("EnemyIdle"))
+				{
+					anim.Play("EnemyIdle");	
+				}
+			}
+			else
+			{
+				if(!anim.IsPlaying("EnemyWalk"))
+				{
+					anim.Play("EnemyWalk");
+				}
+			}
+		}
+		
         if (enemySight != null)
         {
             if (enemySight.playerInSight)
@@ -48,6 +73,8 @@ public class Lv3EnemyAI : MonoBehaviour
                 Patrolling();
             }
         }
+		
+		previousPosition = transform.position;
     }
 
     protected bool canShoot()
