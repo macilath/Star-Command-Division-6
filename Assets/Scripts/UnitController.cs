@@ -165,7 +165,7 @@ public abstract class UnitController : MonoBehaviour {
         {
             if (shipVelocity.sqrMagnitude < shipSpeed && Vector3.Dot(normalizedVelocity, forceVector) != 1)
             {
-                forceVector = shipVelocity + (forceVector * shipAccel);
+                forceVector = (forceVector * shipAccel);
                 //UnityEngine.Debug.Log("Accelerating");
                 if( AfterburnEffect == null)
                 {
