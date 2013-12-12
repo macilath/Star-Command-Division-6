@@ -45,24 +45,20 @@ public class PersonalProjectile : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == enemyTag)
+        if (other.gameObject.tag == enemyTag || other.gameObject.tag == "Hostage")
         {	
             //Debug.Log("HIT PLAYER");
             //((UnitController)((other.gameObject).GetComponent<UnitController>())).takeDamage(weaponDamage);
-            Destroy(weapon);
-            Destroy(other.gameObject);
-
-            GameManager.playerAlive = false;
+            HumanController hc = (other.gameObject).GetComponentInChildren<HumanController>();
+            if( hc != null )
+            {
+                hc.takeDamage( weaponDamage );
+            }
+            else
+            {
+                Debug.Log("Found no HumanController");
+            }
         }
-		else if (other.gameObject.tag == "Hostage")
-		{
-			//Debug.Log("HIT Hostage");
-            //((UnitController)((other.gameObject).GetComponent<UnitController>())).takeDamage(weaponDamage);
-            Destroy(weapon);
-            Destroy(other.gameObject);
-
-            GameManager.hostageAlive = false;
-		}
         else if (other.gameObject.tag == "Wall")
         {
             Destroy(weapon);

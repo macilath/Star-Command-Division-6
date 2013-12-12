@@ -2,8 +2,7 @@
 using System.Collections;
 using System.Diagnostics;
 
-public class Lv3EnemyAI : MonoBehaviour
-{
+public class Lv3EnemyAI : HumanController {
     public float patrolSpeed = 2f;                          // The nav mesh agent's speed when patrolling.
     public float chaseSpeed = 5f;                           // The nav mesh agent's speed when chasing.
     public float chaseWaitTime = 5f;                        // The amount of time to wait when the last sighting is reached.
@@ -40,6 +39,7 @@ public class Lv3EnemyAI : MonoBehaviour
 	
     void Update()
     {
+        base.Update();
 		if(anim != null)
 		{
 			if(previousPosition == transform.position || nav.remainingDistance < 2)
@@ -187,5 +187,10 @@ public class Lv3EnemyAI : MonoBehaviour
         nav.destination = patrolWayPoints[wayPointIndex].position;
 		
 		lastPlayerSighting.panicAudio.mute = true;
+    }
+
+    public override void kill()
+    {
+        Destroy(this.gameObject);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Follow : MonoBehaviour {
+public class Follow : HumanController {
 
     public Transform m_Player;
     private NavMeshAgent m_NavMeshAgent;
@@ -50,5 +50,11 @@ public class Follow : MonoBehaviour {
 			}
 			previousPosition = transform.position;
         }
+	}
+
+	public override void kill()
+	{
+        GameManager.hostageAlive = false;
+		Destroy(this.gameObject);
 	}
 }

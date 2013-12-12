@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Diagnostics;
 
-public class Lv3Player : MonoBehaviour {
+public class Lv3Player : HumanController {
 	
 	public bool hasKey1;
 	private Vector3 lookRotationPoint;
@@ -15,7 +15,8 @@ public class Lv3Player : MonoBehaviour {
 	}
 	
     void Update () 
-    {        
+    {
+        base.Update();        
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
@@ -51,13 +52,19 @@ public class Lv3Player : MonoBehaviour {
 
     protected void fireWeapons()
     {
-        GameObject Projectile = (GameObject)Resources.Load("PersonalProjectile2");
+        GameObject Projectile = (GameObject)Resources.Load("PersonalProjectile");
         Vector3 projectile_position = this.transform.FindChild("HumanSprite").position + (this.transform.FindChild("HumanSprite").up * 10);
         GameObject projObject = Instantiate(Projectile, projectile_position, this.transform.FindChild("HumanSprite").rotation) as GameObject;
 
-        PersonalProjectile2 proj = projObject.GetComponent<PersonalProjectile2>();
+        PersonalProjectile proj = projObject.GetComponent<PersonalProjectile>();
         proj.setEnemyTag("EnemyShip");
 
         shotTimer.Start();
+    }
+
+    public override void kill()
+    {
+        GameManager.playerAlive = false;
+        Destroy(this.gameObject);
     }
 }
