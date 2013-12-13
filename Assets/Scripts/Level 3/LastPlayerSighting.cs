@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Level3 scripts were modificiations of the Unity Tutorial http://unity3d.com/learn/tutorials/projects/stealth
+// Basically a stripped down version with enough to suit our needs.
+
 public class LastPlayerSighting : MonoBehaviour {
 
 	public Vector3 position = new Vector3(1000f, 1000f, 1000f);
