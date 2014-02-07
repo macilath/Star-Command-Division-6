@@ -4,6 +4,7 @@ using System.Collections;
 public abstract class HumanController : MonoBehaviour {
 
 	protected int health = 100;
+	protected string enemyTag;
 	// Use this for initialization
 	void Start () {
 	

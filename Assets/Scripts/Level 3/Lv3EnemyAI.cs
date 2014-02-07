@@ -10,7 +10,7 @@ public class Lv3EnemyAI : HumanController {
     public Transform[] patrolWayPoints;                     // An array of transforms for the patrol route.
 
 
-    private Lv3EnemySight enemySight;                          // Reference to the EnemySight script.
+    private Lv3EnemySight enemySight;                       // Reference to the EnemySight script.
     private NavMeshAgent nav;                               // Reference to the nav mesh agent.
 	private LastPlayerSighting lastPlayerSighting;          // Reference to the last global sighting of the player.
     private float chaseTimer;                               // A timer for the chaseWaitTime.
@@ -30,6 +30,7 @@ public class Lv3EnemyAI : HumanController {
 		enemySight = GetComponentInChildren<Lv3EnemySight>();
 		lastPlayerSighting = GameObject.FindGameObjectWithTag(Lv3Tags.gameController).GetComponent<LastPlayerSighting>();
 		anim = GetComponentInChildren<tk2dSpriteAnimator>();
+        enemyTag = Lv3Tags.player;
     }
 
 	void Start()
@@ -110,7 +111,7 @@ public class Lv3EnemyAI : HumanController {
         GameObject projObject = Instantiate(Projectile, projectile_position, enemy.rotation) as GameObject;
 
         PersonalProjectile proj = projObject.GetComponent<PersonalProjectile>();
-        proj.setEnemyTag(Lv3Tags.player);
+        proj.setEnemyTag(enemyTag);
 
         shotTimer.Start();
     }

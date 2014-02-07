@@ -12,6 +12,7 @@ public class Lv3Player : HumanController {
 	void Awake()
 	{
 		hasKey1 = false;
+        enemyTag = "EnemyShip";
 	}
 	
     void Update () 
@@ -57,7 +58,7 @@ public class Lv3Player : HumanController {
         GameObject projObject = Instantiate(Projectile, projectile_position, this.transform.FindChild("HumanSprite").rotation) as GameObject;
 
         PersonalProjectile proj = projObject.GetComponent<PersonalProjectile>();
-        proj.setEnemyTag("EnemyShip");
+        proj.setEnemyTag(enemyTag);
 
         shotTimer.Start();
     }

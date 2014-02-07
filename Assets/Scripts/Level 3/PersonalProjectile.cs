@@ -58,6 +58,7 @@ public class PersonalProjectile : MonoBehaviour
             {
                 Debug.Log("Found no HumanController");
             }
+            Destroy(weapon);
         }
         else if (other.gameObject.tag == "Wall")
         {
